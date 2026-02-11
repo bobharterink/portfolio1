@@ -1,135 +1,180 @@
+let activePill = null;
 const bar = document.querySelector(".bar");
-const target = document.querySelector(".bar-target");
+bar.innerHTML += bar.innerHTML;
 
-const targetRect = target.getBoundingClientRect();
+function getResponsiveFlex() {
+  const width = window.innerWidth;
 
-// ✅ Timeline
-const tl = gsap.timeline({
-  delay: 2
-});
-
-// 1️⃣ Move to target
-tl.to(bar, {
-  top: targetRect.top,
-  left: targetRect.left,
-  width: targetRect.width,
-  height: targetRect.height,
-  borderRadius: 30,
-  duration: 1.2,
-  ease: "power3.inOut"
-});
-
-// 2️⃣ Daarna kleur veranderen
-tl.to(bar, {
-  backgroundColor: "#FDFBFB", /* kies kleur */
-  duration: 0.6,
-  ease: "power2.out"
-});
-
-tl.from(".line span", 1.2, {
-  y: 100,
-  ease: "power4.out",
-  skewY: 7,
-  stagger: {
-    amount: 0.3
+  if (width <= 600) {
+    return "0 0 calc(60vw - 25px)";
+  } else if (width <= 1025) {
+    return "0 0 calc(40vw - 25px)";
+  } else {
+    return "0 0 calc(25vw - 25px)";
   }
-})
+}
 
 gsap.to(".plus-button", {
-  rotation: 360,
-  duration: 6,       // langzaam
-  repeat: -1,        // oneindig
-  ease: "linear"     // constant tempo
+  rotation: -360,
+  duration: 6,
+  ease: "none",
+  repeat: -1
 });
 
-const blocks = document.querySelectorAll(".bar-inner");
-let activeBlock = null;
+let marqueeTween;
 
-blocks.forEach((block) => {
-  block.addEventListener("click", () => {
+function initMarquee() {
 
-    // ✅ ALS JEZELFDE BLOK → SLUIT
-    if (activeBlock === block) {
+  if (marqueeTween) {
+    marqueeTween.kill();
+    gsap.set(bar, { x: 0 });
+  }
 
-      gsap.to(blocks, {
-        flexGrow: 1,
-        height: "50px",
+const totalWidth = bar.scrollWidth / 2;
+const gap = 10;
+
+marqueeTween = gsap.to(bar, {
+  x: -(totalWidth+gap),
+    duration: 20,
+    ease: "none",
+    repeat: -1
+  });
+}
+
+initMarquee();
+
+window.addEventListener("resize", () => {
+  initMarquee();
+});
+
+
+const marquee = document.querySelector(".marquee");
+
+marquee.addEventListener("mouseenter", () => {
+  gsap.to(marqueeTween, {
+    timeScale: 0,
+    duration: 0.6,
+    ease: "power2.out"
+  });
+});
+
+marquee.addEventListener("mouseleave", () => {
+  gsap.to(marqueeTween, {
+    timeScale: 1,
+    duration: 0.6,
+    ease: "power2.out"
+  });
+});
+
+
+
+const pills = document.querySelectorAll(".bar-inner");
+
+pills.forEach(pill => {
+  pill.addEventListener("click", () => {
+
+    if (activePill === pill) {
+      resetPills();
+      activePill = null;
+      marqueeTween.resume();
+      return;
+    }
+
+        // 👇 NIEUW: als er al één open is → eerst sluiten
+    if (activePill) {
+      resetPills();
+    }
+
+    activePill = pill;
+    marqueeTween.pause();
+    expandPill(pill);
+  });
+});
+
+
+function expandPill(active) {
+
+  pills.forEach(pill => {
+
+    const info = pill.querySelector(".info");
+    const title = pill.querySelector(".line");
+
+    // Pill groeit
+    if (pill === active) {
+      gsap.to(pill, {
+        flex: "0 0 800px",
+        height: 400,
+        borderRadius: 20,
         duration: 0.6,
         ease: "power3.inOut"
       });
 
-      gsap.to(".info", {
-        opacity: 0,
-        y: 20,
-        duration: 0.3
-      });
 
-      gsap.to(".pill-title", {
-        opacity: 1,
-        scale: 1,
-        x: 0,
-        duration: 0.3
-      });
-
-      blocks.forEach(b => b.classList.remove("open"));
-
-      activeBlock = null;
-      return;
-    }
-
-    // ✅ ANDERS: RESET ALLES EERST
-    activeBlock = block;
-
-    blocks.forEach(b => b.classList.remove("open"));
-
-    gsap.to(blocks, {
-      flexGrow: 1,
-      height: "50px",
-      duration: 0.6,
-      ease: "power3.inOut"
-    });
-
-    gsap.to(".info", {
-      opacity: 0,
-      y: 20,
-      duration: 0.3
-    });
-
-    // ✅ OPEN ACTIVE BLOCK
-    block.classList.add("open");
-
-    gsap.to(block, {
-      flexGrow: 4,
-      height: "420px",
-      duration: 0.9,
-      ease: "power4.inOut"
-    });
-
-    // ✅ TITLES ANIMATION
-    blocks.forEach((b) => {
-      const title = b.querySelector(".pill-title");
-      if (!title) return;
-
+      // Titel fade out
       gsap.to(title, {
-        scale: b === block ? 1 : 0.75,
-        opacity: b === block ? 0 : 0.4,
-        x: b === block ? -20 : 0,
-        duration: 0.4,
+        opacity: 0,
+        duration: 0.3,
         ease: "power2.out"
       });
-    });
 
-    // ✅ INFO SHOW
-    const info = block.querySelector(".info");
+      // Info fade in
+      if (info) {
+gsap.to(info, {
+  opacity: 1,
+  pointerEvents: "auto",
+  duration: 0.4,
+  delay: 0.5
+});
+      }
 
-    gsap.to(info, {
-      opacity: 1,
-      y: 0,
-      delay: 0.25,
-      duration: 0.6,
-      ease: "power3.out"
-    });
+
+    } else {
+      gsap.to(pill, {
+        scale: 0.8,
+        duration: 0.6,
+        ease: "power3.inOut"
+      });
+    }
 
   });
-});
 
+}
+
+function resetPills() {
+
+  const tl = gsap.timeline();
+
+  // 👉 Eerst alleen info van actieve pill weg
+  if (activePill) {
+    const info = activePill.querySelector(".info");
+
+    tl.to(info, {
+      opacity: 0,
+      pointerEvents: "none",
+      duration: 0.3,
+      ease: "power2.out"
+    });
+  }
+
+  // 👉 Daarna ALLE pills tegelijk resetten (met 0.15 overlap)
+  tl.to(pills, {
+    flex: getResponsiveFlex(),
+    height: "clamp(50px, 6vw, 60px)",
+    scale: 1,
+    borderRadius: 999,
+    duration: 0.6,
+    ease: "power3.inOut"
+  }, "-=0.15");
+
+  // 👉 Titel van actieve pill pas op het einde terug
+  if (activePill) {
+    const title = activePill.querySelector(".line");
+
+    tl.to(title, {
+      opacity: 1,
+      duration: 0.3,
+      ease: "power2.out"
+    });
+  }
+
+}
