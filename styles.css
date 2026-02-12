@@ -112,6 +112,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  
 
   cursor: pointer;
   overflow: hidden;
@@ -161,7 +162,7 @@ body {
 */
 
 .bar-inner {
-  flex: 0 0 34%;
+  flex: 0 0 calc(25vw - 25px);
   height: clamp(50px, 6vw, 60px);
 
   border-radius: 999px;
@@ -283,7 +284,7 @@ body {
 
 @media (max-width: 1025px) {
   .bar-inner {
-    flex: 0 0 21%;
+    flex: 0 0 calc(40vw - 25px);
   }
   .hero {
   padding: clamp(120px, 8vw, 130px) 20px clamp(20px, 4vw, 40px);
@@ -292,7 +293,7 @@ body {
 
 @media (max-width: 600px) {
   .bar-inner {
-    flex: 0 0 14%;
+    flex: 0 0 calc(60vw - 25px);
   }
   .bar {
     animation-duration: 16s;

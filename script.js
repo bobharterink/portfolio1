@@ -1,4 +1,8 @@
+let hasInteracted = false;
+let marqueeOffset = 0;
+let openShift = 0;
 let activePill = null;
+let isAnimating = false;   // 👈 NIEUW
 const bar = document.querySelector(".bar");
 bar.innerHTML += bar.innerHTML;
 
@@ -14,6 +18,51 @@ function getResponsiveFlex() {
   }
 }
 
+function getExpandedWidth() {
+  const w = window.innerWidth;
+
+  if (w <= 600) return w * 0.9;      // mobile: bijna full width
+  if (w <= 1025) return w * 0.85;    // tablet
+  return 800;                       // desktop
+}
+
+
+function getPillDelta(pill) {
+  const marquee = document.querySelector(".marquee");
+  const marqueeRect = marquee.getBoundingClientRect();
+  const pillRect = pill.getBoundingClientRect();
+  const viewportWidth = window.innerWidth;
+  const padding = 24;
+
+  const expandedWidth = getExpandedWidth();
+
+  // 📱 Mobile & tablet → hard centreren
+  if (viewportWidth <= 1025) {
+    const pillCenter = pillRect.left + expandedWidth / 2;
+    const marqueeCenter = marqueeRect.left + marqueeRect.width / 2;
+    return marqueeCenter - pillCenter;
+  }
+
+  // 💻 Desktop → corrigeren indien nodig
+
+  // Links buiten beeld
+  if (pillRect.left < marqueeRect.left + padding) {
+    return (marqueeRect.left + padding) - pillRect.left;
+  }
+
+  // Rechts buiten beeld (⚠️ MET expandedWidth)
+  const expandedRight = pillRect.left + expandedWidth;
+
+  if (expandedRight > marqueeRect.right - padding) {
+    return (marqueeRect.right - padding) - expandedRight;
+  }
+
+  return 0;
+}
+
+
+
+
 gsap.to(".plus-button", {
   rotation: -360,
   duration: 6,
@@ -26,15 +75,15 @@ let marqueeTween;
 function initMarquee() {
 
   if (marqueeTween) {
+    marqueeOffset = gsap.getProperty(bar, "x");
     marqueeTween.kill();
-    gsap.set(bar, { x: 0 });
   }
 
 const totalWidth = bar.scrollWidth / 2;
 const gap = 10;
 
 marqueeTween = gsap.to(bar, {
-  x: -(totalWidth+gap),
+    x: marqueeOffset - (totalWidth + gap),
     duration: 20,
     ease: "none",
     repeat: -1
@@ -71,7 +120,27 @@ marquee.addEventListener("mouseleave", () => {
 const pills = document.querySelectorAll(".bar-inner");
 
 pills.forEach(pill => {
+    const info = pill.querySelector(".info");
+  if (!info) return;
+
+  gsap.set(info, {
+    opacity: 1,
+    visibility: "hidden",
+    pointerEvents: "none"
+  });
+
+  // force reflow
+  info.offsetHeight;
+
+  gsap.set(info, {
+    opacity: 0,
+    visibility: "visible"
+  });
+  
   pill.addEventListener("click", () => {
+
+      if (isAnimating) return;   // 👈 blokkeer snelle clicks
+
 
     if (activePill === pill) {
       resetPills();
@@ -93,56 +162,91 @@ pills.forEach(pill => {
 
 
 function expandPill(active) {
+  isAnimating = true;
+
+
+  // 👇 FIX: eerste interactie → layout stabiliseren
+  if (!hasInteracted) {
+    marqueeTween.pause();
+    gsap.set(bar, { x: gsap.getProperty(bar, "x") }); // force reflow
+    hasInteracted = true;
+  }
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      isAnimating = false;
+    }
+  });
 
   pills.forEach(pill => {
-
     const info = pill.querySelector(".info");
     const title = pill.querySelector(".line");
 
-    // Pill groeit
     if (pill === active) {
-      gsap.to(pill, {
-        flex: "0 0 800px",
+
+      // 1️⃣ Pill groeit eerst
+      tl.to(pill, {
+        flex: `0 0 ${getExpandedWidth()}px`,
         height: 400,
         borderRadius: 20,
         duration: 0.6,
         ease: "power3.inOut"
-      });
+      }, 0);
+
+// 2️⃣ NA expand → bereken shift
+tl.call(() => {
+  openShift = getPillDelta(active);
+}, null, 0.1);
+
+// 3️⃣ Bar schuift mee (IN timeline)
+tl.to(bar, {
+  x: () => `+=${openShift}`,
+  duration: 0.6,
+  ease: "power3.inOut",
+  onComplete: () => {
+    marqueeOffset += openShift;
+  }
+}, 0.1);
 
 
-      // Titel fade out
-      gsap.to(title, {
+      // 3️⃣ Titel weg
+      tl.to(title, {
         opacity: 0,
-        duration: 0.3,
-        ease: "power2.out"
-      });
+        duration: 0.3
+      }, 0);
 
-      // Info fade in
+      // 4️⃣ Info erin
       if (info) {
-gsap.to(info, {
-  opacity: 1,
-  pointerEvents: "auto",
-  duration: 0.4,
-  delay: 0.5
-});
+        tl.to(info, {
+          opacity: 1,
+          pointerEvents: "auto",
+          duration: 0.4
+        }, 0.4);
       }
 
-
     } else {
-      gsap.to(pill, {
+      tl.to(pill, {
         scale: 0.8,
         duration: 0.6,
         ease: "power3.inOut"
-      });
+      }, 0);
     }
-
   });
-
 }
+
+
 
 function resetPills() {
 
-  const tl = gsap.timeline();
+    isAnimating = true;  // 👈 lock aan
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      isAnimating = false;  // 👈 lock uit
+      openShift = 0; // 👈 belangrijk: resetten
+
+    }
+  });
 
   // 👉 Eerst alleen info van actieve pill weg
   if (activePill) {
@@ -155,6 +259,15 @@ function resetPills() {
       ease: "power2.out"
     });
   }
+
+tl.to(bar, {
+  x: `-=${openShift}`,
+  duration: 0.6,
+  ease: "power3.inOut",
+  onComplete: () => {
+    marqueeOffset -= openShift; // 👈 BELANGRIJK
+  }
+}, "-=0.15");
 
   // 👉 Daarna ALLE pills tegelijk resetten (met 0.15 overlap)
   tl.to(pills, {
@@ -176,5 +289,6 @@ function resetPills() {
       ease: "power2.out"
     });
   }
+
 
 }
