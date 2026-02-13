@@ -1,3 +1,8 @@
+import { gsap } from 'gsap'
+let isDetailsOpen = false;
+const heroTitle = document.querySelector(".title");
+const heroSubtitle = document.querySelector(".subtitle");
+const plusButton = document.querySelector(".plus-button");
 let hasInteracted = false;
 let marqueeOffset = 0;
 let openShift = 0;
@@ -5,6 +10,24 @@ let activePill = null;
 let isAnimating = false;   // 👈 NIEUW
 const bar = document.querySelector(".bar");
 bar.innerHTML += bar.innerHTML;
+
+function getFullExpandedSize() {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+
+  if (w <= 1025) {
+    return {
+      width: w * 0.95,
+      height: h * 0.9
+    };
+  }
+
+  return {
+    width: w - 50,
+    height: h * 0.80
+  };
+}
+
 
 function getResponsiveFlex() {
   const width = window.innerWidth;
@@ -62,8 +85,7 @@ function getPillDelta(pill) {
 
 
 
-
-gsap.to(".plus-button", {
+const plusRotation = gsap.to(".plus-button", {
   rotation: -360,
   duration: 6,
   ease: "none",
@@ -137,7 +159,15 @@ pills.forEach(pill => {
     visibility: "visible"
   });
   
-  pill.addEventListener("click", () => {
+  pill.addEventListener("click", (e) => {
+
+      // ⛔️ ALS details open zijn → niks doen
+  if (isDetailsOpen) return;
+
+      // ⛔️ ALS op "Meer zien" geklikt → pill NIET sluiten
+  if (e.target.closest(".more-btn")) {
+    return;
+  }
 
       if (isAnimating) return;   // 👈 blokkeer snelle clicks
 
@@ -159,6 +189,113 @@ pills.forEach(pill => {
     expandPill(pill);
   });
 });
+
+
+document.querySelectorAll(".more-btn").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const pill = btn.closest(".bar-inner");
+    if (!pill) return;
+
+    activePill = pill;
+    openDetails(pill);
+  });
+});
+
+
+function openDetails(pill) {
+  const details = pill.querySelector(".details");
+  if (!details || isDetailsOpen) return;
+
+  isDetailsOpen = true;
+
+  // details zichtbaar
+  details.style.display = "block";
+
+  // hero weg
+  gsap.to([heroTitle, heroSubtitle], {
+    opacity: 0,
+    y: -20,
+    duration: 0.4,
+    ease: "power2.out",
+    pointerEvents: "none"
+  });
+
+const moreBtn = pill.querySelector(".more-btn");
+if (moreBtn) {
+  moreBtn.style.display = "none";
+}
+
+  // 🛑 stop draaien
+  plusRotation.pause();
+
+  // plus naar boven + kruis
+  gsap.to(plusButton, {
+    rotation: 45,
+    top: "3%",
+    duration: 0.5,
+    ease: "power3.inOut"
+  });
+
+  // pill bijna fullscreen
+  gsap.to(pill, {
+    flex: `0 0 ${window.innerWidth - 24}px`,
+    height: window.innerHeight * 0.8,
+    duration: 0.7,
+    ease: "power3.inOut"
+  });
+}
+
+
+function closeDetails() {
+  if (!isDetailsOpen || !activePill) return;
+
+  const details = activePill.querySelector(".details");
+  if (details) details.style.display = "none";
+
+  isDetailsOpen = false;
+
+  // hero terug
+  gsap.to([heroTitle, heroSubtitle], {
+    opacity: 1,
+    y: 0,
+    duration: 0.4,
+    ease: "power2.out",
+    pointerEvents: "auto"
+  });
+
+  const moreBtn = activePill.querySelector(".more-btn");
+if (moreBtn) {
+  moreBtn.style.display = "block";
+}
+
+
+  // plus terug + draaien hervatten
+  gsap.to(plusButton, {
+    rotation: 0,
+    top: "55%",
+    duration: 0.5,
+    ease: "power3.inOut"
+  });
+
+  plusRotation.resume();
+
+  // pill terug naar normale expanded state
+  gsap.to(activePill, {
+    flex: `0 0 ${getExpandedWidth()}px`,
+    height: 400,
+    duration: 0.6,
+    ease: "power3.inOut"
+  });
+}
+
+plusButton.addEventListener("click", () => {
+  closeDetails();
+});
+
+
+
 
 
 function expandPill(active) {
@@ -225,12 +362,24 @@ tl.to(bar, {
       }
 
     } else {
-      tl.to(pill, {
-        scale: 0.8,
-        duration: 0.6,
-        ease: "power3.inOut"
-      }, 0);
-    }
+  const isDesktop = window.innerWidth > 1025;
+
+  if (isDesktop) {
+    // 💻 Desktop → echte layout shrink
+    tl.to(pill, {
+      scale: 0.8,
+      duration: 0.6,
+      ease: "power3.inOut"
+    }, 0);
+  } else {
+    // 📱 Tablet & mobile → visueel schalen
+    tl.to(pill, {
+      scale: 0.8,
+      duration: 0.6,
+      ease: "power3.inOut"
+    }, 0);
+  }
+}
   });
 }
 
@@ -239,6 +388,8 @@ tl.to(bar, {
 function resetPills() {
 
     isAnimating = true;  // 👈 lock aan
+
+
 
   const tl = gsap.timeline({
     onComplete: () => {
@@ -267,7 +418,7 @@ tl.to(bar, {
   onComplete: () => {
     marqueeOffset -= openShift; // 👈 BELANGRIJK
   }
-}, "-=0.15");
+}, 0);
 
   // 👉 Daarna ALLE pills tegelijk resetten (met 0.15 overlap)
   tl.to(pills, {
@@ -277,7 +428,7 @@ tl.to(bar, {
     borderRadius: 999,
     duration: 0.6,
     ease: "power3.inOut"
-  }, "-=0.15");
+  }, 0);
 
   // 👉 Titel van actieve pill pas op het einde terug
   if (activePill) {
@@ -290,5 +441,14 @@ tl.to(bar, {
     });
   }
 
+  tl.call(() => {
+  gsap.to(marqueeTween, {
+    timeScale: 1,
+    duration: 0.4,
+    ease: "power2.out"
+  });
+});
+
 
 }
+

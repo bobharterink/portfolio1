@@ -132,6 +132,7 @@ body {
   justify-content: center;
 
   cursor: pointer;
+  z-index: 9999;
 }
 
 .plus-icon {
@@ -274,6 +275,11 @@ body {
 .more-btn:hover {
   transform: translateY(-2px);
 }
+
+.details {
+  display: none;
+}
+
 
 @media (max-width: 600px) {
   .mobile-break {

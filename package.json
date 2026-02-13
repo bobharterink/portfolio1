@@ -5,7 +5,9 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   },
   "homepage": "https://github.com/bobharterink/portfolio1#readme",
   "dependencies": {
+    "gsap": "^3.14.2",
     "three": "^0.182.0"
   },
   "devDependencies": {
