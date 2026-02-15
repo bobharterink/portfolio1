@@ -6,8 +6,9 @@ const plusButton = document.querySelector(".plus-button");
 let hasInteracted = false;
 let marqueeOffset = 0;
 let openShift = 0;
+let detailsShift = 0; // 👈 Track de shift voor details centering
 let activePill = null;
-let isAnimating = false;   // 👈 NIEUW
+let isAnimating = false;
 const bar = document.querySelector(".bar");
 bar.innerHTML += bar.innerHTML;
 
@@ -44,9 +45,9 @@ function getResponsiveFlex() {
 function getExpandedWidth() {
   const w = window.innerWidth;
 
-  if (w <= 600) return w * 0.9;      // mobile: bijna full width
-  if (w <= 1025) return w * 0.85;    // tablet
-  return 800;                       // desktop
+  if (w <= 600) return w * 0.9;
+  if (w <= 1025) return w * 0.85;
+  return 800;
 }
 
 
@@ -55,7 +56,7 @@ function getPillDelta(pill) {
   const marqueeRect = marquee.getBoundingClientRect();
   const pillRect = pill.getBoundingClientRect();
   const viewportWidth = window.innerWidth;
-  const padding = 24;
+  const padding = 100; // 👈 VERHOOGD van 24 naar 80 voor meer ruimte
 
   const expandedWidth = getExpandedWidth();
 
@@ -130,11 +131,14 @@ marquee.addEventListener("mouseenter", () => {
 });
 
 marquee.addEventListener("mouseleave", () => {
-  gsap.to(marqueeTween, {
-    timeScale: 1,
-    duration: 0.6,
-    ease: "power2.out"
-  });
+  // ✅ Alleen hervatten als er geen pill actief is
+  if (!activePill) {
+    gsap.to(marqueeTween, {
+      timeScale: 1,
+      duration: 0.6,
+      ease: "power2.out"
+    });
+  }
 });
 
 
@@ -169,7 +173,7 @@ pills.forEach(pill => {
     return;
   }
 
-      if (isAnimating) return;   // 👈 blokkeer snelle clicks
+      if (isAnimating) return;
 
 
     if (activePill === pill) {
@@ -179,7 +183,7 @@ pills.forEach(pill => {
       return;
     }
 
-        // 👇 NIEUW: als er al één open is → eerst sluiten
+        // 👇 Als er al één open is → eerst sluiten
     if (activePill) {
       resetPills();
     }
@@ -206,9 +210,26 @@ document.querySelectorAll(".more-btn").forEach(btn => {
 
 function openDetails(pill) {
   const details = pill.querySelector(".details");
+  
   if (!details || isDetailsOpen) return;
 
   isDetailsOpen = true;
+
+  // 🎯 Bereken hoeveel we moeten shiften om te centreren
+  const pillRect = pill.getBoundingClientRect();
+  const viewportWidth = window.innerWidth;
+  
+  // Gewenste breedte van de pill in State 3
+  const targetWidth = viewportWidth - 24;
+  
+  // Bereken waar het midden van de pill moet komen (centrum van viewport)
+  const viewportCenter = viewportWidth / 2;
+  
+  // Gewenste positie van pill center (na expand)
+  const targetPillCenter = pillRect.left + targetWidth / 2;
+  
+  // Hoeveel moeten we shiften?
+  detailsShift = viewportCenter - targetPillCenter;
 
   // details zichtbaar
   details.style.display = "block";
@@ -222,11 +243,6 @@ function openDetails(pill) {
     pointerEvents: "none"
   });
 
-const moreBtn = pill.querySelector(".more-btn");
-if (moreBtn) {
-  moreBtn.style.display = "none";
-}
-
   // 🛑 stop draaien
   plusRotation.pause();
 
@@ -235,26 +251,43 @@ if (moreBtn) {
     rotation: 45,
     top: "3%",
     duration: 0.5,
-    ease: "power3.inOut"
+    ease: "power3.inOut",
+    cursor: "pointer"
   });
 
-  // pill bijna fullscreen
-  gsap.to(pill, {
-    flex: `0 0 ${window.innerWidth - 24}px`,
+  // Timeline voor pill expand + centreren
+  const tl = gsap.timeline();
+
+  // 1️⃣ Pill groeit
+  tl.to(pill, {
+    flex: `0 0 ${targetWidth}px`,
     height: window.innerHeight * 0.8,
     duration: 0.7,
     ease: "power3.inOut"
-  });
+  }, 0);
+
+  // 2️⃣ Bar shift om te centreren (tegelijkertijd)
+  tl.to(bar, {
+    x: `+=${detailsShift}`,
+    duration: 0.7,
+    ease: "power3.inOut",
+    onComplete: () => {
+      marqueeOffset += detailsShift;
+    }
+  }, 0);
 }
 
 
 function closeDetails() {
   if (!isDetailsOpen || !activePill) return;
 
-  const details = activePill.querySelector(".details");
-  if (details) details.style.display = "none";
+  const pill = activePill;
+  const details = pill.querySelector(".details");
 
   isDetailsOpen = false;
+
+  // details weg
+  if (details) details.style.display = "none";
 
   // hero terug
   gsap.to([heroTitle, heroSubtitle], {
@@ -265,29 +298,23 @@ function closeDetails() {
     pointerEvents: "auto"
   });
 
-  const moreBtn = activePill.querySelector(".more-btn");
-if (moreBtn) {
-  moreBtn.style.display = "block";
-}
-
-
   // plus terug + draaien hervatten
   gsap.to(plusButton, {
     rotation: 0,
     top: "55%",
     duration: 0.5,
-    ease: "power3.inOut"
+    ease: "power3.inOut",
+    cursor: "default"
   });
 
   plusRotation.resume();
 
-  // pill terug naar normale expanded state
-  gsap.to(activePill, {
-    flex: `0 0 ${getExpandedWidth()}px`,
-    height: 400,
-    duration: 0.6,
-    ease: "power3.inOut"
-  });
+  // 🔑 DIRECT NAAR STATE 1
+  resetPills();
+  activePill = null;
+  
+  // ✅ Marquee hervatten na reset
+  marqueeTween.resume();
 }
 
 plusButton.addEventListener("click", () => {
@@ -299,6 +326,11 @@ plusButton.addEventListener("click", () => {
 
 
 function expandPill(active) {
+
+  // 🔑 active class zetten
+pills.forEach(p => p.classList.remove("active"));
+active.classList.add("active");
+
   isAnimating = true;
 
 
@@ -307,6 +339,36 @@ function expandPill(active) {
     marqueeTween.pause();
     gsap.set(bar, { x: gsap.getProperty(bar, "x") }); // force reflow
     hasInteracted = true;
+  }
+
+  // 📱 Op mobile/tablet: hero weghalen + plus button verplaatsen
+  const viewportWidth = window.innerWidth;
+  
+  if (viewportWidth <= 1025) {
+    gsap.to([heroTitle, heroSubtitle], {
+      opacity: 0,
+      y: -20,
+      duration: 0.4,
+      ease: "power2.out",
+      pointerEvents: "none"
+    });
+    
+    // Plus button positie aanpassen
+    if (viewportWidth <= 600) {
+      // 📱 Mobile
+      gsap.to(plusButton, {
+        top: "82%",
+        duration: 0.5,
+        ease: "power3.inOut"
+      });
+    } else {
+      // 📱 Tablet (601-1025px)
+      gsap.to(plusButton, {
+        top: "71%",
+        duration: 0.5,
+        ease: "power3.inOut"
+      });
+    }
   }
 
   const tl = gsap.timeline({
@@ -387,15 +449,14 @@ tl.to(bar, {
 
 function resetPills() {
 
-    isAnimating = true;  // 👈 lock aan
-
-
+    isAnimating = true;
 
   const tl = gsap.timeline({
     onComplete: () => {
-      isAnimating = false;  // 👈 lock uit
+      isAnimating = false;
       openShift = 0; // 👈 belangrijk: resetten
-
+      detailsShift = 0; // 👈 Ook detailsShift resetten
+      pills.forEach(p => p.classList.remove("active"));
     }
   });
 
@@ -411,16 +472,19 @@ function resetPills() {
     });
   }
 
-tl.to(bar, {
-  x: `-=${openShift}`,
-  duration: 0.6,
-  ease: "power3.inOut",
-  onComplete: () => {
-    marqueeOffset -= openShift; // 👈 BELANGRIJK
-  }
-}, 0);
+  // 👉 Bar terugshiften (BEIDE shifts)
+  const totalShift = openShift + detailsShift;
+  
+  tl.to(bar, {
+    x: `-=${totalShift}`,
+    duration: 0.6,
+    ease: "power3.inOut",
+    onComplete: () => {
+      marqueeOffset -= totalShift;
+    }
+  }, 0);
 
-  // 👉 Daarna ALLE pills tegelijk resetten (met 0.15 overlap)
+  // 👉 Daarna ALLE pills tegelijk resetten
   tl.to(pills, {
     flex: getResponsiveFlex(),
     height: "clamp(50px, 6vw, 60px)",
@@ -441,14 +505,30 @@ tl.to(bar, {
     });
   }
 
+  // 📱 Op mobile/tablet: hero terughalen + plus button reset (als details niet open zijn)
+  if (window.innerWidth <= 1025 && !isDetailsOpen) {
+    tl.to([heroTitle, heroSubtitle], {
+      opacity: 1,
+      y: 0,
+      duration: 0.4,
+      ease: "power2.out",
+      pointerEvents: "auto"
+    }, 0.3);
+    
+    // Plus button terug naar 55%
+    tl.to(plusButton, {
+      top: "55%",
+      duration: 0.5,
+      ease: "power3.inOut"
+    }, 0);
+  }
+
+  // ✅ Marquee timescale herstellen na reset animatie (niet resume - dat gebeurt elders)
   tl.call(() => {
-  gsap.to(marqueeTween, {
-    timeScale: 1,
-    duration: 0.4,
-    ease: "power2.out"
+    gsap.to(marqueeTween, {
+      timeScale: 1,
+      duration: 0.4,
+      ease: "power2.out"
+    });
   });
-});
-
-
 }
-
