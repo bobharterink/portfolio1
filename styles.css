@@ -425,10 +425,11 @@ body {
   position: relative; /* Voor iframe */
 }
 
-.details-image img {
+.details-image video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .details-extra h3 {
@@ -497,6 +498,33 @@ body {
   background: transparent;
   color: #FDFBFB;
   border: 2px solid #FDFBFB;
+}
+
+.video-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.video-play-btn {
+    background: rgba(22, 22, 22, 0.9);
+    color: #FDFBFB;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+}
+
+.video-play-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(22, 22, 22, 1);
 }
 
 

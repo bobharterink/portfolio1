@@ -210,29 +210,22 @@ document.querySelectorAll(".more-btn").forEach(btn => {
 
 function openDetails(pill) {
   const details = pill.querySelector(".details");
+  const info = pill.querySelector(".info");
   
-  if (!details || isDetailsOpen) return;
+  if (!details || isDetailsOpen || isAnimating) return; // 👈 Toegevoegd
 
   isDetailsOpen = true;
+  isAnimating = true; // 👈 Toegevoegd
 
   // 🎯 Bereken hoeveel we moeten shiften om te centreren
   const pillRect = pill.getBoundingClientRect();
   const viewportWidth = window.innerWidth;
   
-  // Gewenste breedte van de pill in State 3
   const targetWidth = viewportWidth - 24;
-  
-  // Bereken waar het midden van de pill moet komen (centrum van viewport)
   const viewportCenter = viewportWidth / 2;
-  
-  // Gewenste positie van pill center (na expand)
   const targetPillCenter = pillRect.left + targetWidth / 2;
   
-  // Hoeveel moeten we shiften?
   detailsShift = viewportCenter - targetPillCenter;
-
-  // details zichtbaar
-  details.style.display = "block";
 
   // hero weg
   gsap.to([heroTitle, heroSubtitle], {
@@ -256,17 +249,31 @@ function openDetails(pill) {
   });
 
   // Timeline voor pill expand + centreren
-  const tl = gsap.timeline();
+  const tl = gsap.timeline({
+    onComplete: () => {
+      isAnimating = false; // 👈 Toegevoegd
+    }
+  });
 
-  // 1️⃣ Pill groeit
+  // 1️⃣ Info van stage 2 eerst weg
+  if (info) {
+    tl.to(info, {
+      opacity: 0,
+      pointerEvents: "none",
+      duration: 0.3,
+      ease: "power2.out"
+    }, 0);
+  }
+
+  // 2️⃣ Pill groeit (start op 0.3s, na info fade)
   tl.to(pill, {
     flex: `0 0 ${targetWidth}px`,
     height: window.innerHeight * 0.8,
     duration: 0.7,
     ease: "power3.inOut"
-  }, 0);
+  }, 0.3);
 
-  // 2️⃣ Bar shift om te centreren (tegelijkertijd)
+  // 3️⃣ Bar shift om te centreren (tegelijkertijd met pill grow)
   tl.to(bar, {
     x: `+=${detailsShift}`,
     duration: 0.7,
@@ -274,47 +281,121 @@ function openDetails(pill) {
     onComplete: () => {
       marqueeOffset += detailsShift;
     }
-  }, 0);
+  }, 0.3);
+
+  // 4️⃣ Details zichtbaar maken NA de expand (op 1.0s = 0.3 + 0.7)
+  tl.set(details, {
+    display: "block"
+  }, 1.0);
+
+  // 5️⃣ Details fade in
+  tl.from(details, {
+    opacity: 0,
+    duration: 0.4,
+    ease: "power2.out"
+  }, 1.0);
+
+    // 6️⃣ Start video na fade in (op 1.4s)
+  tl.call(() => {
+    const video = details.querySelector('video');
+    if (video) {
+      video.currentTime = 0; // Start vanaf begin
+      video.play();
+    }
+  }, null, 1.4);
 }
 
 
 function closeDetails() {
-  if (!isDetailsOpen || !activePill) return;
+  if (!isDetailsOpen || !activePill || isAnimating) return;
 
   const pill = activePill;
   const details = pill.querySelector(".details");
 
   isDetailsOpen = false;
+  isAnimating = true;
 
-  // details weg
-  if (details) details.style.display = "none";
 
-  // hero terug
-  gsap.to([heroTitle, heroSubtitle], {
+  // Timeline voor gestructureerde close animatie
+  const tl = gsap.timeline({
+    onComplete: () => {
+      isAnimating = false;
+      
+      // 🔑 DIRECT NAAR STATE 1
+      resetPills();
+      activePill = null;
+      
+      // ✅ Marquee hervatten na reset
+      marqueeTween.resume();
+    }
+  });
+
+  // 1️⃣ Details eerst wegfaden
+  if (details) {
+    tl.to(details, {
+      opacity: 0,
+      duration: 0.3,
+      ease: "power2.out"
+    }, 0);
+    
+    // Display op none zetten na fade + opacity resetten
+    tl.set(details, {
+      display: "none",
+      opacity: 1  // 👈 TOEGEVOEGD - reset opacity voor volgende keer
+    }, 0.3);
+  }
+
+  // 2️⃣ Pill kleiner maken (start op 0.3s)
+  tl.to(pill, {
+    flex: getResponsiveFlex(),
+    height: "clamp(50px, 6vw, 60px)",
+    duration: 0.7,
+    ease: "power3.inOut"
+  }, 0.3);
+
+  // 3️⃣ Bar terugshiften (tegelijkertijd met pill shrink)
+  tl.to(bar, {
+    x: `-=${detailsShift}`,
+    duration: 0.7,
+    ease: "power3.inOut",
+    onComplete: () => {
+      marqueeOffset -= detailsShift;
+      detailsShift = 0;
+    }
+  }, 0.3);
+
+  // 4️⃣ Hero terug (na pill shrink, op 1.0s)
+  tl.to([heroTitle, heroSubtitle], {
     opacity: 1,
     y: 0,
     duration: 0.4,
     ease: "power2.out",
     pointerEvents: "auto"
-  });
+  }, 1.0);
 
-  // plus terug + draaien hervatten
-  gsap.to(plusButton, {
+  // 5️⃣ Plus button terug + draaien hervatten (tegelijkertijd met hero)
+  tl.to(plusButton, {
     rotation: 0,
     top: "55%",
     duration: 0.5,
     ease: "power3.inOut",
-    cursor: "default"
-  });
+    cursor: "default",
+    onComplete: () => {
+      plusRotation.resume();
+    }
+  }, 1.0);
 
-  plusRotation.resume();
-
-  // 🔑 DIRECT NAAR STATE 1
-  resetPills();
-  activePill = null;
-  
-  // ✅ Marquee hervatten na reset
-  marqueeTween.resume();
+    // 6️⃣ Reset video button (op 1.0s, dus 1 sec vertraagd)
+  tl.call(() => {
+    const video = details?.querySelector('video');
+    const playBtn = details?.querySelector('.video-play-btn');
+    if (video && playBtn) {
+      video.pause();
+      video.currentTime = 0;
+      playBtn.style.display = 'none';
+      playBtn.textContent = '▶ Afspelen';
+    }
+  }, null, 1.0);
 }
 
 plusButton.addEventListener("click", () => {
@@ -532,3 +613,80 @@ function resetPills() {
     });
   });
 }
+
+// Video controls
+document.querySelectorAll('.details-image').forEach(container => {
+    const video = container.querySelector('video');
+    const playBtn = container.querySelector('.video-play-btn');
+    
+    if (!video || !playBtn) return;
+    
+    // Button standaard verbergen
+    playBtn.style.display = 'none';
+    
+    // Toon button wanneer video klaar is
+    video.addEventListener('ended', () => {
+        playBtn.style.display = 'block';
+        playBtn.textContent = '↻ Opnieuw afspelen';
+    });
+    
+    // Play functionaliteit
+    playBtn.addEventListener('click', () => {
+        video.currentTime = 0;
+        video.play();
+        playBtn.style.display = 'none';
+    });
+});
+
+// ============================================
+// INTRO ANIMATIE
+// ============================================
+
+// Alles eerst verbergen
+gsap.set([heroTitle, heroSubtitle], { opacity: 0, y: 20 });
+gsap.set(pills, { opacity: 0, scale: 0.8 });
+gsap.set(".footer-socials", { opacity: 0 });
+gsap.set(".plus-button", { opacity: 0, scale: 0 });
+
+// Intro timeline
+const introTl = gsap.timeline({
+  delay: 0.3 // Kleine delay voor smooth start
+});
+
+// 1️⃣ Pills animeren (met stagger voor golf-effect)
+introTl.to(pills, {
+  opacity: 1,
+  scale: 1,
+  duration: 0.8,
+  ease: "back.out(1.2)",
+  stagger: 0.08 // Elke pill 0.08s later
+}, 0);
+
+// 2️⃣ Hero tekst fade in (na pills)
+introTl.to(heroTitle, {
+  opacity: 1,
+  y: 0,
+  duration: 0.6,
+  ease: "power2.out"
+}, 0.6);
+
+introTl.to(heroSubtitle, {
+  opacity: 1,
+  y: 0,
+  duration: 0.6,
+  ease: "power2.out"
+}, 0.7);
+
+// 3️⃣ Plus button en footer (subtiel erna)
+introTl.to(".plus-button", {
+  opacity: 1,
+  scale: 1,
+  duration: 0.5,
+  ease: "back.out(1.5)"
+}, 1.0);
+
+introTl.to(".footer-socials", {
+  opacity: 1,
+  duration: 0.5,
+  ease: "power2.out"
+}, 1.1);
