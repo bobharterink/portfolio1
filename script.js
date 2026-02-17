@@ -642,6 +642,9 @@ document.querySelectorAll('.details-image').forEach(container => {
 // INTRO ANIMATIE
 // ============================================
 
+isAnimating = true;
+
+
 // Alles eerst verbergen
 gsap.set([heroTitle, heroSubtitle], { opacity: 0, y: 20 });
 gsap.set(pills, { opacity: 0, scale: 0.8 });
@@ -650,7 +653,10 @@ gsap.set(".plus-button", { opacity: 0, scale: 0 });
 
 // Intro timeline
 const introTl = gsap.timeline({
-  delay: 0.3 // Kleine delay voor smooth start
+  delay: 0.3,
+  onComplete: () => {
+    isAnimating = false; // 🔓 Sta interacties toe na intro
+  }
 });
 
 // 1️⃣ Pills animeren (met stagger voor golf-effect)
