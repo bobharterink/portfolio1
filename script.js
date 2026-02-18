@@ -93,6 +93,163 @@ const plusRotation = gsap.to(".plus-button", {
   repeat: -1
 });
 
+plusButton.addEventListener("mouseenter", () => {
+  if (!isDetailsOpen) {
+    plusRotation.pause();
+    gsap.to(plusButton, {
+      rotation: 0,
+      duration: 0.4,
+      ease: "power2.out"
+    });
+  }
+});
+
+plusButton.addEventListener("mouseleave", () => {
+  if (!isDetailsOpen) {
+    gsap.to(plusButton, {
+      rotation: -360,
+      duration: 0.4,
+      ease: "power2.in",
+      onComplete: () => plusRotation.resume()
+    });
+  }
+});
+
+
+// ============================================
+// OVERVIEW PANEL LOGIC
+// Voeg dit toe NA de plusRotation definitie en hover listeners,
+// en VERVANG de bestaande plusButton click listener
+// ============================================
+
+const overviewPanel = document.querySelector(".overview-panel");
+let isOverviewOpen = false;
+
+function openOverview() {
+  if (isOverviewOpen || isDetailsOpen || isAnimating) return;
+
+  isOverviewOpen = true;
+
+  // Marquee stoppen
+  marqueeTween.pause();
+
+  // Plus wordt X
+  plusRotation.pause();
+  gsap.to(plusButton, {
+    rotation: 45,
+    top: "3%",
+    duration: 0.5,
+    ease: "power3.inOut",
+    cursor: "pointer"
+  });
+
+  // Hero weg
+  gsap.to([heroTitle, heroSubtitle], {
+    opacity: 0,
+    y: -20,
+    duration: 0.4,
+    ease: "power2.out",
+    pointerEvents: "none"
+  });
+
+  // Panel zichtbaar
+  overviewPanel.classList.add("is-open");
+
+  // Cards staggered fade in
+  const cards = overviewPanel.querySelectorAll(".overview-card");
+  gsap.fromTo(overviewPanel,
+    { opacity: 0 },
+    { opacity: 1, duration: 0.4, ease: "power2.out", pointerEvents: "auto" }
+  );
+
+  gsap.fromTo(cards,
+    { opacity: 0, y: 30 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: "power3.out",
+      stagger: 0.07,
+      delay: 0.2
+    }
+  );
+}
+
+function closeOverview() {
+  if (!isOverviewOpen) return;
+
+  isOverviewOpen = false;
+
+  const cards = overviewPanel.querySelectorAll(".overview-card");
+
+  // Cards weg
+  gsap.to(cards, {
+    opacity: 0,
+    y: 20,
+    duration: 0.3,
+    ease: "power2.in",
+    stagger: 0.04
+  });
+
+  // Panel weg
+  gsap.to(overviewPanel, {
+    opacity: 0,
+    duration: 0.4,
+    delay: 0.2,
+    ease: "power2.in",
+    pointerEvents: "none",
+    onComplete: () => {
+      overviewPanel.classList.remove("is-open");
+      // Reset card transforms voor volgende keer
+      gsap.set(cards, { opacity: 1, y: 0 });
+    }
+  });
+
+  // Plus terug
+  gsap.to(plusButton, {
+    rotation: 0,
+    top: "55%",
+    duration: 0.5,
+    delay: 0.3,
+    ease: "power3.inOut",
+    cursor: "default",
+    onComplete: () => {
+      plusRotation.resume();
+    }
+  });
+
+  // Hero terug
+  gsap.to([heroTitle, heroSubtitle], {
+    opacity: 1,
+    y: 0,
+    duration: 0.4,
+    delay: 0.4,
+    ease: "power2.out",
+    pointerEvents: "auto"
+  });
+
+  // Marquee hervatten
+  setTimeout(() => marqueeTween.resume(), 600);
+}
+
+// VERVANG de bestaande plusButton click listener:
+// plusButton.addEventListener("click", () => { closeDetails(); });
+// MET DIT:
+
+plusButton.addEventListener("click", () => {
+  if (isDetailsOpen) {
+    closeDetails();
+  } else if (isOverviewOpen) {
+    closeOverview();
+  } else {
+    // Stage 1 → open overview
+    if (!isAnimating) {
+      openOverview();
+    }
+  }
+});
+
+
 let marqueeTween;
 
 function initMarquee() {
@@ -398,10 +555,6 @@ function closeDetails() {
   }, null, 1.0);
 }
 
-plusButton.addEventListener("click", () => {
-  closeDetails();
-});
-
 
 
 
@@ -696,3 +849,21 @@ introTl.to(".footer-socials", {
   duration: 0.5,
   ease: "power2.out"
 }, 1.1);
+
+// Mobile card tap om uit te klappen
+document.querySelectorAll(".overview-card").forEach(card => {
+  card.addEventListener("click", (e) => {
+    if (window.innerWidth > 600) return; // alleen mobile
+    
+    // Voorkom dat link opent als card nog niet expanded is
+    if (!card.classList.contains("expanded")) {
+      e.preventDefault();
+      // Sluit andere open cards
+      document.querySelectorAll(".overview-card.expanded").forEach(c => {
+        c.classList.remove("expanded");
+      });
+      card.classList.add("expanded");
+    }
+    // Als al expanded → link mag gewoon openen (via de knop)
+  });
+});

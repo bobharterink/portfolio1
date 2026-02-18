@@ -191,7 +191,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-
+  cursor: pointer;
   z-index: 9999;
 }
 
@@ -404,6 +404,13 @@ body {
   padding-left: 20px;
 }
 
+ul.nested-list {
+  padding-left: 20px;
+}
+ul.nested-list li {
+  font-size: clamp(0.7rem, .8vw, 0.8rem);
+}
+
 .details-content ul li::before {
   content: "→";
   position: absolute;
@@ -430,7 +437,7 @@ body {
   position: relative; /* Voor iframe */
 }
 
-@media (min-width: 1026px) {
+@media (min-width: 1526px) {
 .details-image {
   width: 600px;
 }
@@ -499,8 +506,29 @@ body {
   text-transform: uppercase;
 }
 
-.site-btn:hover,
-.back-btn:hover {
+.site-btn:hover {
+  transform: translateY(-2px);
+}
+
+
+  .overview-visit-btn {
+    background: #FDFBFB;
+    color: #161616;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    cursor: pointer;  
+    transition: transform 0.2s ease;
+  }
+
+  .overview-visit-site {
+    text-decoration: none;
+  }
+
+  .overview-visit-btn:hover {
   transform: translateY(-2px);
 }
 
@@ -741,5 +769,228 @@ body {
   /* Chrome, Safari en Opera */
   .bar-inner .details::-webkit-scrollbar {
     display: none;
+  }
+}
+
+
+/* ============================================
+   OVERVIEW PANEL
+   ============================================ */
+
+.overview-panel {
+  position: fixed;
+  inset: 0;
+  background: #FDFBFB;
+  z-index: 5000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.overview-panel.is-open {
+  visibility: visible;
+}
+
+.overview-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 100px 50px 50px;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.overview-inner::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each row scrolls horizontally on desktop */
+.overview-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+/* ---- CARD ---- */
+.overview-card {
+  flex: 0 0 calc(50% - 10px);
+  background: #161616;
+  color: #FDFBFB;
+  border-radius: 20px;
+  padding: 36px 40px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.overview-card:hover {
+  transform: translateY(-4px);
+}
+
+.overview-card:hover::after {
+  opacity: 1;
+}
+
+.overview-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.overview-title {
+  font-family: "AkzidenzExtended", sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.overview-arrow {
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  opacity: 0.5;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.overview-card:hover .overview-arrow {
+  opacity: 1;
+  transform: translate(3px, -3px);
+}
+
+.overview-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.overview-tags span {
+  background: rgba(255,255,255,0.12);
+  color: #FDFBFB;
+  font-size: clamp(0.55rem, 1vw, 0.75rem);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-family: "AkzidenzExtended", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.overview-desc {
+  font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+  line-height: 1.5;
+  color: #DADADA;
+  font-weight: 300;
+  margin-top: auto;
+}
+
+/* ============================================
+   RESPONSIVE OVERVIEW
+   ============================================ */
+
+/* Tablet: 1 kolom, verticaal scrollen */
+@media (max-width: 1025px) and (min-width: 601px) {
+  .overview-inner {
+    padding: 100px 24px 40px;
+    gap: 16px;
+  }
+
+  .overview-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .overview-card {
+    flex: none;
+    width: 100%;
+    padding: 28px 28px;
+  }
+
+  .overview-title {
+    font-size: 1.6rem;
+  }
+}
+
+/* Mobile: alleen pills stijl */
+@media (max-width: 600px) {
+  .overview-inner {
+    padding: 90px 16px 40px;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .overview-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .overview-card {
+    flex: none;
+    width: 100%;
+    background: #161616;
+    border-radius: 20px;        /* ← was 999px, nu uitklapbaar */
+    padding: 18px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .overview-card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .overview-title {
+    font-size: 1rem;
+  }
+
+  /* Arrow wordt een + teken */
+  .overview-arrow {
+    font-size: 1.4rem;
+    transition: transform 0.3s ease;
+  }
+
+  .overview-card.expanded .overview-arrow {
+    transform: rotate(45deg);
+  }
+
+  /* Tags en desc standaard verborgen op mobile */
+  .overview-tags,
+  .overview-desc,
+  .overview-visit-btn {
+    display: none;
+    opacity: 0;
+  }
+
+  /* Zichtbaar wanneer expanded */
+  .overview-card.expanded .overview-tags,
+  .overview-card.expanded .overview-desc,
+  .overview-card.expanded .overview-visit-btn {
+    display: flex;
+    opacity: 1;
+    margin-top: 14px;
+  }
+
+  .overview-card.expanded .overview-desc {
+    display: block;
   }
 }
