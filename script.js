@@ -94,7 +94,7 @@ const plusRotation = gsap.to(".plus-button", {
 });
 
 plusButton.addEventListener("mouseenter", () => {
-  if (!isDetailsOpen) {
+  if (!isDetailsOpen && !isOverviewOpen) {  // 👈 !isOverviewOpen toevoegen
     plusRotation.pause();
     gsap.to(plusButton, {
       rotation: 0,
@@ -105,7 +105,7 @@ plusButton.addEventListener("mouseenter", () => {
 });
 
 plusButton.addEventListener("mouseleave", () => {
-  if (!isDetailsOpen) {
+  if (!isDetailsOpen && !isOverviewOpen) {  // 👈 !isOverviewOpen toevoegen
     gsap.to(plusButton, {
       rotation: -360,
       duration: 0.4,
@@ -133,15 +133,16 @@ function openOverview() {
   // Marquee stoppen
   marqueeTween.pause();
 
-  // Plus wordt X
-  plusRotation.pause();
-  gsap.to(plusButton, {
-    rotation: 45,
-    top: "3%",
-    duration: 0.5,
-    ease: "power3.inOut",
-    cursor: "pointer"
-  });
+  // Plus wordt X — kill alle lopende tweens eerst!
+plusRotation.pause();
+gsap.set(plusButton, { rotation: 0 }); // 👈 snap naar 0
+gsap.to(plusButton, {
+  rotation: 45,
+  top: "3%",
+  duration: 0.5,
+  ease: "power3.inOut",
+  cursor: "pointer"
+});
 
   // Hero weg
   gsap.to([heroTitle, heroSubtitle], {
@@ -212,7 +213,6 @@ function closeOverview() {
     duration: 0.5,
     delay: 0.3,
     ease: "power3.inOut",
-    cursor: "default",
     onComplete: () => {
       plusRotation.resume();
     }
