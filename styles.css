@@ -260,14 +260,14 @@ body {
 .info {
   position: absolute;
   inset: 0;
-  padding: 30px 40px;
+  padding: 36px 40px;
 
   opacity: 0;
   pointer-events: none;
 
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 2vw, 20px);
+  gap: 6px;
 
 
   color: #FDFBFB;
@@ -283,34 +283,37 @@ body {
 
 .code-lang {
   display: flex;
-  gap: clamp(8px, 2vw, 12px);
+  gap: clamp(8px, 1vw, 12px);
   flex-wrap: wrap;
 }
 
 .code-lang span {
   background: rgba(255,255,255,0.12);
   color: #FDFBFB;
-  font-size:  clamp(0.5rem, 1.5vw, 0.8rem);
+  font-size:  clamp(0.7rem, 1vw, 0.8rem);
   padding: clamp(4px, 1vw, 6px) clamp(10px, 2vw, 14px);
   border-radius: 999px;
 }
 
+
+
 .context {
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 2vw, 20px);
+  gap: 6px;
   max-width: 650px;
 }
 
 .context h3 {
-  font-size: clamp(1rem, 2vw, 1.6rem);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 400;
+  margin-top: 20px;
 }
 
 .context p {
-  font-size: clamp(.8rem, 2vw, .9rem);
+  font-size: clamp(.8rem, 2vw, 1rem);
   line-height: 1.2;
   color: #DADADA;
   font-weight: 300;
@@ -328,6 +331,7 @@ body {
   transition: transform 0.2s ease, background 0.2s ease;
   width: fit-content;
   text-transform: uppercase;
+  margin-top: 15px;
 }
 
 .more-btn:hover {
@@ -900,6 +904,9 @@ ul.nested-list li {
   line-height: 1.5;
   color: #DADADA;
   font-weight: 300;
+}
+
+.overview-card a {
   margin-top: auto;
 }
 
@@ -999,3 +1006,32 @@ ul.nested-list li {
     display: block;
   }
 }
+
+@media (max-width: 600px) {
+
+  .code-lang {
+    gap: clamp(4px, 1vw, 12px);
+  }
+
+  .code-lang span {
+  font-size:  clamp(0.5rem, 1vw, 0.8rem);
+  }
+
+  .context h3 {
+    margin-top: 10px;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+  }
+
+  .more-btn {
+    font-size: 0.7rem;;
+  }
+
+  .info {
+    padding: 30px 40px;
+  }
+
+    .overview-card {
+    height: 60px; /* 👈 vaste starthoogte voor GSAP */
+    overflow: hidden;
+  }
+  }

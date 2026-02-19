@@ -850,20 +850,104 @@ introTl.to(".footer-socials", {
   ease: "power2.out"
 }, 1.1);
 
-// Mobile card tap om uit te klappen
+
+// Mobile card tap met GSAP animatie
+let isCardAnimating = false;
+let activeCard = null;
+
 document.querySelectorAll(".overview-card").forEach(card => {
   card.addEventListener("click", (e) => {
-    if (window.innerWidth > 600) return; // alleen mobile
-    
-    // Voorkom dat link opent als card nog niet expanded is
-    if (!card.classList.contains("expanded")) {
-      e.preventDefault();
-      // Sluit andere open cards
-      document.querySelectorAll(".overview-card.expanded").forEach(c => {
-        c.classList.remove("expanded");
+    if (window.innerWidth > 600) return;
+    if (isCardAnimating) return; // 👈 blokkeer tijdens animatie
+
+    const tags = card.querySelector(".overview-tags");
+    const desc = card.querySelector(".overview-desc");
+    const link = card.querySelector("a");
+    const isOpen = card.classList.contains("expanded");
+
+    // Sluit huidige open card eerst, dan open nieuwe
+    if (activeCard && activeCard !== card) {
+      isCardAnimating = true;
+      const prevTags = activeCard.querySelector(".overview-tags");
+      const prevDesc = activeCard.querySelector(".overview-desc");
+      const prevLink = activeCard.querySelector("a");
+
+      gsap.to([prevTags, prevDesc, prevLink], {
+        opacity: 0,
+        duration: 0.2,
+        ease: "power2.in",
+        onComplete: () => {
+          gsap.to(activeCard, {
+            height: 60,
+            duration: 0.4,
+            ease: "power3.inOut",
+            onComplete: () => {
+              activeCard.classList.remove("expanded");
+              gsap.set([prevTags, prevDesc, prevLink], { display: "none", opacity: 0 });
+              activeCard = null;
+              // Nu de nieuwe openen
+              openCard(card, tags, desc, link);
+            }
+          });
+        }
       });
-      card.classList.add("expanded");
+      return;
     }
-    // Als al expanded → link mag gewoon openen (via de knop)
+
+    if (isOpen) {
+      // Sluiten
+      isCardAnimating = true;
+      gsap.to([tags, desc, link], {
+        opacity: 0,
+        duration: 0.2,
+        ease: "power2.in",
+        onComplete: () => {
+          gsap.to(card, {
+            height: 60,
+            duration: 0.4,
+            ease: "power3.inOut",
+            onComplete: () => {
+              card.classList.remove("expanded");
+              gsap.set([tags, desc, link], { display: "none", opacity: 0 });
+              activeCard = null;
+              isCardAnimating = false;
+            }
+          });
+        }
+      });
+    } else {
+      openCard(card, tags, desc, link);
+    }
   });
 });
+
+function openCard(card, tags, desc, link) {
+  isCardAnimating = true;
+  activeCard = card;
+  card.classList.add("expanded");
+
+  // Zet elementen klaar (zichtbaar maar transparant)
+  gsap.set([tags, desc, link], { display: "flex", opacity: 0 });
+  gsap.set(desc, { display: "block" });
+
+  // Bereken de open hoogte
+  const openHeight = card.scrollHeight;
+
+  gsap.to(card, {
+    height: openHeight,
+    duration: 0.5,
+    ease: "power3.inOut",
+    onComplete: () => {
+      // Tekst fade in na open
+      gsap.to([tags, desc, link], {
+        opacity: 1,
+        duration: 0.3,
+        ease: "power2.out",
+        stagger: 0.08,
+        onComplete: () => {
+          isCardAnimating = false;
+        }
+      });
+    }
+  });
+}
