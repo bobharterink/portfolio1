@@ -73,7 +73,7 @@
 
 body {
   background: #FDFBFB;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   font-family: "AkzidenzExtended", sans-serif;
@@ -713,7 +713,7 @@ ul.nested-list li {
   }
   .footer-socials {
     right: 20px;
-    bottom: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom));
   }
   .plus-button {
     right: 15px;
@@ -853,7 +853,7 @@ ul.nested-list li {
   flex: 0 0 calc(50% - 10px);
   background: #161616;
   color: #FDFBFB;
-  border-radius: 20px;
+  border-radius: 30px;
   padding: 36px 40px;
   text-decoration: none;
   display: flex;
@@ -1034,20 +1034,25 @@ ul.nested-list li {
     flex: none;
     width: 100%;
     background: #161616;
-    border-radius: 20px;        /* ← was 999px, nu uitklapbaar */
+    border-radius: 30px;        /* ← was 999px, nu uitklapbaar */
     padding: 18px 24px;
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
     overflow: hidden;
+    
   }
 
   .overview-card-header {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
   }
+
+  .overview-card.expanded .overview-card-header {
+  justify-content: space-between;
+}
 
   .overview-title {
     font-size: 1rem;
@@ -1109,7 +1114,7 @@ ul.nested-list li {
   }
 
     .overview-card {
-    height: 60px; /* 👈 vaste starthoogte voor GSAP */
+    height: 50px; /* 👈 vaste starthoogte voor GSAP */
     overflow: hidden;
   }
 
@@ -1120,7 +1125,7 @@ ul.nested-list li {
 
     body {
     overflow: hidden;
-    height: 100vh;
+    height: 100dvh;
   }
   }
 

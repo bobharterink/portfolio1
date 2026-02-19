@@ -946,7 +946,7 @@ document.querySelectorAll(".overview-card").forEach(card => {
         ease: "power2.in",
         onComplete: () => {
           gsap.to(activeCard, {
-            height: 60,
+            height: 50,
             duration: 0.4,
             ease: "power3.inOut",
             onComplete: () => {
@@ -971,7 +971,7 @@ document.querySelectorAll(".overview-card").forEach(card => {
         ease: "power2.in",
         onComplete: () => {
           gsap.to(card, {
-            height: 60,
+            height: 50,
             duration: 0.4,
             ease: "power3.inOut",
             onComplete: () => {
