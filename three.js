@@ -25,6 +25,9 @@ renderer.setSize(container.clientWidth, container.clientHeight)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 container.appendChild(renderer.domElement)
 
+// 👈 Verberg canvas tot intro event
+renderer.domElement.style.opacity = '0'
+
 /* ------------------ LIGHTING ------------------ */
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.8))
@@ -41,7 +44,6 @@ let model
 loader.load('/logo.glb', (gltf) => {
   model = gltf.scene
 
-  // Force clean material (optioneel maar mooier voor minimal look)
   model.traverse((child) => {
     if (child.isMesh) {
       child.material = new THREE.MeshStandardMaterial({
@@ -75,16 +77,13 @@ function animate() {
   const elapsed = clock.getElapsedTime()
 
   if (model) {
-    // Asymmetrische rotatie (premium feel)
     model.rotation.x = elapsed * 0.4
     model.rotation.y = elapsed * 0.8
     model.rotation.z = elapsed * 0.2
 
-    // Subtiele floating
     model.position.y += Math.sin(elapsed * 1.2) * 0.0005
   }
 
-  // Mini camera drift voor diepte
   camera.position.x = Math.sin(elapsed * 0.3) * 0.1
   camera.lookAt(0, 0, 0)
 
@@ -92,6 +91,17 @@ function animate() {
 }
 
 animate()
+
+/* ------------------ INTRO EVENT ------------------ */
+
+// 👈 Luister naar het intro event van script.js
+window.addEventListener('intro-complete', () => {
+  gsap.to(renderer.domElement, {
+    opacity: 1,
+    duration: 0.6,
+    ease: "power2.out"
+  })
+})
 
 /* ------------------ RESPONSIVE ------------------ */
 
