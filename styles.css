@@ -295,7 +295,7 @@ body {
 }
 
 .project-title {
-  font-size: clamp(1.2rem, 4vw, 3rem);
+  font-size: clamp(1.4rem, 3vw, 2.5rem);
   font-weight: 400;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -329,11 +329,12 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 400;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .context p {
-  font-size: clamp(.8rem, 2vw, 1rem);
+  font-size: clamp(.95rem, 2vw, 1.2rem);
+  font-family: 'AkzidenzGrotesk';
   line-height: 1.2;
   color: #DADADA;
   font-weight: 300;
@@ -407,7 +408,8 @@ body {
 }
 
 .details-content p {
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-size: clamp(.95rem, 2vw, 1.15rem);
+  font-family: 'AkzidenzGrotesk';
   line-height: 1.2;
   color: #DADADA;
   font-weight: 300;
@@ -423,7 +425,8 @@ body {
 }
 
 .details-content ul li {
-  font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+  font-size: clamp(.95rem, 2vw, 1.15rem);
+  font-family: 'AkzidenzGrotesk';
   line-height: 1.2;
   color: #DADADA;
   position: relative;
@@ -486,7 +489,8 @@ ul.nested-list li {
 }
 
 .details-extra p {
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-size: clamp(.95rem, 2vw, 1.15rem);
+  font-family: 'AkzidenzGrotesk';
   line-height: 1.2;
   color: #DADADA;
   margin-bottom: 10px;
@@ -500,7 +504,8 @@ ul.nested-list li {
 }
 
 .details-extra ul li {
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-size: clamp(.95rem, 2vw, 1.15rem);
+  font-family: 'AkzidenzGrotesk';
   line-height: 1.2;
   color: #DADADA;
   position: relative;
@@ -863,6 +868,7 @@ ul.nested-list li {
   transition: transform 0.25s ease, background 0.25s ease;
   position: relative;
   overflow: hidden;
+  cursor: default;
 }
 
 .overview-card:hover {
@@ -920,7 +926,8 @@ ul.nested-list li {
 }
 
 .overview-desc {
-  font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+  font-size: clamp(.95rem, 2vw, 1.2rem);
+  font-family: 'AkzidenzGrotesk';
   line-height: 1.5;
   color: #DADADA;
   font-weight: 300;
@@ -1093,7 +1100,7 @@ ul.nested-list li {
 @media (max-width: 600px) {
 
   .code-lang {
-    gap: clamp(4px, 1vw, 12px);
+    gap: clamp(4px, .5vw, 12px);
   }
 
   .code-lang span {
