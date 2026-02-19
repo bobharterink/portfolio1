@@ -113,7 +113,7 @@ const translations = {
     "studio.context.h3": "Context",
     "studio.context.p": "Studio Harterink originated from a series of modular vases that I designed and made myself. The vases fit through a letterbox and are assembled by the user, so it feels as though you truly made the object yourself. I wanted to translate that same experience into a digital environment.\n\nThe goal of the website was not only to showcase products, but to replicate the physical assembly process as an interactive web experience.",
     "studio.concept.h3": "Concept & interaction",
-    "studio.concept.p": "As you scroll, the vase is digitally assembled within a 3D environment. Each part appears through scrolling, giving the user the feeling of putting the object together themselves. Scrolling becomes an essential part of the experience, not just a navigation action. When you click another version, the scroll event continues with the new vase — you scroll through the entire process.\nI also made the vase from a different material, used as a lamp, for which I created a separate page to evoke a sense of luxury material. Many of the same techniques are used there.",
+    "studio.concept.p": "As you scroll, the vase is digitally assembled within a 3D environment. Each part appears through scrolling, giving the user the feeling of putting the object together themselves. Scrolling becomes an essential part of the experience, not just a navigation action. When you click another version, the scroll event continues with the new vase, you scroll through the entire process.\nI also made the vase from a different material, used as a lamp, for which I created a separate page to evoke a sense of luxury material. Many of the same techniques are used there.",
     "studio.tech.h3": "Technical implementation",
     "studio.tech.li1": "Setting up a custom scroll-driven interaction",
     "studio.tech.li2": "Integration of 3D objects with Three.js",
@@ -232,3 +232,9 @@ function setLanguage(lang) {
 
 const savedLang = localStorage.getItem("lang") || "nl";
 setLanguage(savedLang);
+
+// 👈 Exporteer beide
+export { translations };
+export function getCurrentLang() {
+  return localStorage.getItem("lang") || "nl";
+}

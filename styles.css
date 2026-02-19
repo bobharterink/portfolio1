@@ -77,25 +77,34 @@ body {
   display: flex;
   flex-direction: column;
   font-family: "AkzidenzExtended", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 600px) {
+  body, .stage {
+    height: 100dvh; /* 👈 dynamic viewport height, werkt in beide */
+    min-height: 100dvh;
+  }
 }
 
 .logo-3d {
   position: fixed;
-  top: 10px;
+  top: 0px;
   left: 20px;
   width: 100px;
   height: 100px;
-  z-index: 2000;
+  z-index: 6000;
   pointer-events: none;
 }
 
 @media (max-width: 600px) {
 .logo-3d {
-  top: 0px;
+  top: 6px;
   left: 0px;
   width: 80px;
   height: 80px;
-  z-index: 2000;
+  z-index: 6000;
   pointer-events: none;
 }
 }
@@ -160,6 +169,12 @@ body {
   position: relative;
 }
 
+/* @media (max-width: 600px) {
+  .stage {
+    margin-top: -80px; /* 👈 schuift alles omhoog, pas waarde aan */
+  
+
+
 .bar-inner {
   flex: 1;
   height: 50px;
@@ -193,6 +208,11 @@ body {
   justify-content: center;
   cursor: pointer;
   z-index: 9999;
+}
+
+.plus-button {
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* 👈 dit is de boosdoener op mobile */
 }
 
 .plus-icon {
@@ -916,6 +936,8 @@ ul.nested-list li {
   top: 3.5%;
   right: 40px;
   z-index: 9999;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* 👈 dit is de boosdoener op mobile */
 }
 
 .lang-btn {
@@ -1093,6 +1115,12 @@ ul.nested-list li {
 
   .lang-switcher {
     right: 15px;
+    top: 3.7%;
+  }
+
+    body {
+    overflow: hidden;
+    height: 100vh;
   }
   }
 

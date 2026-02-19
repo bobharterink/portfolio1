@@ -1,4 +1,5 @@
 import { gsap } from 'gsap'
+import { translations, getCurrentLang } from './translate.js'
 let isDetailsOpen = false;
 const heroTitle = document.querySelector(".title");
 const heroSubtitle = document.querySelector(".subtitle");
@@ -224,6 +225,12 @@ function closeOverview() {
     }
   });
 
+    // ✅ Als er een actieve pill is (stage 2) → reset naar stage 1
+  if (activePill) {
+    resetPills();
+    activePill = null;
+  }
+
   // Plus terug
   gsap.to(plusButton, {
     rotation: 0,
@@ -398,10 +405,10 @@ function openDetails(pill) {
   const details = pill.querySelector(".details");
   const info = pill.querySelector(".info");
   
-  if (!details || isDetailsOpen || isAnimating) return; // 👈 Toegevoegd
+  if (!details || isDetailsOpen || isAnimating) return;
 
   isDetailsOpen = true;
-  isAnimating = true; // 👈 Toegevoegd
+  isAnimating = true;
 
   // 🎯 Bereken hoeveel we moeten shiften om te centreren
   const pillRect = pill.getBoundingClientRect();
@@ -413,8 +420,7 @@ function openDetails(pill) {
   
   detailsShift = viewportCenter - targetPillCenter;
 
-  // In openDetails, na de bestaande code:
-pill.classList.add("activedt"); // 👈 stage 3 class
+  pill.classList.add("activedt");
 
   // hero weg
   gsap.to([heroTitle, heroSubtitle], {
@@ -425,10 +431,8 @@ pill.classList.add("activedt"); // 👈 stage 3 class
     pointerEvents: "none"
   });
 
-  // 🛑 stop draaien
   plusRotation.pause();
 
-  // plus naar boven + kruis
   gsap.to(plusButton, {
     rotation: 45,
     top: "3%",
@@ -437,22 +441,18 @@ pill.classList.add("activedt"); // 👈 stage 3 class
     cursor: "pointer"
   });
 
-  // Lang-btn naar links
-gsap.to(".lang-switcher", {
-  right: window.innerWidth <= 600 ? 70 : 100, // 👈 minder ver op mobile
-  duration: 0.5,
-  ease: "power3.inOut"
-});
+  gsap.to(".lang-switcher", {
+    right: window.innerWidth <= 600 ? 70 : 100,
+    duration: 0.5,
+    ease: "power3.inOut"
+  });
 
-
-  // Timeline voor pill expand + centreren
   const tl = gsap.timeline({
     onComplete: () => {
-      isAnimating = false; // 👈 Toegevoegd
+      isAnimating = false;
     }
   });
 
-  // 1️⃣ Info van stage 2 eerst weg
   if (info) {
     tl.to(info, {
       opacity: 0,
@@ -462,7 +462,6 @@ gsap.to(".lang-switcher", {
     }, 0);
   }
 
-  // 2️⃣ Pill groeit (start op 0.3s, na info fade)
   tl.to(pill, {
     flex: `0 0 ${targetWidth}px`,
     height: window.innerHeight * 0.8,
@@ -470,7 +469,6 @@ gsap.to(".lang-switcher", {
     ease: "power3.inOut"
   }, 0.3);
 
-  // 3️⃣ Bar shift om te centreren (tegelijkertijd met pill grow)
   tl.to(bar, {
     x: `+=${detailsShift}`,
     duration: 0.7,
@@ -480,23 +478,30 @@ gsap.to(".lang-switcher", {
     }
   }, 0.3);
 
-  // 4️⃣ Details zichtbaar maken NA de expand (op 1.0s = 0.3 + 0.7)
   tl.set(details, {
     display: "block"
   }, 1.0);
 
-  // 5️⃣ Details fade in
   tl.from(details, {
     opacity: 0,
     duration: 0.4,
     ease: "power2.out"
   }, 1.0);
 
-    // 6️⃣ Start video na fade in (op 1.4s)
+  // ✅ Play button altijd tonen op mobile, autoplay op desktop
   tl.call(() => {
     const video = details.querySelector('video');
-    if (video) {
-      video.currentTime = 0; // Start vanaf begin
+    const playBtn = details.querySelector('.video-play-btn');
+
+    if (!video) return;
+
+    video.currentTime = 0;
+
+    if (window.innerWidth <= 1025) {
+      // 📱 Mobile/tablet → play button tonen, gebruiker speelt zelf af
+      if (playBtn) playBtn.style.display = 'block';
+    } else {
+      // 💻 Desktop → autoplay
       video.play();
     }
   }, null, 1.4);
@@ -578,7 +583,7 @@ function closeDetails() {
     top: "55%",
     duration: 0.5,
     ease: "power3.inOut",
-    cursor: "default",
+    cursor: "pointer",
     onComplete: () => {
       plusRotation.resume();
     }
@@ -592,16 +597,16 @@ tl.to(".lang-switcher", {
 });
 
     // 6️⃣ Reset video button (op 1.0s, dus 1 sec vertraagd)
-  tl.call(() => {
-    const video = details?.querySelector('video');
-    const playBtn = details?.querySelector('.video-play-btn');
-    if (video && playBtn) {
-      video.pause();
-      video.currentTime = 0;
-      playBtn.style.display = 'none';
-      playBtn.textContent = '▶ Afspelen';
-    }
-  }, null, 1.0);
+tl.call(() => {
+  const video = details?.querySelector('video');
+  const playBtn = details?.querySelector('.video-play-btn');
+  if (video && playBtn) {
+    video.pause();
+    video.currentTime = 0;
+    playBtn.style.display = 'none';
+    playBtn.textContent = translations[getCurrentLang()]['btn.afspelen']; // 👈
+  }
+}, null, 1.0);
 }
 
 
@@ -827,10 +832,11 @@ document.querySelectorAll('.details-image').forEach(container => {
     playBtn.style.display = 'none';
     
     // Toon button wanneer video klaar is
-    video.addEventListener('ended', () => {
-        playBtn.style.display = 'block';
-        playBtn.textContent = '↻ Opnieuw afspelen';
-    });
+video.addEventListener('ended', () => {
+  const t = translations[getCurrentLang()];
+  playBtn.style.display = 'block';
+  playBtn.textContent = t['btn.opnieuw']; // 👈 ipv hardcoded tekst
+});
     
     // Play functionaliteit
     playBtn.addEventListener('click', () => {
