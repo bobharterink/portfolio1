@@ -101,11 +101,22 @@ plusButton.addEventListener("mouseenter", () => {
       duration: 0.4,
       ease: "power2.out"
     });
+    gsap.to(plusButton, {
+      scale: 1.1,
+      duration: 0.4,
+      ease: "back.out(3)"
+    });
   }
 });
 
 plusButton.addEventListener("mouseleave", () => {
-  if (!isDetailsOpen && !isOverviewOpen) {  // 👈 !isOverviewOpen toevoegen
+  gsap.to(plusButton, {
+    scale: 1, // 👈 altijd resetten
+    duration: 0.4,
+    ease: "back.out(3)"
+  });
+
+  if (!isDetailsOpen && !isOverviewOpen) {
     gsap.to(plusButton, {
       rotation: -360,
       duration: 0.4,
@@ -144,6 +155,13 @@ gsap.to(plusButton, {
   cursor: "pointer"
 });
 
+// Lang-btn naar links
+gsap.to(".lang-switcher", {
+  right: window.innerWidth <= 600 ? 70 : 100, // 👈 minder ver op mobile
+  duration: 0.5,
+  ease: "power3.inOut"
+});
+
   // Hero weg
   gsap.to([heroTitle, heroSubtitle], {
     opacity: 0,
@@ -169,7 +187,7 @@ gsap.to(plusButton, {
       opacity: 1,
       y: 0,
       duration: 0.5,
-      ease: "power3.out",
+      ease: "none",
       stagger: 0.07,
       delay: 0.2
     }
@@ -218,6 +236,14 @@ function closeOverview() {
     }
   });
 
+  // Lang-btn terug
+gsap.to(".lang-switcher", {
+  right: window.innerWidth <= 600 ? 15 : 40, // 👈 minder ver op mobile
+  duration: 0.5,
+  delay: 0.3, // 👈 wacht tot plus button beneden is
+  ease: "power3.inOut"
+});
+
   // Hero terug
   gsap.to([heroTitle, heroSubtitle], {
     opacity: 1,
@@ -237,6 +263,9 @@ function closeOverview() {
 // MET DIT:
 
 plusButton.addEventListener("click", () => {
+    gsap.killTweensOf(plusButton, "scale"); // 👈 stop eventuele lopende scale animatie
+  gsap.set(plusButton, { scale: 1 });     // 👈 hard reset
+
   if (isDetailsOpen) {
     closeDetails();
   } else if (isOverviewOpen) {
@@ -384,6 +413,9 @@ function openDetails(pill) {
   
   detailsShift = viewportCenter - targetPillCenter;
 
+  // In openDetails, na de bestaande code:
+pill.classList.add("activedt"); // 👈 stage 3 class
+
   // hero weg
   gsap.to([heroTitle, heroSubtitle], {
     opacity: 0,
@@ -404,6 +436,14 @@ function openDetails(pill) {
     ease: "power3.inOut",
     cursor: "pointer"
   });
+
+  // Lang-btn naar links
+gsap.to(".lang-switcher", {
+  right: window.innerWidth <= 600 ? 70 : 100, // 👈 minder ver op mobile
+  duration: 0.5,
+  ease: "power3.inOut"
+});
+
 
   // Timeline voor pill expand + centreren
   const tl = gsap.timeline({
@@ -481,6 +521,8 @@ function closeDetails() {
       // 🔑 DIRECT NAAR STATE 1
       resetPills();
       activePill = null;
+      pill.classList.remove("activedt"); // 👈
+
       
       // ✅ Marquee hervatten na reset
       marqueeTween.resume();
@@ -541,6 +583,13 @@ function closeDetails() {
       plusRotation.resume();
     }
   }, 1.0);
+
+  // Lang-btn terug
+tl.to(".lang-switcher", {
+  right: window.innerWidth <= 600 ? 15 : 40, // 👈 minder ver op mobile
+  duration: 0.5,
+  ease: "power3.inOut"
+});
 
     // 6️⃣ Reset video button (op 1.0s, dus 1 sec vertraagd)
   tl.call(() => {
@@ -817,8 +866,8 @@ introTl.to(pills, {
   opacity: 1,
   scale: 1,
   duration: 0.8,
-  ease: "back.out(1.2)",
-  stagger: 0.08 // Elke pill 0.08s later
+  ease: "power4.out",
+  stagger: 0.080 // Elke pill 0.08s later
 }, 0);
 
 // 2️⃣ Hero tekst fade in (na pills)
@@ -926,19 +975,22 @@ function openCard(card, tags, desc, link) {
   activeCard = card;
   card.classList.add("expanded");
 
-  // Zet elementen klaar (zichtbaar maar transparant)
+  // Zet elementen klaar
   gsap.set([tags, desc, link], { display: "flex", opacity: 0 });
   gsap.set(desc, { display: "block" });
 
-  // Bereken de open hoogte
-  const openHeight = card.scrollHeight;
+  // 👈 Meet hoogte door tijdelijk auto te zetten
+  gsap.set(card, { height: "auto" });
+  const openHeight = card.offsetHeight; // offsetHeight ipv scrollHeight
+  gsap.set(card, { height: 60 }); // terug naar dicht
 
+  // Nu animeren naar de gemeten hoogte
   gsap.to(card, {
     height: openHeight,
     duration: 0.5,
     ease: "power3.inOut",
     onComplete: () => {
-      // Tekst fade in na open
+      gsap.set(card, { height: "auto" }); // 👈 na animatie auto zodat content altijd past
       gsap.to([tags, desc, link], {
         opacity: 1,
         duration: 0.3,

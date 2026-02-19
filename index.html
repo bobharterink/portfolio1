@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl-be">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +10,17 @@
 <body>
 <div class="logo-3d"></div>
 
+<div class="lang-switcher">
+  <button class="lang-btn" id="langToggle">NL ▾</button>
+  <div class="lang-dropdown" id="langDropdown">
+    <button data-lang="nl">Nederlands</button>
+    <button data-lang="en">English</button>
+  </div>
+</div>
+
   <header class="hero">
-    <h1 class="title">👋 Ik ben <br class="mobile-break">Bob Harterink</h1>
-    <h2 class="subtitle">Front-End Developer with <br class="mobile-break">full-stack experience</h2>
+    <h1 class="title" data-i18n="hero.title">👋 Ik ben <br class="mobile-break">Bob Harterink</h1>
+    <h2 class="subtitle" data-i18n="hero.subtitle">Front-End Developer with <br class="mobile-break">full-stack experience</h2>
   </header>
 
   <main class="stage">
@@ -567,5 +575,6 @@ Het uitgangspunt was om een visueel rijke website te bouwen die niet hard-gecode
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="module" src="/script.js"></script>
     <script type="module" src="three.js"></script>
+    <script type="module" src="translate.js"></script>
 </body>
 </html>

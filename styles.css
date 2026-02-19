@@ -180,7 +180,7 @@ body {
 }
 
 .plus-button {
-  position: absolute;
+  position: fixed;
   top: 55%; 
   right: 40px;
   width: 40px;
@@ -808,7 +808,7 @@ ul.nested-list li {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 100px 50px 50px;
+  padding: 100px 40px 50px;
   width: 100%;
   height: 100%;
   overflow-y: auto;
@@ -908,6 +908,62 @@ ul.nested-list li {
 
 .overview-card a {
   margin-top: auto;
+}
+
+
+.lang-switcher {
+  position: fixed;
+  top: 3.5%;
+  right: 40px;
+  z-index: 9999;
+}
+
+.lang-btn {
+  background: #161616;
+  color: #FDFBFB;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: "AkzidenzExtended", sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.lang-dropdown {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #161616;
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 140px;
+}
+
+.lang-dropdown.open {
+  display: block;
+}
+
+.lang-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  color: #FDFBFB;
+  font-family: "AkzidenzExtended", sans-serif;
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lang-dropdown button:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.activedt {
+  cursor: default!important;
 }
 
 /* ============================================
@@ -1034,4 +1090,10 @@ ul.nested-list li {
     height: 60px; /* 👈 vaste starthoogte voor GSAP */
     overflow: hidden;
   }
+
+  .lang-switcher {
+    right: 15px;
   }
+  }
+
+  
