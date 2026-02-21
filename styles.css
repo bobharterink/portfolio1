@@ -62,7 +62,7 @@
     font-style: normal;
 }
 
-/* Reset alles */
+/* Reset */
 *,
 *::before,
 *::after {
@@ -83,7 +83,7 @@ body {
 
 @media (max-width: 600px) {
   body, .stage {
-    height: 100dvh; /* 👈 dynamic viewport height, werkt in beide */
+    height: 100dvh;
     min-height: 100dvh;
   }
 }
@@ -99,16 +99,13 @@ body {
 }
 
 @media (max-width: 600px) {
-.logo-3d {
-  top: 6px;
-  left: 0px;
-  width: 80px;
-  height: 80px;
-  z-index: 6000;
-  pointer-events: none;
+  .logo-3d {
+    top: 6px;
+    left: 0px;
+    width: 80px;
+    height: 80px;
+  }
 }
-}
-
 
 .hero {
   padding: 120px 20px 40px;
@@ -142,25 +139,6 @@ body {
   text-transform: uppercase;
 }
 
-.socials {
-  margin-top: 30px;
-  display: flex;
-  gap: 20px;
-}
-
-.socials a {
-  font-family: "AkzidenzExtended", sans-serif;
-  text-transform: uppercase;
-  font-size: clamp(0.75rem, 1.5vw, 0.9rem);
-  color: #161616;
-  opacity: 0.6;
-  text-decoration: none;
-}
-
-.socials a:hover {
-  opacity: 1;
-}
-
 .stage {
   flex: 1;
   display: flex;
@@ -169,22 +147,14 @@ body {
   position: relative;
 }
 
-/* @media (max-width: 600px) {
-  .stage {
-    margin-top: -80px; /* 👈 schuift alles omhoog, pas waarde aan */
-  
-
-
 .bar-inner {
   flex: 1;
   height: 50px;
   border-radius: 30px;
   background: #161616;
-
   display: flex;
   align-items: center;
   justify-content: center;
-  
   position: relative;
   cursor: zoom-in;
   overflow: hidden;
@@ -196,23 +166,19 @@ body {
 
 .plus-button {
   position: absolute;
-  top: 55%; 
+  top: 55%;
   right: 40px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background: #161616;
-
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 9999;
-}
-
-.plus-button {
   outline: none;
-  -webkit-tap-highlight-color: transparent; /* 👈 dit is de boosdoener op mobile */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .plus-icon {
@@ -221,7 +187,6 @@ body {
   stroke: #FDFBFB;
   stroke-width: 2;
 }
-
 
 .marquee {
   width: 100%;
@@ -238,15 +203,12 @@ body {
 .bar-inner {
   flex: 0 0 calc(25vw - 25px);
   height: clamp(50px, 6vw, 60px);
-
   border-radius: 999px;
   background: #161616;
   color: #FDFBFB;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .footer-socials {
@@ -281,15 +243,11 @@ body {
   position: absolute;
   inset: 0;
   padding: 36px 40px;
-
   opacity: 0;
   pointer-events: none;
-
   display: flex;
   flex-direction: column;
   gap: 6px;
-
-
   color: #FDFBFB;
   overflow-y: auto;
 }
@@ -310,12 +268,10 @@ body {
 .code-lang span {
   background: rgba(255,255,255,0.12);
   color: #FDFBFB;
-  font-size:  clamp(0.7rem, 1vw, 0.8rem);
+  font-size: clamp(0.7rem, 1vw, 0.8rem);
   padding: clamp(4px, 1vw, 6px) clamp(10px, 2vw, 14px);
   border-radius: 999px;
 }
-
-
 
 .context {
   display: flex;
@@ -333,7 +289,7 @@ body {
 }
 
 .context p {
-  font-size: clamp(.95rem, 2vw, 1.2rem);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
   font-family: 'AkzidenzGrotesk';
   line-height: 1.2;
   color: #DADADA;
@@ -349,14 +305,17 @@ body {
   font-weight: 600;
   font-size: 0.8rem;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: background 0.4s ease, color 0.4s ease, transform 0.3s ease;
   width: fit-content;
   text-transform: uppercase;
   margin-top: 15px;
 }
 
 .more-btn:hover {
-  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+  color: #FDFBFB;
+  transform: scale(1.1);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ============================================
@@ -373,7 +332,6 @@ body {
   overflow-y: auto;
 }
 
-/* Title en tags in details */
 .details .project-title {
   margin-bottom: 10px;
 }
@@ -382,17 +340,12 @@ body {
   margin-bottom: 30px;
 }
 
-.details-wrapper {
-  /* Geen extra padding nodig */
-}
-
 .details-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 150px; /* 👈 Alleen horizontale gap */
+  column-gap: 150px;
 }
 
-/* Linker kolom */
 .details-content {
   display: flex;
   flex-direction: column;
@@ -437,18 +390,18 @@ body {
 ul.nested-list {
   padding-left: 20px;
 }
+
 ul.nested-list li {
-  font-size: clamp(0.7rem, .8vw, 0.8rem);
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
 }
 
 .details-content ul li::before {
-  content: "→";
+  content: "•";
   position: absolute;
   left: 0;
   color: #FDFBFB;
 }
 
-/* Rechter kolom */
 .details-right {
   display: flex;
   flex-direction: column;
@@ -461,16 +414,15 @@ ul.nested-list li {
   justify-content: center;
   background: #FDFBFB;
   border-radius: 12px;
-  height: 315px; /* 900px * 0.35 = 315px */
-  /* width: 600px; */
+  height: 315px;
   overflow: hidden;
-  position: relative; /* Voor iframe */
+  position: relative;
 }
 
 @media (min-width: 1526px) {
-.details-image {
-  width: 600px;
-}
+  .details-image {
+    width: 600px;
+  }
 }
 
 .details-image video {
@@ -493,7 +445,7 @@ ul.nested-list li {
   font-family: 'AkzidenzGrotesk';
   line-height: 1.2;
   color: #DADADA;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-weight: 300;
 }
 
@@ -514,17 +466,16 @@ ul.nested-list li {
 }
 
 .details-extra ul li::before {
-  content: "→";
+  content: "•";
   position: absolute;
   left: 0;
   color: #FDFBFB;
 }
 
-/* Buttons in linker kolom */
 .details-buttons {
   display: flex;
   gap: 15px;
-  margin-top: auto; /* Push naar beneden in flex container */
+  margin-top: auto;
 }
 
 .site-btn {
@@ -536,69 +487,67 @@ ul.nested-list li {
   font-weight: 600;
   font-size: 0.8rem;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: background 0.4s ease, color 0.4s ease, transform 0.3s ease;
   text-transform: uppercase;
 }
 
 .site-btn:hover {
-  transform: translateY(-2px);
-}
-
-
-  .overview-visit-btn {
-    background: #FDFBFB;
-    color: #161616;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    cursor: pointer;  
-    transition: transform 0.2s ease;
-  }
-
-  .overview-visit-site {
-    text-decoration: none;
-  }
-
-  .overview-visit-btn:hover {
-  transform: translateY(-2px);
-}
-
-.back-btn {
-  background: transparent;
+  background: rgba(255,255,255,0.12);
   color: #FDFBFB;
-  border: 2px solid #FDFBFB;
+  transform: scale(1.1);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.overview-visit-btn {
+  background: #FDFBFB;
+  color: #161616;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.4s ease, color 0.4s ease, transform 0.3s ease;
+}
+
+.overview-visit-site {
+  text-decoration: none;
+}
+
+.overview-visit-btn:hover {
+  background: rgba(255,255,255,0.12);
+  color: #FDFBFB;
+  transform: scale(1.1);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .video-controls {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
 .video-play-btn {
-    background: rgba(22, 22, 22, 0.9);
-    color: #FDFBFB;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.2s ease;
-    text-transform: uppercase;
-    backdrop-filter: blur(10px);
+  background: rgba(22, 22, 22, 0.9);
+  color: #FDFBFB;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
 }
 
 .video-play-btn:hover {
-    transform: translateY(-2px);
-    background: rgba(22, 22, 22, 1);
+  transform: scale(1.05);
+  background: rgba(22, 22, 22, 1);
 }
-
 
 /* ============================================
    RESPONSIVE
@@ -610,30 +559,34 @@ ul.nested-list li {
   }
 }
 
-
-/* iPad / Tablet (landscape & portrait) */
+/* Tablet */
 @media (max-width: 1025px) and (min-width: 601px) {
   .hero {
     padding: 180px 20px 40px;
   }
-  
+
   .bar-inner {
     flex: 0 0 calc(40vw - 25px);
   }
-  
-  /* DETAILS SECTION SPECIFIEK VOOR TABLET */
+
   .bar-inner .details {
     padding: 30px 20px !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  
+
+  .bar-inner .details::-webkit-scrollbar {
+    display: none;
+  }
+
   .bar-inner .details .project-title {
     font-size: clamp(1.8rem, 5vw, 2.5rem) !important;
   }
-  
+
   .bar-inner .details-content h3 {
     font-size: 1.3rem !important;
   }
-  
+
   .bar-inner .details-content p,
   .bar-inner .details-content ul li,
   .bar-inner .details-extra p,
@@ -641,171 +594,166 @@ ul.nested-list li {
     font-size: 0.9rem !important;
     line-height: 1.4;
   }
-  
-  /* 👇 Grid met 1 kolom */
+
   .bar-inner .details-grid {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  
-  /* 👇 Details-right moet contents worden */
+
   .bar-inner .details-right {
     display: contents;
   }
-  
-  /* 👇 VOLGORDE VOOR TABLET */
+
   .bar-inner .details-image {
-    order: 1; /* Video bovenaan */
-  }
-  
-  .bar-inner .details-content {
-    order: 2; /* Alle tekst in het midden */
-  }
-  
-  .bar-inner .details-extra {
-    order: 3; /* Waarom dit project */
-  }
-  
-  .bar-inner .details-buttons {
-    order: 4; /* Buttons helemaal onderaan */
-  }
-  
-  .bar-inner .details-image {
+    order: 1;
     min-height: 300px;
     width: 100% !important;
     height: 400px;
   }
 
-    .bar-inner .details {
-    /* Firefox */
-    scrollbar-width: none;
-    
-    /* Internet Explorer en Edge */
-    -ms-overflow-style: none;
+  .bar-inner .details-content {
+    order: 2;
   }
-  
-  /* Chrome, Safari en Opera */
-  .bar-inner .details::-webkit-scrollbar {
-    display: none;
+
+  .bar-inner .details-extra {
+    order: 3;
+  }
+
+  .bar-inner .details-buttons {
+    order: 4;
   }
 }
 
-/* iPhone 14 Pro en vergelijkbare grote phones */
+/* Large phones */
 @media (max-width: 600px) and (min-height: 800px) {
   .hero {
-    padding: 140px 20px 40px; /* 👈 Meer ruimte voor grote phones */
+    padding: 140px 20px 40px;
   }
 }
 
-/* Kleinere phones (iPhone SE, XR standaard) */
+/* Small phones */
 @media (max-width: 600px) and (max-height: 799px) {
   .hero {
-    padding: 100px 20px 40px; /* 👈 Standaard voor kleinere phones */
+    padding: 100px 20px 40px;
   }
 }
-
 
 @media (max-width: 600px) {
   .mobile-break {
     display: block;
   }
-  
+
   .bar-inner {
     flex: 0 0 calc(60vw - 25px);
   }
-  .bar {
-    animation-duration: 16s;
-  }
+
   .footer-socials {
     right: 20px;
     bottom: calc(20px + env(safe-area-inset-bottom));
   }
+
   .plus-button {
     right: 15px;
   }
-  
-  /* DETAILS SECTION MOBILE */
+
   .bar-inner .details {
     padding: 20px 15px !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  
+
+  .bar-inner .details::-webkit-scrollbar {
+    display: none;
+  }
+
   .bar-inner .details .project-title {
     font-size: 1.5rem !important;
     margin-bottom: 8px;
   }
-  
-  /* 👇 Grid met 1 kolom */
+
   .bar-inner .details-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  
-  /* 👇 Details-right moet ook contents worden! */
+
   .bar-inner .details-right {
     display: contents;
   }
-  
-  /* 👇 PERFECTE VOLGORDE! */
+
   .bar-inner .details-image {
-    order: 1; /* Video bovenaan */
-  }
-  
-  .bar-inner .details-content {
-    order: 2; /* Alle tekst in het midden */
-  }
-  
-  .bar-inner .details-extra {
-    order: 3; /* Waarom dit project */
-  }
-  
-  .bar-inner .details-buttons {
-    order: 4; /* Buttons helemaal onderaan */
-    flex-direction: column;
-  }
-  
-  .bar-inner .details-content h3 {
-    font-size: 1.1rem !important;
-  }
-  
-  .bar-inner .details-content p,
-  .bar-inner .details-content ul li,
-  .bar-inner .details-extra p,
-  .bar-inner .details-extra ul li {
-    font-size: 0.85rem !important;
-    line-height: 1.4;
-  }
-  
-  .bar-inner .details-image {
+    order: 1;
     min-height: 200px;
     width: 100% !important;
     height: 200px;
   }
-  
-  .bar-inner .site-btn,
-  .bar-inner .back-btn {
-    width: 100%;
+
+  .bar-inner .details-content {
+    order: 2;
   }
-  
+
+  .bar-inner .details-extra {
+    order: 3;
+  }
+
+  .bar-inner .details-buttons {
+    order: 4;
+    flex-direction: column;
+  }
+
+  .bar-inner .details-content h3 {
+    font-size: 1.1rem !important;
+  }
+
+  .bar-inner .details-content p,
+  .bar-inner .details-content ul li,
+  .bar-inner .details-extra p,
+  .bar-inner .details-extra ul li {
+    font-size: 1.1rem !important;
+    line-height: 1.2;
+  }
+
   .bar-inner .video-play-btn {
     padding: 10px 20px;
     font-size: 0.8rem;
   }
 
-    .bar-inner .details {
-    /* Firefox */
-    scrollbar-width: none;
-    
-    /* Internet Explorer en Edge */
-    -ms-overflow-style: none;
+  .code-lang {
+    gap: clamp(4px, .5vw, 12px);
   }
-  
-  /* Chrome, Safari en Opera */
-  .bar-inner .details::-webkit-scrollbar {
-    display: none;
+
+  .code-lang span {
+    font-size: clamp(0.8rem, 1vw, 0.8rem);
+  }
+
+  .context h3 {
+    margin-top: 10px;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+  }
+
+  .more-btn {
+    font-size: 0.7rem;
+  }
+
+  .info {
+    padding: 30px 40px;
+  }
+
+  .overview-card {
+    height: 50px;
+    overflow: hidden;
+  }
+
+  .lang-switcher {
+    right: 15px;
+    top: 3.7%;
+  }
+
+  body {
+    overflow: hidden;
+    height: 100dvh;
   }
 }
-
 
 /* ============================================
    OVERVIEW PANEL
@@ -837,7 +785,6 @@ ul.nested-list li {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  /* Hide scrollbar */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -846,37 +793,29 @@ ul.nested-list li {
   display: none;
 }
 
-/* Each row scrolls horizontally on desktop */
 .overview-row {
   display: flex;
   gap: 20px;
   width: 100%;
 }
 
-/* ---- CARD ---- */
 .overview-card {
   flex: 0 0 calc(50% - 10px);
   background: #161616;
   color: #FDFBFB;
   border-radius: 30px;
   padding: 36px 40px;
-  text-decoration: none;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  cursor: pointer;
-  transition: transform 0.25s ease, background 0.25s ease;
   position: relative;
   overflow: hidden;
   cursor: default;
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
 .overview-card:hover {
   transform: translateY(-4px);
-}
-
-.overview-card:hover::after {
-  opacity: 1;
 }
 
 .overview-card-header {
@@ -893,19 +832,6 @@ ul.nested-list li {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   line-height: 1;
-}
-
-.overview-arrow {
-  font-size: clamp(1.2rem, 2vw, 1.8rem);
-  opacity: 0.5;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.overview-card:hover .overview-arrow {
-  opacity: 1;
-  transform: translate(3px, -3px);
 }
 
 .overview-tags {
@@ -937,14 +863,13 @@ ul.nested-list li {
   margin-top: auto;
 }
 
-
 .lang-switcher {
   position: fixed;
   top: 3.5%;
   right: 40px;
   z-index: 9999;
   outline: none;
-  -webkit-tap-highlight-color: transparent; /* 👈 dit is de boosdoener op mobile */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .lang-btn {
@@ -992,14 +917,13 @@ ul.nested-list li {
 }
 
 .activedt {
-  cursor: default!important;
+  cursor: default !important;
 }
 
 /* ============================================
    RESPONSIVE OVERVIEW
    ============================================ */
 
-/* Tablet: 1 kolom, verticaal scrollen */
 @media (max-width: 1025px) and (min-width: 601px) {
   .overview-inner {
     padding: 100px 24px 40px;
@@ -1022,7 +946,6 @@ ul.nested-list li {
   }
 }
 
-/* Mobile: alleen pills stijl */
 @media (max-width: 600px) {
   .overview-inner {
     padding: 90px 16px 40px;
@@ -1041,13 +964,12 @@ ul.nested-list li {
     flex: none;
     width: 100%;
     background: #161616;
-    border-radius: 30px;        /* ← was 999px, nu uitklapbaar */
+    border-radius: 30px;
     padding: 18px 24px;
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
     overflow: hidden;
-    
   }
 
   .overview-card-header {
@@ -1058,24 +980,13 @@ ul.nested-list li {
   }
 
   .overview-card.expanded .overview-card-header {
-  justify-content: space-between;
-}
+    justify-content: space-between;
+  }
 
   .overview-title {
     font-size: 1rem;
   }
 
-  /* Arrow wordt een + teken */
-  .overview-arrow {
-    font-size: 1.4rem;
-    transition: transform 0.3s ease;
-  }
-
-  .overview-card.expanded .overview-arrow {
-    transform: rotate(45deg);
-  }
-
-  /* Tags en desc standaard verborgen op mobile */
   .overview-tags,
   .overview-desc,
   .overview-visit-btn {
@@ -1083,7 +994,6 @@ ul.nested-list li {
     opacity: 0;
   }
 
-  /* Zichtbaar wanneer expanded */
   .overview-card.expanded .overview-tags,
   .overview-card.expanded .overview-desc,
   .overview-card.expanded .overview-visit-btn {
@@ -1096,44 +1006,3 @@ ul.nested-list li {
     display: block;
   }
 }
-
-@media (max-width: 600px) {
-
-  .code-lang {
-    gap: clamp(4px, .5vw, 12px);
-  }
-
-  .code-lang span {
-  font-size:  clamp(0.5rem, 1vw, 0.8rem);
-  }
-
-  .context h3 {
-    margin-top: 10px;
-    font-size: clamp(1rem, 2vw, 1.4rem);
-  }
-
-  .more-btn {
-    font-size: 0.7rem;;
-  }
-
-  .info {
-    padding: 30px 40px;
-  }
-
-    .overview-card {
-    height: 50px; /* 👈 vaste starthoogte voor GSAP */
-    overflow: hidden;
-  }
-
-  .lang-switcher {
-    right: 15px;
-    top: 3.7%;
-  }
-
-    body {
-    overflow: hidden;
-    height: 100dvh;
-  }
-  }
-
-  
