@@ -259,6 +259,10 @@ body {
   text-transform: uppercase;
 }
 
+.project-title.long {
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+}
+
 .code-lang {
   display: flex;
   gap: clamp(8px, 1vw, 12px);
@@ -852,12 +856,14 @@ ul.nested-list li {
 }
 
 .overview-desc {
-  font-size: clamp(.95rem, 2vw, 1.2rem);
+  font-size: clamp(1.1rem, 2vw, 1.2rem);
   font-family: 'AkzidenzGrotesk';
   line-height: 1.5;
   color: #DADADA;
   font-weight: 300;
 }
+
+
 
 .overview-card a {
   margin-top: auto;
@@ -918,6 +924,13 @@ ul.nested-list li {
 
 .activedt {
   cursor: default !important;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 /* ============================================
@@ -984,7 +997,7 @@ ul.nested-list li {
   }
 
   .overview-title {
-    font-size: 1rem;
+font-size: clamp(1.3rem, 2.5vw, 2rem);
   }
 
   .overview-tags,
@@ -1005,4 +1018,13 @@ ul.nested-list li {
   .overview-card.expanded .overview-desc {
     display: block;
   }
+  
+  .overview-tags {
+    gap: clamp(4px, .5vw, 12px);
+  }
+
+  .overview-tags span {
+    font-size: clamp(0.8rem, 1vw, 0.8rem);
+  }
+
 }

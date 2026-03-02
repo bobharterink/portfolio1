@@ -13,6 +13,7 @@ const translations = {
     "btn.site": "Website bekijken",
     "btn.afspelen": "▶ Afspelen",
     "btn.opnieuw": "↻ Opnieuw afspelen",
+    "btn.overview": "Bezoek site",
 
     // ── STUDIO HARTERINK ──
     "studio.context.h3": "Eigen webshop",
@@ -84,6 +85,30 @@ const translations = {
     "dirk.why.li2": "Design en techniek combineer in één geheel",
     "dirk.why.li3": "Verder denk dan een standaard \"productpagina\"",
     "dirk.overview.desc": "Dirk Nielandt is een kinderboekenschrijver die zijn werk online zichtbaar wilde maken. Naast een overzicht van zijn boeken was er behoefte aan betere vindbaarheid, duidelijke informatie per boek en een laagdrempelig contactpunt.\nHet doel was een eenvoudige, onderhoudbare website die zelfstandig beheerd kan worden door de auteur.",
+  
+    // ── DOOR HET OOG VAN DE MAKER ──
+    "picturemod.context.h3": "Masterproef",
+    "picturemod.context.p": "Door het oog van de maker verbindt de digitale wereld met het tastbare. Bezoekers worden actieve deelnemers en ontdekken mijn fascinatie voor moiré-patronen door zelf een unieke postkaart te ontwerpen. Zo komen digitale structuren spelenderwijs tot leven in de fysieke wereld.",
+    "picturemod.concept.h3": "Concept & interactie",
+    "picturemod.concept.p": "Het project vertrekt vanuit mijn fascinatie voor moiré-patronen, die ik wil delen met de bezoeker. Via de website maken bezoekers een wazige foto met hun camera, waarop cirkels, vierkanten en lijnen reageren op lichte en donkere zones. Met sliders kan het ontwerp volledig worden aangepast: vorm, intensiteit en kleur. Bij het printen worden de kleurlagen opgesplitst en één voor één naar de AxiDraw gestuurd, waarna de bezoeker telkens de juiste kleur plaatst. Zo ontstaat een uniek, zelfgemaakt moiré-postkaartje.",
+    "picturemod.tech.h3": "Technische uitwerking",
+    "picturemod.tech.li1": "Web-based interface gebouwd met HTML, CSS en JavaScript",
+    "picturemod.tech.li2": "Gebruik van de device camera om een wazige foto te maken",
+    "picturemod.tech.li3": "Analyse van licht- en donkerwaarden in de afbeelding",
+    "picturemod.tech.li4": "Realtime aanpasbaar ontwerp via sliders (vorm, intensiteit, dichtheid)",
+    "picturemod.tech.li5": "Automatische opsplitsing van het ontwerp in kleur-lagen",
+    "picturemod.tech.li6": "Elke kleurlaag wordt sequentieel naar de AxiDraw gestuurd",
+    "picturemod.tech.li7": "Handmatige kleurwissel door de gebruiker tijdens het plotten",
+    "picturemod.extra.h3": "Extra",
+    "picturemod.extra.p": "Pssst! Shift+klik op de site om de Docs in het menu te zien!",
+    "picturemod.extra.btn1": "Bekijk de Docs",
+    "picturemod.extra.btn2": "Bekijk de media",
+    "picturemod.why.h3": "Waarom dit project?",
+    "picturemod.why.p": "Door het oog van de maker is een project waarin front- en back-end samenkomen, verschillende systemen met elkaar samenwerken en data en databases worden geïntegreerd binnen een interactief creatief proces.",
+    "picturemod.overview.desc": "Door het oog van de maker is een interactief project waarin bezoekers zelf experimenteren met patronen, repetitie en moiré-effecten. Via mijn website maken gebruikers met de camera een foto, waarop patronen reageren op licht en donker. Met sliders kunnen zij het ontwerp volledig aanpassen en zo een unieke compositie voor een postkaart creëren. Het digitale resultaat wordt automatisch opgesplitst in lagen en als SVG voorbereid voor fysieke output. Met een Axidraw wordt het ontwerp laag voor laag getekend, wat resulteert in een tastbaar eindobject.",
+
+    // ── FLATLAND ──
+    "flatland.overview.desc": "Flatland is een interactief digitaal bachelorproject waarin een boek wordt hervertaald naar een visuele en ervaarbare vorm. Het verhaal speelt zich af in een tweedimensionale wereld, bevolkt door wiskundige figuren. Elk hoofdstuk komt tot leven via een fullscreen interactie die de gebruiker meeneemt in het perspectief van deze wereld.",
   },
 
   en: {
@@ -96,6 +121,7 @@ const translations = {
     "btn.site": "Visit website",
     "btn.afspelen": "▶ Play",
     "btn.opnieuw": "↻ Play again",
+    "btn.overview": "Visit website",
 
     // ── STUDIO HARTERINK ──
     "studio.context.h3": "My online store",
@@ -167,6 +193,30 @@ const translations = {
     "dirk.why.li2": "combine design and technology into a single whole",
     "dirk.why.li3": "think beyond a standard \"product page\"",
     "dirk.overview.desc": "Dirk Nielandt is a children's book author who wanted to make his work visible online. Beyond an overview of his books, there was a need for better discoverability, clear information per book and an accessible point of contact.\nThe goal was a simple, maintainable website that the author could manage independently.",
+  
+    // ── DOOR HET OOG VAN DE MAKER ──
+    "picturemod.context.h3": "Master’s thesis",
+    "picturemod.context.p": "Through the Eye of the Maker connects the digital world with the tangible. Visitors become active participants, exploring my fascination with moiré patterns by designing their own unique postcard. In this way, digital structures playfully come to life in the physical world.",
+    "picturemod.concept.h3": "Concept & interaction",
+    "picturemod.concept.p": "The project originated from my interest in moiré patterns, a fascination I aim to share with the visitor. Through the website, visitors use their camera to capture a blurred image, to which circles, squares, and lines respond based on light and dark areas. Using sliders, the design can be fully customized in shape, intensity, and color. When print is pressed, the color layers are separated and sent one by one to the AxiDraw, resulting in a self-made moiré postcard.",
+    "picturemod.tech.h3": "Technical implementation",
+    "picturemod.tech.li1": "Web-based interface built with HTML, CSS, and JavaScript",
+    "picturemod.tech.li2": "Use of the device camera to capture a blurred image",
+    "picturemod.tech.li3": "Analysis of light and dark values within the image",
+    "picturemod.tech.li4": "Real-time adjustable design via sliders (shape, intensity, density)",
+    "picturemod.tech.li5": "Automatic separation of the design into color layers",
+    "picturemod.tech.li6": "Each color layer is sent sequentially to the AxiDraw",
+    "picturemod.tech.li7": "Manual color changes by the user during the plotting process",
+    "picturemod.extra.h3": "Extra",
+    "picturemod.extra.p": "Pssst! Click on Shift+click on the site to see the Docs in the menu!",
+    "picturemod.extra.btn1": "View the Docs",
+    "picturemod.extra.btn2": "View the Media",
+    "picturemod.why.h3": "Why this project?",
+    "picturemod.why.p": "Through the Eye of the Maker is a project in which front-end and back-end come together, multiple systems interact, and data and databases are integrated within an interactive creative process.",
+    "picturemod.overview.desc": "Through the Eye of the Maker is an interactive project in which visitors experiment with patterns, repetition, and moiré effects. Through my website, users take a photo with their camera, triggering patterns that respond to light and dark areas. Using sliders, they can fully customize the design and create a unique composition for a postcard. The digital result is automatically separated into layers and prepared as an SVG for physical output. An Axidraw then draws the design layer by layer, resulting in a tangible final object.",
+  
+    // ── FLATLAND ──
+    "flatland.overview.desc": "Flatland is an interactive digital bachelor project in which a book is reinterpreted into a visual and experiential form. The story takes place in a two-dimensional world inhabited by mathematical figures. Each chapter comes to life through a fullscreen interaction that immerses the user in the perspective of this world.",
   }
 };
 

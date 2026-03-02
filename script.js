@@ -215,7 +215,12 @@ function initMarquee() {
 
 initMarquee();
 
-window.addEventListener("resize", () => initMarquee());
+window.addEventListener("resize", () => {
+  initMarquee();
+  if (activePill || isDetailsOpen || isOverviewOpen) {
+    marqueeTween.pause();
+  }
+});
 
 function normalizeMarqueePosition() {
   const totalWidth = bar.scrollWidth / 2;
@@ -233,7 +238,7 @@ marquee.addEventListener("mouseenter", () => {
 });
 
 marquee.addEventListener("mouseleave", () => {
-  if (!activePill) {
+  if (!activePill && !isDetailsOpen && !isOverviewOpen) {
     gsap.to(marqueeTween, { timeScale: 1, duration: 0.6, ease: "power2.out" });
   }
 });
@@ -265,7 +270,7 @@ pills.forEach(pill => {
       return;
     }
 
-    if (activePill) resetPills();
+    if (activePill) resetPills(true);
 
     activePill = pill;
     marqueeTween.pause();
@@ -439,7 +444,7 @@ function expandPill(active) {
 
   const viewportWidth = window.innerWidth;
 
-  if (viewportWidth <= 1025) {
+  if (viewportWidth <= 1440) {
     gsap.to([heroTitle, heroSubtitle], {
       opacity: 0, y: -20, duration: 0.4, ease: "power2.out", pointerEvents: "none"
     });
@@ -485,7 +490,7 @@ function expandPill(active) {
   });
 }
 
-function resetPills() {
+function resetPills(isSwitch = false) { 
   isAnimating = true;
 
   const tl = gsap.timeline({
@@ -524,7 +529,7 @@ function resetPills() {
     tl.to(title, { opacity: 1, duration: 0.3, ease: "power2.out" });
   }
 
-  if (window.innerWidth <= 1025 && !isDetailsOpen) {
+  if (!isSwitch && window.innerWidth <= 1440 && !isDetailsOpen) {
     tl.to([heroTitle, heroSubtitle], {
       opacity: 1, y: 0, duration: 0.4, ease: "power2.out", pointerEvents: "auto"
     }, 0.3);
