@@ -198,26 +198,31 @@ function closeOverview() {
 // ============================================
 
 let marqueeTween;
+let singleWidth; // breedte van één originele set pills
 
 function initMarquee() {
   if (marqueeTween) marqueeTween.kill();
 
-  const totalWidth = bar.scrollWidth / 2;
+  // Meet de breedte van de EERSTE helft exact (inclusief gaps)
+  // We weten dat bar.innerHTML is gedupliceerd, dus helft = scrollWidth / 2
+  // Maar we moeten ook de gap tussen de twee helften aftrekken
+  const gap = 20; // moet overeenkomen met .bar { gap: 20px }
+  singleWidth = bar.scrollWidth / 2;
+
   let currentX = parseFloat(gsap.getProperty(bar, "x")) || 0;
 
-  // Normaliseer naar [-totalWidth, 0]
-  currentX = ((currentX % -totalWidth) - totalWidth) % -totalWidth;
-  if (currentX > 0) currentX -= totalWidth;
-
+  // Normaliseer: zorg dat currentX in [-singleWidth, 0] zit
+  currentX = currentX % -singleWidth;
+  if (currentX > 0) currentX -= singleWidth;
   gsap.set(bar, { x: currentX });
 
   marqueeTween = gsap.to(bar, {
-    x: currentX - totalWidth,
-    duration: 20,
+    x: currentX - singleWidth,
+    duration: 60 * (singleWidth / 2000), // schaal duration op breedte
     ease: "none",
     repeat: -1,
-    onRepeat: () => {
-      // Bij elke herhaling: reset naar genormaliseerde startpositie
+    onRepeat() {
+      // Harde reset bij elke loop — geen drift mogelijk
       gsap.set(bar, { x: currentX });
     }
   });
@@ -509,6 +514,8 @@ function resetPills(isSwitch = false) {
       openShift = 0;
       detailsShift = 0;
       pills.forEach(p => p.classList.remove("active"));
+      // Normaliseer positie zodat de loop weer klopt
+      if (!isSwitch) initMarquee();
     }
   });
 
@@ -546,10 +553,6 @@ function resetPills(isSwitch = false) {
     }, 0.3);
     tl.to(plusButton, { top: "55%", duration: 0.5, ease: "power3.inOut" }, 0);
   }
-
-  tl.call(() => {
-    gsap.to(marqueeTween, { timeScale: 1, duration: 0.4, ease: "power2.out" });
-  });
 }
 
 
