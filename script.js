@@ -188,8 +188,7 @@ function closeOverview() {
   });
 
   setTimeout(() => {
-    normalizeMarqueePosition();
-    marqueeTween.resume();
+    initMarquee();
   }, 600);
 }
 
@@ -201,19 +200,26 @@ function closeOverview() {
 let marqueeTween;
 
 function initMarquee() {
-  if (marqueeTween) {
-    marqueeOffset = gsap.getProperty(bar, "x");
-    marqueeTween.kill();
-  }
+  if (marqueeTween) marqueeTween.kill();
 
   const totalWidth = bar.scrollWidth / 2;
-  const gap = 10;
+  let currentX = parseFloat(gsap.getProperty(bar, "x")) || 0;
+
+  // Normaliseer naar [-totalWidth, 0]
+  currentX = ((currentX % -totalWidth) - totalWidth) % -totalWidth;
+  if (currentX > 0) currentX -= totalWidth;
+
+  gsap.set(bar, { x: currentX });
 
   marqueeTween = gsap.to(bar, {
-    x: marqueeOffset - (totalWidth + gap),
+    x: currentX - totalWidth,
     duration: 20,
     ease: "none",
-    repeat: -1
+    repeat: -1,
+    onRepeat: () => {
+      // Bij elke herhaling: reset naar genormaliseerde startpositie
+      gsap.set(bar, { x: currentX });
+    }
   });
 }
 
@@ -379,8 +385,7 @@ function closeDetails() {
       resetPills();
       activePill = null;
       pill.classList.remove("activedt");
-      normalizeMarqueePosition();
-      marqueeTween.resume();
+      initMarquee();
     }
   });
 
