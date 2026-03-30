@@ -54,6 +54,10 @@ function getPillDelta(pill) {
   return 0;
 }
 
+function shouldHideHero() {
+  return window.innerWidth <= 1440 || window.innerHeight <= 900;
+}
+
 
 // ============================================
 // PLUS BUTTON
@@ -444,7 +448,8 @@ function expandPill(active) {
 
   const viewportWidth = window.innerWidth;
 
-  if (viewportWidth <= 1440) {
+  // Hide hero title/subtitle if screen is narrow OR not tall enough
+  if (shouldHideHero()) {
     gsap.to([heroTitle, heroSubtitle], {
       opacity: 0, y: -20, duration: 0.4, ease: "power2.out", pointerEvents: "none"
     });
@@ -529,7 +534,8 @@ function resetPills(isSwitch = false) {
     tl.to(title, { opacity: 1, duration: 0.3, ease: "power2.out" });
   }
 
-  if (!isSwitch && window.innerWidth <= 1440 && !isDetailsOpen) {
+  // Restore hero title/subtitle when closing, same condition as hiding
+  if (!isSwitch && !isDetailsOpen && shouldHideHero()) {
     tl.to([heroTitle, heroSubtitle], {
       opacity: 1, y: 0, duration: 0.4, ease: "power2.out", pointerEvents: "auto"
     }, 0.3);
