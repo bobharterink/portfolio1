@@ -91,6 +91,13 @@ plusButton.addEventListener("mouseleave", () => {
   }
 });
 
+plusButton.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    plusButton.click();
+  }
+});
+
 plusButton.addEventListener("click", () => {
   gsap.killTweensOf(plusButton, "scale");
   gsap.set(plusButton, { scale: 1 });
@@ -143,6 +150,17 @@ function openOverview() {
     { opacity: 0, y: 30 },
     { opacity: 1, y: 0, duration: 0.5, ease: "none", stagger: 0.07, delay: 0.2 }
   );
+
+  document.querySelectorAll('a, button, [tabindex]').forEach(el => {
+  if (
+    !overviewPanel.contains(el) &&
+    !el.closest('.lang-switcher') &&
+    !el.closest('.plus-button')
+  ) {
+    el.dataset.prevTabindex = el.getAttribute('tabindex') ?? '';
+    el.setAttribute('tabindex', '-1');
+  }
+});
 }
 
 function closeOverview() {
@@ -163,6 +181,16 @@ function closeOverview() {
     onComplete: () => {
       overviewPanel.classList.remove("is-open");
       gsap.set(cards, { opacity: 1, y: 0 });
+
+        document.querySelectorAll('[data-prev-tabindex]').forEach(el => {
+    const prev = el.dataset.prevTabindex;
+    if (prev === '') {
+      el.removeAttribute('tabindex');
+    } else {
+      el.setAttribute('tabindex', prev);
+    }
+    delete el.dataset.prevTabindex;
+  });
     }
   });
 
@@ -273,6 +301,8 @@ pills.forEach(pill => {
   info.offsetHeight; // force reflow
   gsap.set(info, { opacity: 0, visibility: "visible" });
 
+  info.querySelectorAll("button, a").forEach(el => el.setAttribute("tabindex", "-1"));
+
   pill.addEventListener("click", (e) => {
     if (isDetailsOpen) return;
     if (e.target.closest(".more-btn")) return;
@@ -290,6 +320,19 @@ pills.forEach(pill => {
     activePill = pill;
     marqueeTween.pause();
     expandPill(pill);
+  });
+
+    pill.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      if (e.target.closest(".more-btn") || e.target.closest(".site-btn") || e.target.closest(".video-play-btn")) return;
+      e.preventDefault();
+      pill.click();
+    }
+  });
+
+    pill.addEventListener("focus", () => {
+    // Voorkom dat de browser naar het element scrollt
+    window.scrollTo(0, 0);
   });
 });
 
@@ -362,6 +405,20 @@ function openDetails(pill) {
   tl.set(details, { display: "block" }, 1.0);
   tl.from(details, { opacity: 0, duration: 0.4, ease: "power2.out" }, 1.0);
 
+tl.call(() => {
+  document.querySelectorAll('a, button, [tabindex]').forEach(el => {
+    if (
+      !details.contains(el) &&
+      !el.closest('.lang-switcher') &&
+      !el.closest('.plus-button') &&
+      !el.closest('.footer-socials')
+    ) {
+      el.dataset.prevTabindex = el.getAttribute('tabindex') ?? '';
+      el.setAttribute('tabindex', '-1');
+    }
+  });
+}, null, 1.0);
+
   tl.call(() => {
     const video = details.querySelector('video');
     const playBtn = details.querySelector('.video-play-btn');
@@ -428,16 +485,27 @@ function closeDetails() {
     ease: "power3.inOut"
   }, 1.0);
 
-  tl.call(() => {
-    const video = details?.querySelector('video');
-    const playBtn = details?.querySelector('.video-play-btn');
-    if (video && playBtn) {
-      video.pause();
-      video.currentTime = 0;
-      playBtn.style.display = 'none';
-      playBtn.textContent = translations[getCurrentLang()]['btn.afspelen'];
+tl.call(() => {
+  const video = details?.querySelector('video');
+  const playBtn = details?.querySelector('.video-play-btn');
+  if (video && playBtn) {
+    video.pause();
+    video.currentTime = 0;
+    playBtn.style.display = 'none';
+    playBtn.textContent = translations[getCurrentLang()]['btn.afspelen'];
+  }
+
+  // Herstel alle tabindexen
+  document.querySelectorAll('[data-prev-tabindex]').forEach(el => {
+    const prev = el.dataset.prevTabindex;
+    if (prev === '') {
+      el.removeAttribute('tabindex');
+    } else {
+      el.setAttribute('tabindex', prev);
     }
-  }, null, 1.0);
+    delete el.dataset.prevTabindex;
+  });
+}, null, 1.0);
 }
 
 
@@ -498,6 +566,10 @@ function expandPill(active) {
 
       if (info) {
         tl.to(info, { opacity: 1, pointerEvents: "auto", duration: 0.4 }, 0.4);
+          tl.call(() => {
+    info.querySelectorAll("button, a").forEach(el => el.removeAttribute("tabindex"));
+  }, null, 0.4);
+
       }
     } else {
       tl.to(pill, { scale: 0.8, duration: 0.6, ease: "power3.inOut" }, 0);
@@ -521,6 +593,7 @@ function resetPills(isSwitch = false) {
 
   if (activePill) {
     const info = activePill.querySelector(".info");
+    info.querySelectorAll("button, a").forEach(el => el.setAttribute("tabindex", "-1"));
     tl.to(info, { opacity: 0, pointerEvents: "none", duration: 0.3, ease: "power2.out" });
   }
 

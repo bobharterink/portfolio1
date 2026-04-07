@@ -227,19 +227,53 @@ const translations = {
 const langToggle = document.getElementById("langToggle");
 const langDropdown = document.getElementById("langDropdown");
 
+// Initiële staat
+gsap.set(langDropdown, { opacity: 0, scale: 0.9, transformOrigin: "top right" });
+
 langToggle.addEventListener("click", (e) => {
   e.stopPropagation();
-  langDropdown.classList.toggle("open");
+  const isOpen = langDropdown.classList.contains("open");
+
+  if (isOpen) {
+    gsap.to(langDropdown, {
+      opacity: 0,
+      scale: 0.9,
+      duration: 0.25,
+      ease: "power2.in",
+      onComplete: () => langDropdown.classList.remove("open")
+    });
+  } else {
+    langDropdown.classList.add("open");
+    gsap.fromTo(langDropdown,
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }
+    );
+  }
 });
 
 document.addEventListener("click", () => {
-  langDropdown.classList.remove("open");
+  if (langDropdown.classList.contains("open")) {
+    gsap.to(langDropdown, {
+      opacity: 0,
+      scale: 0.9,
+      duration: 0.25,
+      ease: "power2.in",
+      onComplete: () => langDropdown.classList.remove("open")
+    });
+  }
 });
 
 langDropdown.querySelectorAll("button[data-lang]").forEach(btn => {
-  btn.addEventListener("click", () => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
     setLanguage(btn.dataset.lang);
-    langDropdown.classList.remove("open");
+    gsap.to(langDropdown, {
+      opacity: 0,
+      scale: 0.9,
+      duration: 0.25,
+      ease: "power2.in",
+      onComplete: () => langDropdown.classList.remove("open")
+    });
   });
 });
 

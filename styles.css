@@ -144,7 +144,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  overflow: hidden;
+  padding-block: 10px;
+
 }
 
 .bar-inner {
@@ -156,12 +158,17 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  cursor: zoom-in;
+  cursor: pointer;
   overflow: hidden;
 }
 
+.bar-inner:focus-visible {
+  outline: 2px solid #161616;
+  outline-offset: .1rem;
+}
+
 .bar-inner.active {
-  cursor: zoom-out;
+  cursor: pointer;
 }
 
 .plus-button {
@@ -181,6 +188,11 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+.plus-button:focus-visible {
+  outline: 2px solid #161616;
+  outline-offset: .1rem;
+}
+
 .plus-icon {
   width: 30px;
   height: 30px;
@@ -190,7 +202,7 @@ body {
 
 .marquee {
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .bar {
@@ -227,12 +239,16 @@ body {
   text-transform: uppercase;
   font-size: 0.85rem;
   color: #161616;
-  opacity: 0.6;
   text-decoration: none;
 }
 
 .footer-socials a:hover {
-  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer-socials a:focus-visible {
+  outline: none;
+  text-decoration: underline;
 }
 
 .mobile-break {
@@ -322,6 +338,10 @@ body {
   transition: background 0.3s ease, color 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.more-btn:focus-visible {
+  outline: 2px solid #FDFBFB;
+  outline-offset: .1rem;
+}
 /* ============================================
    DETAILS SECTION
    ============================================ */
@@ -502,6 +522,12 @@ ul.nested-list li {
   transition: background 0.3s ease, color 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.site-btn:focus-visible {
+  outline: 2px solid #FDFBFB;
+  outline-offset: .1rem;
+  
+}
+
 .overview-visit-btn {
   background: #FDFBFB;
   color: #161616;
@@ -524,6 +550,11 @@ ul.nested-list li {
   color: #FDFBFB;
   transform: scale(1.1);
   transition: background 0.3s ease, color 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.overview-visit-btn:focus-visible {
+  outline: 2px solid #FDFBFB;
+  outline-offset: .1rem;
 }
 
 .video-controls {
@@ -551,6 +582,11 @@ ul.nested-list li {
 .video-play-btn:hover {
   transform: scale(1.05);
   background: rgba(22, 22, 22, 1);
+}
+
+.video-play-btn:focus-visible {
+  outline: 2px solid #161616;
+  outline-offset: .1rem;
 }
 
 /* ============================================
@@ -777,6 +813,18 @@ ul.nested-list li {
   visibility: hidden;
 }
 
+.overview-panel::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: #FDFBFB;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .overview-panel.is-open {
   visibility: visible;
 }
@@ -890,7 +938,7 @@ ul.nested-list li {
   cursor: pointer;
 }
 
-.lang-btn:focus {
+.lang-btn:focus-visible {
   outline: 2px solid #161616;
   outline-offset: .1rem;
 }
@@ -924,7 +972,12 @@ ul.nested-list li {
 }
 
 .lang-dropdown button:hover {
-  background: rgba(255,255,255,0.1);
+  text-decoration: underline;
+}
+
+.langchoice:focus-visible {
+  outline: none;
+  text-decoration: underline;
 }
 
 .activedt {
