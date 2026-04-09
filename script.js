@@ -12,7 +12,8 @@ let detailsShift = 0;
 let activePill = null;
 let isAnimating = false;
 const bar = document.querySelector(".bar");
-bar.innerHTML += bar.innerHTML;
+const origBarHTML = bar.innerHTML;
+bar.innerHTML = origBarHTML + origBarHTML + origBarHTML;
 
 function getResponsiveFlex() {
   const width = window.innerWidth;
@@ -194,6 +195,7 @@ function closeOverview() {
     }
   });
 
+  const hadActivePill = !!activePill;
   if (activePill) {
     resetPills();
     activePill = null;
@@ -211,13 +213,15 @@ function closeOverview() {
     ease: "power3.inOut"
   });
 
-  gsap.to([heroTitle, heroSubtitle], {
-    opacity: 1, y: 0, duration: 0.4, delay: 0.4, ease: "power2.out", pointerEvents: "auto"
-  });
+  if (!hadActivePill) {
+    gsap.to([heroTitle, heroSubtitle], {
+      opacity: 1, y: 0, duration: 0.4, delay: 0.4, ease: "power2.out", pointerEvents: "auto"
+    });
 
-  setTimeout(() => {
-    initMarquee();
-  }, 600);
+    setTimeout(() => {
+      initMarquee();
+    }, 600);
+  }
 }
 
 
@@ -235,7 +239,7 @@ function initMarquee() {
   // We weten dat bar.innerHTML is gedupliceerd, dus helft = scrollWidth / 2
   // Maar we moeten ook de gap tussen de twee helften aftrekken
   const gap = 20; // moet overeenkomen met .bar { gap: 20px }
-  singleWidth = bar.scrollWidth / 2;
+  singleWidth = (bar.scrollWidth + gap) / 3;
 
   let currentX = parseFloat(gsap.getProperty(bar, "x")) || 0;
 
@@ -311,7 +315,6 @@ pills.forEach(pill => {
     if (activePill === pill) {
       resetPills();
       activePill = null;
-      marqueeTween.resume();
       return;
     }
 
@@ -447,7 +450,6 @@ function closeDetails() {
       resetPills();
       activePill = null;
       pill.classList.remove("activedt");
-      initMarquee();
     }
   });
 
@@ -526,16 +528,18 @@ function expandPill(active) {
 
   const viewportWidth = window.innerWidth;
 
-  // Hide hero title/subtitle if screen is narrow OR not tall enough
   if (shouldHideHero()) {
-    gsap.to([heroTitle, heroSubtitle], {
-      opacity: 0, y: -20, duration: 0.4, ease: "power2.out", pointerEvents: "none"
-    });
-    gsap.to(plusButton, {
-      top: viewportWidth <= 600 ? "82%" : "71%",
-      duration: 0.5,
-      ease: "power3.inOut"
-    });
+gsap.to([heroTitle, heroSubtitle], {
+  opacity: 0, y: -20, duration: 0.4, ease: "power2.out", pointerEvents: "none"
+});
+
+if (viewportWidth <= 1025) {
+  gsap.to(plusButton, {
+    top: viewportWidth <= 600 ? "82%" : "71%",
+    duration: 0.5,
+    ease: "power3.inOut"
+  });
+}
   }
 
   const tl = gsap.timeline({ onComplete: () => { isAnimating = false; } });
@@ -583,8 +587,10 @@ function resetPills(isSwitch = false) {
   const tl = gsap.timeline({
     onComplete: () => {
       isAnimating = false;
-      openShift = 0;
-      detailsShift = 0;
+      if (!isSwitch) {
+        openShift = 0;
+        detailsShift = 0;
+      }
       pills.forEach(p => p.classList.remove("active"));
       // Normaliseer positie zodat de loop weer klopt
       if (!isSwitch) initMarquee();
@@ -619,13 +625,15 @@ function resetPills(isSwitch = false) {
     tl.to(title, { opacity: 1, duration: 0.3, ease: "power2.out" });
   }
 
-  // Restore hero title/subtitle when closing, same condition as hiding
-  if (!isSwitch && !isDetailsOpen && shouldHideHero()) {
-    tl.to([heroTitle, heroSubtitle], {
-      opacity: 1, y: 0, duration: 0.4, ease: "power2.out", pointerEvents: "auto"
-    }, 0.3);
+if (!isSwitch && !isDetailsOpen) {
+  tl.to([heroTitle, heroSubtitle], {
+    opacity: 1, y: 0, duration: 0.4, ease: "power2.out", pointerEvents: "auto"
+  }, 0.3);
+
+  if (window.innerWidth <= 1025) {
     tl.to(plusButton, { top: "55%", duration: 0.5, ease: "power3.inOut" }, 0);
   }
+}
 }
 
 

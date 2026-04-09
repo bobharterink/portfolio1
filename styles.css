@@ -1041,6 +1041,8 @@ ul.nested-list li {
     align-items: flex-start;
     gap: 0;
     overflow: hidden;
+    justify-content: center;
+    min-height: 50px; 
   }
 
   .overview-card-header {
