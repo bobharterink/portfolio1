@@ -13,8 +13,6 @@ const translations = {
     "btn.site": "Website bekijken",
     "btn.afspelen": "▶ Afspelen",
     "btn.opnieuw": "↻ Opnieuw afspelen",
-    "btn.overview": "Bezoek site",
-
     // ── STUDIO HARTERINK ──
     "studio.context.h3": "Eigen webshop",
     "studio.context.p": "Studio Harterink ontstond vanuit modulaire vazen die door de brievenbus passen en door de gebruiker zelf worden geassembleerd. Dat gevoel van eigenaarschap en maakproces is vertaald naar een interactieve website, waarin het fysieke assemblageproces digitaal wordt ervaren.",
@@ -34,8 +32,6 @@ const translations = {
     "studio.why.li1": "Abstracte concepten vertaal naar concrete interacties",
     "studio.why.li2": "Design en techniek combineer in één geheel",
     "studio.why.li3": "Verder denk dan een standaard \"productpagina\"",
-    "studio.overview.desc": "Studio Harterink is ontstaan vanuit een reeks modulaire vazen die ik zelf heb ontworpen en gemaakt. De vazen passen door de brievenbus en worden door de gebruiker zelf geassembleerd, zodat het voelt alsof je het object ook écht zelf hebt gemaakt. Diezelfde ervaring wilde ik vertalen naar een digitale omgeving.\n\nHet doel van de website was niet alleen het tonen van producten, maar het nabootsen van het fysieke assemblageproces in een interactieve webervaring.",
-
     // ── FIZZI ──
     "fizzi.context.h3": "Cursus",
     "fizzi.context.p": "Fizzi is een professioneel opgebouwde website, ontwikkeld aan de hand van een cursus, waarin ik onderzocht hoe interactieve front-end met Next.js, GSAP en Three/R3F kan samengaan met dynamische content uit een CMS. Het resultaat is een visueel rijke site met flexibel beheerbare content.",
@@ -50,8 +46,6 @@ const translations = {
     "fizzi.why.li1": "Werken met een moderne stack",
     "fizzi.why.li2": "Rekening houden met schaalbaarheid en onderhoud",
     "fizzi.why.li3": "Visuele interacties inzetten zonder het functionele aspect te verliezen",
-    "fizzi.overview.desc": "fizzi is een professioneel opgebouwde website waarin ik onderzocht aan de hand van een tutorial hoe interactieve frontend samen met next.js, gsap en three/r3f kan samengaan met dynamische content vanuit een CMS.\nHet uitgangspunt was om een visueel rijke website te bouwen die niet hard-gecodeerd is, maar waarbij content eenvoudig aangepast kan worden door de gebruiker.",
-
     // ── FRIDGEPICK ──
     "fridge.context.h3": "Eigen project",
     "fridge.context.p": "Fridgepick speelt in op een herkenbaar probleem: ingrediënten in huis, maar geen kookidee. De webapp koppelt wat er nog in de koelkast ligt aan passende recepten, met een sterke focus op gebruiksvriendelijkheid en inspiratie.",
@@ -64,8 +58,6 @@ const translations = {
     "fridge.tech.li4": "'Pro' modus voor meer gerechten",
     "fridge.why.h3": "Waarom dit project?",
     "fridge.why.p": "Fridgepick was mijn eerste project waarin ik bewust full-stack features combineerde met een sterke frontend focus. Het project markeert mijn overgang van puur frontend werk naar het begrijpen en bouwen van complete webapplicaties, zonder de gebruikservaring uit het oog te verliezen.",
-    "fridge.overview.desc": "Fridgepick vertrekt vanuit een herkenbaar probleem: je hebt nog ingrediënten in huis, maar geen idee wat je ermee kunt koken. De webapp helpt gebruikers door ingrediënten die nog in de koelkast liggen te koppelen aan passende recepten. De focus lag op het ontwikkelen van een toegankelijke en gebruiksvriendelijke applicatie waarin inspiratie centraal staat.",
-
     // ── DIRK NIELANDT ──
     "dirk.context.h3": "Betaalde opdracht",
     "dirk.context.p": "Dirk Nielandt is een kinderboekenschrijver die zijn werk online beter zichtbaar wilde maken. De website biedt een overzicht van zijn boeken, duidelijke informatie per titel en een laagdrempelig contactpunt, binnen een eenvoudig en zelfstandig te beheren platform.",
@@ -84,8 +76,6 @@ const translations = {
     "dirk.why.li1": "Abstracte concepten vertaal naar concrete interacties",
     "dirk.why.li2": "Design en techniek combineer in één geheel",
     "dirk.why.li3": "Verder denk dan een standaard \"productpagina\"",
-    "dirk.overview.desc": "Dirk Nielandt is een kinderboekenschrijver die zijn werk online zichtbaar wilde maken. Naast een overzicht van zijn boeken was er behoefte aan betere vindbaarheid, duidelijke informatie per boek en een laagdrempelig contactpunt.\nHet doel was een eenvoudige, onderhoudbare website die zelfstandig beheerd kan worden door de auteur.",
-  
     // ── DOOR HET OOG VAN DE MAKER ──
     "picturemod.context.h3": "Masterproef",
     "picturemod.context.p": "Door het oog van de maker verbindt de digitale wereld met het tastbare. Bezoekers worden actieve deelnemers en ontdekken mijn fascinatie voor moiré-patronen door zelf een unieke postkaart te ontwerpen. Zo komen digitale structuren spelenderwijs tot leven in de fysieke wereld.",
@@ -105,10 +95,6 @@ const translations = {
     "picturemod.extra.btn2": "Bekijk de media",
     "picturemod.why.h3": "Waarom dit project?",
     "picturemod.why.p": "Door het oog van de maker is een project waarin front- en back-end samenkomen, verschillende systemen met elkaar samenwerken en data en databases worden geïntegreerd binnen een interactief creatief proces.",
-    "picturemod.overview.desc": "Door het oog van de maker is een interactief project waarin bezoekers zelf experimenteren met patronen, repetitie en moiré-effecten. Via mijn website maken gebruikers met de camera een foto, waarop patronen reageren op licht en donker. Met sliders kunnen zij het ontwerp volledig aanpassen en zo een unieke compositie voor een postkaart creëren. Het digitale resultaat wordt automatisch opgesplitst in lagen en als SVG voorbereid voor fysieke output. Met een Axidraw wordt het ontwerp laag voor laag getekend, wat resulteert in een tastbaar eindobject.",
-
-    // ── FLATLAND ──
-    "flatland.overview.desc": "Flatland is een interactief digitaal bachelorproject waarin een boek wordt hervertaald naar een visuele en ervaarbare vorm. Het verhaal speelt zich af in een tweedimensionale wereld, bevolkt door wiskundige figuren. Elk hoofdstuk komt tot leven via een fullscreen interactie die de gebruiker meeneemt in het perspectief van deze wereld.",
   },
 
   en: {
@@ -121,8 +107,6 @@ const translations = {
     "btn.site": "Visit website",
     "btn.afspelen": "▶ Play",
     "btn.opnieuw": "↻ Play again",
-    "btn.overview": "Visit website",
-
     // ── STUDIO HARTERINK ──
     "studio.context.h3": "My online store",
     "studio.context.p": "Studio Harterink originated from a series of modular vases that fit through the mailbox and are assembled by the user. That sense of ownership and making is translated into an interactive website, where the physical assembly process is experienced digitally.",
@@ -142,8 +126,6 @@ const translations = {
     "studio.why.li1": "Translate abstract concepts into concrete interactions",
     "studio.why.li2": "Combine design and technology into a single whole",
     "studio.why.li3": "Think beyond a standard \"product page\"",
-    "studio.overview.desc": "Studio Harterink originated from a series of modular vases that I designed and made myself. The vases fit through a letterbox and are assembled by the user, so it feels as though you truly made the object yourself. I wanted to translate that same experience into a digital environment.\n\nThe goal of the website was not only to showcase products, but to replicate the physical assembly process as an interactive web experience.",
-
     // ── FIZZI ──
     "fizzi.context.h3": "Course",
     "fizzi.context.p": "Fizzi is a professionally built website, developed as part of a course, in which I explored how interactive front-end development with Next.js, GSAP, and Three/R3F can integrate with dynamic content from a CMS. The result is a visually rich site with flexible, easily manageable content.",
@@ -158,8 +140,6 @@ const translations = {
     "fizzi.why.li1": "Working with a modern stack",
     "fizzi.why.li2": "Considering scalability and maintainability",
     "fizzi.why.li3": "Applying visual interactions without losing the functional aspect",
-    "fizzi.overview.desc": "Fizzi is a professionally built website in which I explored how interactive frontend using Next.js, GSAP and Three.js/R3F can work together with dynamic content from a CMS.\nThe starting point was to build a visually rich website that is not hard-coded, but where content can easily be updated by the user.",
-
     // ── FRIDGEPICK ──
     "fridge.context.h3": "My project",
     "fridge.context.p": "Fridgepick addresses a familiar problem: having ingredients at home but no idea what to cook. The web app matches what's left in the fridge with suitable recipes, with a strong focus on usability and inspiration.",
@@ -172,8 +152,6 @@ const translations = {
     "fridge.tech.li4": "'Pro' mode for more dishes",
     "fridge.why.h3": "Why this project?",
     "fridge.why.p": "FridgePick was my first project in which I consciously combined full-stack features with a strong frontend focus. The project marks my transition from purely frontend work to understanding and building complete web applications, without losing sight of the user experience.",
-    "fridge.overview.desc": "FridgePick starts from a familiar problem: you have ingredients at home but no idea what to cook with them. The web app helps users by matching leftover fridge ingredients to suitable recipes. The focus was on developing an accessible and user-friendly application where inspiration takes centre stage.",
-
     // ── DIRK NIELANDT ──
     "dirk.context.h3": "Paid assignment",
     "dirk.context.p": "Dirk Nielandt is a children's book author who wanted to make his work more visible online. The website provides an overview of his books, clear information per title, and an accessible point of contact, all within a simple, independently manageable platform.",
@@ -192,8 +170,6 @@ const translations = {
     "dirk.why.li1": "translate abstract concepts into concrete interactions",
     "dirk.why.li2": "combine design and technology into a single whole",
     "dirk.why.li3": "think beyond a standard \"product page\"",
-    "dirk.overview.desc": "Dirk Nielandt is a children's book author who wanted to make his work visible online. Beyond an overview of his books, there was a need for better discoverability, clear information per book and an accessible point of contact.\nThe goal was a simple, maintainable website that the author could manage independently.",
-  
     // ── DOOR HET OOG VAN DE MAKER ──
     "picturemod.context.h3": "Master’s thesis",
     "picturemod.context.p": "Through the Eye of the Maker connects the digital world with the tangible. Visitors become active participants, exploring my fascination with moiré patterns by designing their own unique postcard. In this way, digital structures playfully come to life in the physical world.",
@@ -213,68 +189,18 @@ const translations = {
     "picturemod.extra.btn2": "View the Media",
     "picturemod.why.h3": "Why this project?",
     "picturemod.why.p": "Through the Eye of the Maker is a project in which front-end and back-end come together, multiple systems interact, and data and databases are integrated within an interactive creative process.",
-    "picturemod.overview.desc": "Through the Eye of the Maker is an interactive project in which visitors experiment with patterns, repetition, and moiré effects. Through my website, users take a photo with their camera, triggering patterns that respond to light and dark areas. Using sliders, they can fully customize the design and create a unique composition for a postcard. The digital result is automatically separated into layers and prepared as an SVG for physical output. An Axidraw then draws the design layer by layer, resulting in a tangible final object.",
-  
-    // ── FLATLAND ──
-    "flatland.overview.desc": "Flatland is an interactive digital bachelor project in which a book is reinterpreted into a visual and experiential form. The story takes place in a two-dimensional world inhabited by mathematical figures. Each chapter comes to life through a fullscreen interaction that immerses the user in the perspective of this world.",
   }
 };
 
 // ============================================
-// DROPDOWN TOGGLE
+// TOGGLE
 // ============================================
 
 const langToggle = document.getElementById("langToggle");
-const langDropdown = document.getElementById("langDropdown");
 
-// Initiële staat
-gsap.set(langDropdown, { opacity: 0, scale: 0.9, transformOrigin: "top right" });
-
-langToggle.addEventListener("click", (e) => {
-  e.stopPropagation();
-  const isOpen = langDropdown.classList.contains("open");
-
-  if (isOpen) {
-    gsap.to(langDropdown, {
-      opacity: 0,
-      scale: 0.9,
-      duration: 0.25,
-      ease: "power2.in",
-      onComplete: () => langDropdown.classList.remove("open")
-    });
-  } else {
-    langDropdown.classList.add("open");
-    gsap.fromTo(langDropdown,
-      { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }
-    );
-  }
-});
-
-document.addEventListener("click", () => {
-  if (langDropdown.classList.contains("open")) {
-    gsap.to(langDropdown, {
-      opacity: 0,
-      scale: 0.9,
-      duration: 0.25,
-      ease: "power2.in",
-      onComplete: () => langDropdown.classList.remove("open")
-    });
-  }
-});
-
-langDropdown.querySelectorAll("button[data-lang]").forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    setLanguage(btn.dataset.lang);
-    gsap.to(langDropdown, {
-      opacity: 0,
-      scale: 0.9,
-      duration: 0.25,
-      ease: "power2.in",
-      onComplete: () => langDropdown.classList.remove("open")
-    });
-  });
+langToggle.addEventListener("click", () => {
+  const current = localStorage.getItem("lang") || "nl";
+  setLanguage(current === "nl" ? "en" : "nl");
 });
 
 // ============================================
@@ -290,7 +216,7 @@ function setLanguage(lang) {
     }
   });
 
-  langToggle.textContent = lang.toUpperCase() + " ▾";
+  langToggle.textContent = lang.toUpperCase();
   localStorage.setItem("lang", lang);
   document.documentElement.lang = lang === "nl" ? "nl-be" : "en";
 }

@@ -5,15 +5,13 @@ let isDetailsOpen = false;
 const heroTitle = document.querySelector(".title");
 const heroSubtitle = document.querySelector(".subtitle");
 const plusButton = document.querySelector(".plus-button");
-let hasInteracted = false;
 let marqueeOffset = 0;
-let openShift = 0;
 let detailsShift = 0;
 let activePill = null;
 let isAnimating = false;
 const bar = document.querySelector(".bar");
 const origBarHTML = bar.innerHTML;
-bar.innerHTML = origBarHTML + origBarHTML + origBarHTML;
+bar.innerHTML = origBarHTML + origBarHTML + origBarHTML + origBarHTML;
 
 function getResponsiveFlex() {
   const width = window.innerWidth;
@@ -22,42 +20,6 @@ function getResponsiveFlex() {
   return "0 0 calc(25vw - 25px)";
 }
 
-function getExpandedWidth() {
-  const w = window.innerWidth;
-  if (w <= 600) return w * 0.9;
-  if (w <= 1025) return w * 0.85;
-  return 800;
-}
-
-function getPillDelta(pill) {
-  const marquee = document.querySelector(".marquee");
-  const marqueeRect = marquee.getBoundingClientRect();
-  const pillRect = pill.getBoundingClientRect();
-  const viewportWidth = window.innerWidth;
-  const padding = 100;
-  const expandedWidth = getExpandedWidth();
-
-  if (viewportWidth <= 1025) {
-    const pillCenter = pillRect.left + expandedWidth / 2;
-    const marqueeCenter = marqueeRect.left + marqueeRect.width / 2;
-    return marqueeCenter - pillCenter;
-  }
-
-  if (pillRect.left < marqueeRect.left + padding) {
-    return (marqueeRect.left + padding) - pillRect.left;
-  }
-
-  const expandedRight = pillRect.left + expandedWidth;
-  if (expandedRight > marqueeRect.right - padding) {
-    return (marqueeRect.right - padding) - expandedRight;
-  }
-
-  return 0;
-}
-
-function shouldHideHero() {
-  return window.innerWidth <= 1440 || window.innerHeight <= 900;
-}
 
 
 // ============================================
@@ -72,7 +34,7 @@ const plusRotation = gsap.to(".plus-button", {
 });
 
 plusButton.addEventListener("mouseenter", () => {
-  if (!isDetailsOpen && !isOverviewOpen) {
+  if (!isDetailsOpen) {
     plusRotation.pause();
     gsap.to(plusButton, { rotation: 0, duration: 0.4, ease: "power2.out" });
     gsap.to(plusButton, { scale: 1.1, duration: 0.4, ease: "back.out(3)" });
@@ -82,7 +44,7 @@ plusButton.addEventListener("mouseenter", () => {
 plusButton.addEventListener("mouseleave", () => {
   gsap.to(plusButton, { scale: 1, duration: 0.4, ease: "back.out(3)" });
 
-  if (!isDetailsOpen && !isOverviewOpen) {
+  if (!isDetailsOpen) {
     gsap.to(plusButton, {
       rotation: -360,
       duration: 0.4,
@@ -105,124 +67,10 @@ plusButton.addEventListener("click", () => {
 
   if (isDetailsOpen) {
     closeDetails();
-  } else if (isOverviewOpen) {
-    closeOverview();
   } else if (!isAnimating) {
-    openOverview();
+    window.location.href = '/cv/';
   }
 });
-
-
-// ============================================
-// OVERVIEW PANEL
-// ============================================
-
-const overviewPanel = document.querySelector(".overview-panel");
-let isOverviewOpen = false;
-
-function openOverview() {
-  if (isOverviewOpen || isDetailsOpen || isAnimating) return;
-
-  isOverviewOpen = true;
-  marqueeTween.pause();
-
-  plusRotation.pause();
-  gsap.set(plusButton, { rotation: 0 });
-  gsap.to(plusButton, { rotation: 45, top: "3%", duration: 0.5, ease: "power3.inOut" });
-
-  gsap.to(".lang-switcher", {
-    right: window.innerWidth <= 600 ? 70 : 100,
-    duration: 0.5,
-    ease: "power3.inOut"
-  });
-
-  gsap.to([heroTitle, heroSubtitle], {
-    opacity: 0, y: -20, duration: 0.4, ease: "power2.out", pointerEvents: "none"
-  });
-
-  overviewPanel.classList.add("is-open");
-
-  const cards = overviewPanel.querySelectorAll(".overview-card");
-  gsap.fromTo(overviewPanel,
-    { opacity: 0 },
-    { opacity: 1, duration: 0.4, ease: "power2.out", pointerEvents: "auto" }
-  );
-  gsap.fromTo(cards,
-    { opacity: 0, y: 30 },
-    { opacity: 1, y: 0, duration: 0.5, ease: "none", stagger: 0.07, delay: 0.2 }
-  );
-
-  document.querySelectorAll('a, button, [tabindex]').forEach(el => {
-  if (
-    !overviewPanel.contains(el) &&
-    !el.closest('.lang-switcher') &&
-    !el.closest('.plus-button')
-  ) {
-    el.dataset.prevTabindex = el.getAttribute('tabindex') ?? '';
-    el.setAttribute('tabindex', '-1');
-  }
-});
-}
-
-function closeOverview() {
-  if (!isOverviewOpen) return;
-
-  isOverviewOpen = false;
-
-  const cards = overviewPanel.querySelectorAll(".overview-card");
-
-  gsap.to(cards, { opacity: 0, y: 20, duration: 0.3, ease: "power2.in", stagger: 0.04 });
-
-  gsap.to(overviewPanel, {
-    opacity: 0,
-    duration: 0.4,
-    delay: 0.2,
-    ease: "power2.in",
-    pointerEvents: "none",
-    onComplete: () => {
-      overviewPanel.classList.remove("is-open");
-      gsap.set(cards, { opacity: 1, y: 0 });
-
-        document.querySelectorAll('[data-prev-tabindex]').forEach(el => {
-    const prev = el.dataset.prevTabindex;
-    if (prev === '') {
-      el.removeAttribute('tabindex');
-    } else {
-      el.setAttribute('tabindex', prev);
-    }
-    delete el.dataset.prevTabindex;
-  });
-    }
-  });
-
-  const hadActivePill = !!activePill;
-  if (activePill) {
-    resetPills();
-    activePill = null;
-  }
-
-  gsap.to(plusButton, {
-    rotation: 0, top: "55%", duration: 0.5, delay: 0.3, ease: "power3.inOut",
-    onComplete: () => plusRotation.resume()
-  });
-
-  gsap.to(".lang-switcher", {
-    right: window.innerWidth <= 600 ? 15 : 40,
-    duration: 0.5,
-    delay: 0.3,
-    ease: "power3.inOut"
-  });
-
-  if (!hadActivePill) {
-    gsap.to([heroTitle, heroSubtitle], {
-      opacity: 1, y: 0, duration: 0.4, delay: 0.4, ease: "power2.out", pointerEvents: "auto"
-    });
-
-    setTimeout(() => {
-      initMarquee();
-    }, 600);
-  }
-}
 
 
 // ============================================
@@ -239,13 +87,14 @@ function initMarquee() {
   // We weten dat bar.innerHTML is gedupliceerd, dus helft = scrollWidth / 2
   // Maar we moeten ook de gap tussen de twee helften aftrekken
   const gap = 20; // moet overeenkomen met .bar { gap: 20px }
-  singleWidth = (bar.scrollWidth + gap) / 3;
+  singleWidth = (bar.scrollWidth + gap) / 4;
 
   let currentX = parseFloat(gsap.getProperty(bar, "x")) || 0;
 
-  // Normaliseer: zorg dat currentX in [-singleWidth, 0] zit
-  currentX = currentX % -singleWidth;
-  if (currentX > 0) currentX -= singleWidth;
+  // Normaliseer: zorg dat currentX in [-2*singleWidth, -singleWidth] zit
+  // zodat er altijd een volle kopie links en rechts beschikbaar is
+  currentX = ((currentX + singleWidth) % -singleWidth) - singleWidth;
+  if (currentX > -singleWidth) currentX -= singleWidth;
   gsap.set(bar, { x: currentX });
 
   marqueeTween = gsap.to(bar, {
@@ -264,19 +113,11 @@ initMarquee();
 
 window.addEventListener("resize", () => {
   initMarquee();
-  if (activePill || isDetailsOpen || isOverviewOpen) {
+  if (activePill || isDetailsOpen) {
     marqueeTween.pause();
   }
 });
 
-function normalizeMarqueePosition() {
-  const totalWidth = bar.scrollWidth / 2;
-  let currentX = gsap.getProperty(bar, "x");
-  currentX = currentX % -totalWidth;
-  if (currentX > 0) currentX -= totalWidth;
-  gsap.set(bar, { x: currentX });
-  marqueeOffset = currentX;
-}
 
 const marquee = document.querySelector(".marquee");
 
@@ -285,10 +126,110 @@ marquee.addEventListener("mouseenter", () => {
 });
 
 marquee.addEventListener("mouseleave", () => {
-  if (!activePill && !isDetailsOpen && !isOverviewOpen) {
+  if (!activePill && !isDetailsOpen && !isDragging) {
     gsap.to(marqueeTween, { timeScale: 1, duration: 0.6, ease: "power2.out" });
   }
 });
+
+
+// ============================================
+// DRAG / SWIPE
+// ============================================
+
+let isDragging = false;
+let wasDragging = false;
+let dragCooldownUntil = 0;
+let dragStartX = 0;
+let dragPrevX = 0;
+let dragVelocity = 0;
+let dragLastX = 0;
+let dragLastTime = 0;
+
+function normalizeX(x) {
+  // Houd x altijd in [-2*singleWidth, -singleWidth] zodat er
+  // links én rechts altijd een volle kopie beschikbaar is
+  const lo = -2 * singleWidth;
+  const range = singleWidth;
+  x = ((x - lo) % range + range) % range + lo;
+  return x;
+}
+
+marquee.addEventListener("pointerdown", (e) => {
+  if (isDetailsOpen || isAnimating) return;
+  if (e.button !== 0 && e.pointerType === "mouse") return;
+
+  dragStartX = e.clientX;
+  dragPrevX = e.clientX;
+  isDragging = false;
+  wasDragging = false;
+  dragVelocity = 0;
+  dragLastX = e.clientX;
+  dragLastTime = performance.now();
+
+  gsap.killTweensOf(bar);
+  gsap.killTweensOf(marqueeTween, "timeScale");
+  marqueeTween.pause();
+
+  window.addEventListener("pointermove", onMarqueeDrag);
+  window.addEventListener("pointerup", onMarqueeDragEnd);
+});
+
+function onMarqueeDrag(e) {
+  const now = performance.now();
+  const dt = now - dragLastTime;
+  if (dt > 0) dragVelocity = (e.clientX - dragLastX) / dt;
+  dragLastX = e.clientX;
+  dragLastTime = now;
+
+  if (!isDragging && Math.abs(e.clientX - dragStartX) > 5) {
+    isDragging = true;
+    marquee.style.cursor = "grabbing";
+  }
+
+  if (isDragging) {
+    const dx = e.clientX - dragPrevX;
+    gsap.set(bar, { x: normalizeX((parseFloat(gsap.getProperty(bar, "x")) || 0) + dx) });
+  }
+
+  dragPrevX = e.clientX;
+}
+
+function onMarqueeDragEnd() {
+  window.removeEventListener("pointermove", onMarqueeDrag);
+  window.removeEventListener("pointerup", onMarqueeDragEnd);
+
+  marquee.style.cursor = "";
+  wasDragging = isDragging;
+  isDragging = false;
+
+  if (wasDragging && Math.abs(dragVelocity) > 0.3) {
+    dragCooldownUntil = Date.now() + 600;
+  }
+
+  if (!wasDragging) {
+    if (!activePill && !isDetailsOpen) {
+      gsap.to(marqueeTween, { timeScale: 1, duration: 0.6, ease: "power2.out" });
+    }
+    return;
+  }
+
+  const currentX = parseFloat(gsap.getProperty(bar, "x")) || 0;
+  const proxy = { x: currentX };
+
+  gsap.to(proxy, {
+    x: currentX + dragVelocity * 300,
+    duration: 0.8,
+    ease: "power2.out",
+    onUpdate() {
+      gsap.set(bar, { x: normalizeX(proxy.x) });
+    },
+    onComplete: () => {
+      if (!activePill && !isDetailsOpen) {
+        initMarquee();
+      }
+    }
+  });
+}
 
 
 // ============================================
@@ -307,22 +248,18 @@ pills.forEach(pill => {
 
   info.querySelectorAll("button, a").forEach(el => el.setAttribute("tabindex", "-1"));
 
-  pill.addEventListener("click", (e) => {
+  pill.addEventListener("click", () => {
+    if (wasDragging || Date.now() < dragCooldownUntil) return;
     if (isDetailsOpen) return;
-    if (e.target.closest(".more-btn")) return;
     if (isAnimating) return;
-
-    if (activePill === pill) {
-      resetPills();
-      activePill = null;
-      return;
-    }
-
-    if (activePill) resetPills(true);
 
     activePill = pill;
     marqueeTween.pause();
-    expandPill(pill);
+    if (pill.dataset.project === 'dirk') {
+      openDirkShowreel(pill);
+    } else {
+      openDetails(pill);
+    }
   });
 
     pill.addEventListener("keydown", (e) => {
@@ -337,17 +274,73 @@ pills.forEach(pill => {
     // Voorkom dat de browser naar het element scrollt
     window.scrollTo(0, 0);
   });
-});
 
-document.querySelectorAll(".more-btn").forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const pill = btn.closest(".bar-inner");
-    if (!pill) return;
-    activePill = pill;
-    openDetails(pill);
+  pill.addEventListener("mouseenter", () => {
+    if (isDetailsOpen || isAnimating) return;
+    const line = pill.querySelector(".line");
+    gsap.to(pill, { scale: 1.06, duration: 0.4, ease: "back.out(2)", overwrite: true });
+    if (line) gsap.to(line, { scale: 1.1, duration: 0.4, ease: "back.out(2)", overwrite: true });
+    pills.forEach(p => {
+      if (p !== pill) gsap.to(p, { scale: 0.94, duration: 0.4, ease: "power2.out", overwrite: true });
+    });
+  });
+
+  pill.addEventListener("mouseleave", () => {
+    if (isDetailsOpen || isAnimating) return;
+    const line = pill.querySelector(".line");
+    if (line) gsap.to(line, { scale: 1, duration: 0.4, ease: "power2.out", overwrite: true });
+    pills.forEach(p => gsap.to(p, { scale: 1, duration: 0.5, ease: "back.out(1.5)", overwrite: true }));
   });
 });
+
+
+
+// ============================================
+// DIRK SHOWREEL TRANSITION
+// ============================================
+
+function openDirkShowreel(pill) {
+  isAnimating = true;
+
+  const pillRect = pill.getBoundingClientRect();
+  const targetWidth = window.innerWidth - 24;
+  const shift = window.innerWidth / 2 - (pillRect.left + targetWidth / 2);
+
+  gsap.set(pills, { scale: 1 });
+
+  const stage = document.querySelector('.stage');
+  stage.style.overflow = 'visible';
+  document.body.style.overflowY = 'hidden';
+
+  const line = pill.querySelector('.line');
+  const info = pill.querySelector('.info');
+
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:#0e0e10;opacity:0;z-index:9999;pointer-events:none;';
+  document.body.appendChild(overlay);
+
+  plusRotation.pause();
+  gsap.to([heroTitle, heroSubtitle], { opacity: 0, y: -20, duration: 0.4, ease: 'power2.out' });
+
+  const tl = gsap.timeline();
+
+  if (line) tl.to(line, { y: 70, opacity: 0, duration: 0.35, ease: 'power2.in' }, 0);
+  if (info) tl.to(info, { opacity: 0, pointerEvents: 'none', duration: 0.3, ease: 'power2.out' }, 0);
+
+  tl.to(pill, {
+    flex: `0 0 ${window.innerWidth}px`,
+    height: window.innerHeight,
+    borderRadius: 0,
+    duration: 0.7,
+    ease: 'power3.inOut'
+  }, 0.3);
+
+  tl.to(bar, { x: `+=${shift}`, duration: 0.7, ease: 'power3.inOut' }, 0.3);
+
+  tl.to(overlay, { opacity: 1, duration: 0.35, ease: 'power2.in' }, 0.75);
+
+  tl.call(() => { window.location.href = '/dirk-showreel/'; }, null, 1.15);
+}
 
 
 // ============================================
@@ -362,6 +355,9 @@ function openDetails(pill) {
 
   isDetailsOpen = true;
   isAnimating = true;
+  window.updateActiveChip?.(pill.dataset.project);
+
+  gsap.set(pills, { scale: 1 });
 
   const pillRect = pill.getBoundingClientRect();
   const viewportWidth = window.innerWidth;
@@ -372,6 +368,7 @@ function openDetails(pill) {
   detailsShift = viewportCenter - targetPillCenter;
 
   pill.classList.add("activedt");
+  if (pill.dataset.project === 'studio') window.dispatchEvent(new Event('studio-details-open'));
 
   gsap.to([heroTitle, heroSubtitle], {
     opacity: 0, y: -20, duration: 0.4, ease: "power2.out", pointerEvents: "none"
@@ -379,13 +376,14 @@ function openDetails(pill) {
 
   plusRotation.pause();
   gsap.to(plusButton, { rotation: 45, top: "3%", duration: 0.5, ease: "power3.inOut" });
-  gsap.to(".lang-switcher", {
-    right: window.innerWidth <= 600 ? 70 : 100,
-    duration: 0.5,
-    ease: "power3.inOut"
-  });
 
-  const tl = gsap.timeline({ onComplete: () => { isAnimating = false; } });
+  const line = pill.querySelector(".line");
+
+  const tl = gsap.timeline({ onComplete: () => { isAnimating = false; setupDetailScroll(pill); } });
+
+  if (line) {
+    tl.to(line, { y: 70, opacity: 0, duration: 0.35, ease: "power2.in" }, 0);
+  }
 
   if (info) {
     tl.to(info, { opacity: 0, pointerEvents: "none", duration: 0.3, ease: "power2.out" }, 0);
@@ -394,6 +392,7 @@ function openDetails(pill) {
   tl.to(pill, {
     flex: `0 0 ${targetWidth}px`,
     height: window.innerHeight * 0.8,
+    borderRadius: 20,
     duration: 0.7,
     ease: "power3.inOut"
   }, 0.3);
@@ -405,14 +404,14 @@ function openDetails(pill) {
     onComplete: () => { marqueeOffset += detailsShift; }
   }, 0.3);
 
-  tl.set(details, { display: "block" }, 1.0);
-  tl.from(details, { opacity: 0, duration: 0.4, ease: "power2.out" }, 1.0);
+  tl.set(details, { display: "block" }, 1.3);
+  tl.fromTo(details, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 1.3);
 
 tl.call(() => {
   document.querySelectorAll('a, button, [tabindex]').forEach(el => {
     if (
       !details.contains(el) &&
-      !el.closest('.lang-switcher') &&
+      !el.closest('.hud') &&
       !el.closest('.plus-button') &&
       !el.closest('.footer-socials')
     ) {
@@ -435,21 +434,81 @@ tl.call(() => {
   }, null, 1.4);
 }
 
+let detailScrollCleanup = null;
+
+function setupDetailScroll(pill) {
+  const details = pill.querySelector('.details');
+  if (!details) return;
+
+  const stage = document.querySelector('.stage');
+  const savedOverflow = stage.style.overflow;
+  stage.style.overflow = 'visible';
+  document.body.style.overflowY = 'hidden';
+
+  const openWidth = window.innerWidth - 24;
+  const openHeight = window.innerHeight * 0.8;
+  const scrollDist = 120;
+  const baseBarX = parseFloat(gsap.getProperty(bar, 'x')) || 0;
+  const baseBarY = parseFloat(gsap.getProperty(bar, 'y')) || 0;
+  const pillTop = pill.getBoundingClientRect().top;
+  const topGap = pillTop - (window.innerHeight - openHeight) / 2;
+
+  let scrollbarTimeout;
+
+  function onScroll() {
+    const p = Math.min(details.scrollTop / scrollDist, 1);
+    const newWidth = openWidth + (window.innerWidth - openWidth) * p;
+    gsap.set(pill, {
+      flex: `0 0 ${newWidth}px`,
+      height: openHeight + (window.innerHeight - openHeight) * p,
+      borderRadius: 20 * (1 - p)
+    });
+    gsap.set(bar, {
+      x: baseBarX - (newWidth - openWidth) / 2,
+      y: baseBarY - topGap * p
+    });
+
+    details.classList.add('is-scrolling');
+    clearTimeout(scrollbarTimeout);
+    scrollbarTimeout = setTimeout(() => details.classList.remove('is-scrolling'), 800);
+  }
+
+  details.addEventListener('scroll', onScroll, { passive: true });
+
+  detailScrollCleanup = () => {
+    details.removeEventListener('scroll', onScroll);
+    clearTimeout(scrollbarTimeout);
+    details.classList.remove('is-scrolling');
+    stage.style.overflow = savedOverflow;
+    document.body.style.overflowY = '';
+    gsap.set(pill, { flex: `0 0 ${openWidth}px`, height: openHeight, borderRadius: 20 });
+    gsap.set(bar, { x: baseBarX, y: baseBarY });
+    gsap.set(bar, { x: baseBarX });
+  };
+}
+
 function closeDetails() {
   if (!isDetailsOpen || !activePill || isAnimating) return;
+
+  if (detailScrollCleanup) { detailScrollCleanup(); detailScrollCleanup = null; }
 
   const pill = activePill;
   const details = pill.querySelector(".details");
 
   isDetailsOpen = false;
   isAnimating = true;
+  window.updateActiveChip?.(null);
+
+  const line = pill.querySelector(".line");
 
   const tl = gsap.timeline({
     onComplete: () => {
       isAnimating = false;
-      resetPills();
       activePill = null;
       pill.classList.remove("activedt");
+      if (pill.dataset.project === 'studio') window.dispatchEvent(new Event('studio-details-close'));
+      if (line) gsap.set(line, { scale: 1, y: 0, opacity: 1 });
+      initMarquee();
     }
   });
 
@@ -461,6 +520,7 @@ function closeDetails() {
   tl.to(pill, {
     flex: getResponsiveFlex(),
     height: "clamp(50px, 6vw, 60px)",
+    borderRadius: 999,
     duration: 0.7,
     ease: "power3.inOut"
   }, 0.3);
@@ -481,11 +541,6 @@ function closeDetails() {
     onComplete: () => plusRotation.resume()
   }, 1.0);
 
-  tl.to(".lang-switcher", {
-    right: window.innerWidth <= 600 ? 15 : 40,
-    duration: 0.5,
-    ease: "power3.inOut"
-  }, 1.0);
 
 tl.call(() => {
   const video = details?.querySelector('video');
@@ -510,131 +565,6 @@ tl.call(() => {
 }, null, 1.0);
 }
 
-
-// ============================================
-// EXPAND / RESET PILLS
-// ============================================
-
-function expandPill(active) {
-  pills.forEach(p => p.classList.remove("active"));
-  active.classList.add("active");
-  isAnimating = true;
-
-  if (!hasInteracted) {
-    marqueeTween.pause();
-    gsap.set(bar, { x: gsap.getProperty(bar, "x") });
-    hasInteracted = true;
-  }
-
-  const viewportWidth = window.innerWidth;
-
-  if (shouldHideHero()) {
-gsap.to([heroTitle, heroSubtitle], {
-  opacity: 0, y: -20, duration: 0.4, ease: "power2.out", pointerEvents: "none"
-});
-
-if (viewportWidth <= 1025) {
-  gsap.to(plusButton, {
-    top: viewportWidth <= 600 ? "82%" : "71%",
-    duration: 0.5,
-    ease: "power3.inOut"
-  });
-}
-  }
-
-  const tl = gsap.timeline({ onComplete: () => { isAnimating = false; } });
-
-  pills.forEach(pill => {
-    const info = pill.querySelector(".info");
-    const title = pill.querySelector(".line");
-
-    if (pill === active) {
-      tl.to(pill, {
-        flex: `0 0 ${getExpandedWidth()}px`,
-        height: 400,
-        borderRadius: 20,
-        duration: 0.6,
-        ease: "power3.inOut"
-      }, 0);
-
-      tl.call(() => { openShift = getPillDelta(active); }, null, 0.1);
-
-      tl.to(bar, {
-        x: () => `+=${openShift}`,
-        duration: 0.6,
-        ease: "power3.inOut",
-        onComplete: () => { marqueeOffset += openShift; }
-      }, 0.1);
-
-      tl.to(title, { opacity: 0, duration: 0.3 }, 0);
-
-      if (info) {
-        tl.to(info, { opacity: 1, pointerEvents: "auto", duration: 0.4 }, 0.4);
-          tl.call(() => {
-    info.querySelectorAll("button, a").forEach(el => el.removeAttribute("tabindex"));
-  }, null, 0.4);
-
-      }
-    } else {
-      tl.to(pill, { scale: 0.8, duration: 0.6, ease: "power3.inOut" }, 0);
-    }
-  });
-}
-
-function resetPills(isSwitch = false) { 
-  isAnimating = true;
-
-  const tl = gsap.timeline({
-    onComplete: () => {
-      isAnimating = false;
-      if (!isSwitch) {
-        openShift = 0;
-        detailsShift = 0;
-      }
-      pills.forEach(p => p.classList.remove("active"));
-      // Normaliseer positie zodat de loop weer klopt
-      if (!isSwitch) initMarquee();
-    }
-  });
-
-  if (activePill) {
-    const info = activePill.querySelector(".info");
-    info.querySelectorAll("button, a").forEach(el => el.setAttribute("tabindex", "-1"));
-    tl.to(info, { opacity: 0, pointerEvents: "none", duration: 0.3, ease: "power2.out" });
-  }
-
-  const totalShift = openShift + detailsShift;
-  tl.to(bar, {
-    x: `-=${totalShift}`,
-    duration: 0.6,
-    ease: "power3.inOut",
-    onComplete: () => { marqueeOffset -= totalShift; }
-  }, 0);
-
-  tl.to(pills, {
-    flex: getResponsiveFlex(),
-    height: "clamp(50px, 6vw, 60px)",
-    scale: 1,
-    borderRadius: 999,
-    duration: 0.6,
-    ease: "power3.inOut"
-  }, 0);
-
-  if (activePill) {
-    const title = activePill.querySelector(".line");
-    tl.to(title, { opacity: 1, duration: 0.3, ease: "power2.out" });
-  }
-
-if (!isSwitch && !isDetailsOpen) {
-  tl.to([heroTitle, heroSubtitle], {
-    opacity: 1, y: 0, duration: 0.4, ease: "power2.out", pointerEvents: "auto"
-  }, 0.3);
-
-  if (window.innerWidth <= 1025) {
-    tl.to(plusButton, { top: "55%", duration: 0.5, ease: "power3.inOut" }, 0);
-  }
-}
-}
 
 
 // ============================================
@@ -672,117 +602,89 @@ gsap.set([heroTitle, heroSubtitle], { opacity: 0, y: 20 });
 gsap.set(pills, { opacity: 0, scale: 0.8 });
 gsap.set(".footer-socials", { opacity: 0 });
 gsap.set(".plus-button", { opacity: 0, scale: 0 });
-gsap.set(".lang-switcher", { opacity: 0, y: 20 });
+gsap.set(".hud", { opacity: 0, y: 20 });
 
-const introTl = gsap.timeline({
-  delay: 0.3,
-  onComplete: () => { isAnimating = false; }
-});
+const fromShowreel = new URLSearchParams(location.search).get('from') === 'showreel';
+if (fromShowreel) history.replaceState(null, '', '/');
 
-introTl.to(pills, { opacity: 1, scale: 1, duration: 0.8, ease: "power4.out", stagger: 0.08 }, 0);
-introTl.to(heroTitle, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.6);
-introTl.to(heroSubtitle, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.7);
-introTl.to(".plus-button", { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 1.0);
-introTl.to(".lang-switcher", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 1.5);
-introTl.call(() => { window.dispatchEvent(new Event('intro-complete')); }, null, 1.5);
-introTl.to(".footer-socials", { opacity: 1, duration: 0.5, ease: "power2.out" }, 2);
+if (fromShowreel) {
+  const __backOverlay = document.getElementById('__back-overlay');
+  if (__backOverlay) {
+    gsap.to(__backOverlay, { opacity: 0, duration: 0.4, delay: 0.05, ease: 'power2.out', onComplete: () => __backOverlay.remove() });
+  }
+  gsap.to([heroTitle, heroSubtitle, ".footer-socials"], { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", delay: 0.1 });
+  gsap.to(pills, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out", delay: 0.1 });
+  gsap.to(".plus-button", { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)", delay: 0.1 });
+  gsap.to(".hud", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", delay: 0.1, onComplete: () => {
+    isAnimating = false;
+    window.dispatchEvent(new Event('intro-complete'));
+  }});
+} else {
+  const introTl = gsap.timeline({
+    delay: 0.3,
+    onComplete: () => { isAnimating = false; }
+  });
+  introTl.to(pills, { opacity: 1, scale: 1, duration: 0.8, ease: "power4.out", stagger: 0.08 }, 0);
+  introTl.to(heroTitle, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.6);
+  introTl.to(heroSubtitle, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.7);
+  introTl.to(".plus-button", { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 1.0);
+  introTl.to(".hud", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 1.5);
+  introTl.call(() => { window.dispatchEvent(new Event('intro-complete')); }, null, 1.5);
+  introTl.to(".footer-socials", { opacity: 1, duration: 0.5, ease: "power2.out" }, 2);
+}
 
-
-// ============================================
-// MOBILE OVERVIEW CARDS
-// ============================================
-
-let isCardAnimating = false;
-let activeCard = null;
-
-document.querySelectorAll(".overview-card").forEach(card => {
-  card.addEventListener("click", (e) => {
-    if (window.innerWidth > 600) return;
-    if (isCardAnimating) return;
-
-    const tags = card.querySelector(".overview-tags");
-    const desc = card.querySelector(".overview-desc");
-    const link = card.querySelector("a");
-    const isOpen = card.classList.contains("expanded");
-
-    if (activeCard && activeCard !== card) {
-      isCardAnimating = true;
-      const prevTags = activeCard.querySelector(".overview-tags");
-      const prevDesc = activeCard.querySelector(".overview-desc");
-      const prevLink = activeCard.querySelector("a");
-
-      gsap.to([prevTags, prevDesc, prevLink], {
-        opacity: 0,
-        duration: 0.2,
-        ease: "power2.in",
-        onComplete: () => {
-          gsap.to(activeCard, {
-            height: 50,
-            duration: 0.4,
-            ease: "power3.inOut",
-            onComplete: () => {
-              activeCard.classList.remove("expanded");
-              gsap.set([prevTags, prevDesc, prevLink], { display: "none", opacity: 0 });
-              activeCard = null;
-              openCard(card, tags, desc, link);
-            }
-          });
-        }
-      });
-      return;
-    }
-
-    if (isOpen) {
-      isCardAnimating = true;
-      gsap.to([tags, desc, link], {
-        opacity: 0,
-        duration: 0.2,
-        ease: "power2.in",
-        onComplete: () => {
-          gsap.to(card, {
-            height: 50,
-            duration: 0.4,
-            ease: "power3.inOut",
-            onComplete: () => {
-              card.classList.remove("expanded");
-              gsap.set([tags, desc, link], { display: "none", opacity: 0 });
-              activeCard = null;
-              isCardAnimating = false;
-            }
-          });
-        }
-      });
+// Theme toggle
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+  function setTheme(t) {
+    if (t === 'light') {
+      document.documentElement.classList.add('light');
+      themeToggle.textContent = '☽';
     } else {
-      openCard(card, tags, desc, link);
+      document.documentElement.classList.remove('light');
+      themeToggle.textContent = '☀';
     }
+    localStorage.setItem('theme', t);
+  }
+  themeToggle.addEventListener('click', () => {
+    setTheme(document.documentElement.classList.contains('light') ? 'dark' : 'light');
   });
-});
+  setTheme(localStorage.getItem('theme') || 'dark');
+}
 
-function openCard(card, tags, desc, link) {
-  isCardAnimating = true;
-  activeCard = card;
-  card.classList.add("expanded");
+// Project chips in HUD
+const projectChipsEl = document.getElementById('projectChips');
+if (projectChipsEl) {
+  const projects = [
+    { key: 'studio', label: 'Studio' },
+    { key: 'oog',    label: 'Oog' },
+    { key: 'fizzi',  label: 'Fizzi' },
+    { key: 'dirk',   label: 'Dirk' },
+  ];
 
-  gsap.set([tags, desc, link], { display: "flex", opacity: 0 });
-  gsap.set(desc, { display: "block" });
-
-  gsap.set(card, { height: "auto" });
-  const openHeight = card.offsetHeight;
-  gsap.set(card, { height: 60 });
-
-  gsap.to(card, {
-    height: openHeight,
-    duration: 0.5,
-    ease: "power3.inOut",
-    onComplete: () => {
-      gsap.set(card, { height: "auto" });
-      gsap.to([tags, desc, link], {
-        opacity: 1,
-        duration: 0.3,
-        ease: "power2.out",
-        stagger: 0.08,
-        onComplete: () => { isCardAnimating = false; }
-      });
-    }
+  const chipEls = {};
+  projects.forEach(({ key, label }) => {
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.textContent = label;
+    btn.addEventListener('click', () => {
+      if (isAnimating || isDetailsOpen) return;
+      const pill = document.querySelector(`.bar-inner[data-project="${key}"]`);
+      if (!pill) return;
+      activePill = pill;
+      marqueeTween.pause();
+      if (key === 'dirk') {
+        openDirkShowreel(pill);
+      } else {
+        openDetails(pill);
+      }
+    });
+    chipEls[key] = btn;
+    projectChipsEl.appendChild(btn);
   });
+
+  window.updateActiveChip = (project) => {
+    Object.values(chipEls).forEach(b => b.classList.remove('is-active'));
+    if (project && chipEls[project]) chipEls[project].classList.add('is-active');
+  };
 }

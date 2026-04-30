@@ -3,6 +3,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 const container = document.querySelector('.logo-3d')
 
+if (container) {
+
 /* ------------------ SCENE ------------------ */
 
 const scene = new THREE.Scene()
@@ -25,7 +27,6 @@ renderer.setSize(container.clientWidth, container.clientHeight)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 container.appendChild(renderer.domElement)
 
-// 👈 Verberg canvas tot intro event
 renderer.domElement.style.opacity = '0'
 
 /* ------------------ LIGHTING ------------------ */
@@ -46,20 +47,16 @@ loader.load('/logo.glb', (gltf) => {
 
   model.traverse((child) => {
     if (child.isMesh) {
-      child.material = new THREE.MeshStandardMaterial({
-        color: 0x161616,
-        roughness: 0.4,
-        metalness: 0.1
+      child.material = new THREE.MeshBasicMaterial({
+        color: 0xFDFBFB
       })
     }
   })
 
-  // Auto center
   const box = new THREE.Box3().setFromObject(model)
   const center = box.getCenter(new THREE.Vector3())
   model.position.sub(center)
 
-  // Auto scale
   const size = box.getSize(new THREE.Vector3()).length()
   const scale = 1.2 / size
   model.scale.setScalar(scale)
@@ -94,7 +91,6 @@ animate()
 
 /* ------------------ INTRO EVENT ------------------ */
 
-// 👈 Luister naar het intro event van script.js
 window.addEventListener('intro-complete', () => {
   gsap.to(renderer.domElement, {
     opacity: 1,
@@ -110,3 +106,5 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix()
   renderer.setSize(container.clientWidth, container.clientHeight)
 })
+
+} // end if (container)

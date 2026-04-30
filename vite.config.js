@@ -7,6 +7,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         cv: resolve(__dirname, 'cv/index.html'),
+        dirkShowreel: resolve(__dirname, 'dirk-showreel/index.html'),
+        fizziShowreel: resolve(__dirname, 'fizzi-showreel/index.html'),
       },
     },
   },
