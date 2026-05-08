@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<title>CV_Bob_Harterink_NL_ENG</title>
+<link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Light.woff2") format("woff2");font-weight:300}
+@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Regular.woff2") format("woff2");font-weight:400}
+@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Medium.woff2") format("woff2");font-weight:500}
+@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Bold.woff2") format("woff2");font-weight:700}
+
+:root{
+  --ink:#0e0e10;--ink-2:#52525b;--ink-3:#9a9aa3;--accent:#ed1c40;
+  --rule:rgba(14,14,16,.12);--rule-soft:rgba(14,14,16,.07);
+  --paper:#ffffff;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#e4e4e7;color:var(--ink);font-family:'Outfit','AkzidenzGrotesk',sans-serif;-webkit-font-smoothing:antialiased}
+body{padding:28px 0;display:flex;flex-direction:column;align-items:center;gap:24px}
+
+/* A4 sheet */
+.sheet{
+  width:210mm;height:297mm;background:var(--paper);
+  padding:11mm 13mm 9mm;
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.12);
+  position:relative;display:flex;flex-direction:column;gap:4mm;
+  break-after:page;overflow:hidden;
+}
+.sheet:last-child{break-after:auto}
+
+/* Print toolbar */
+.toolbar{position:fixed;top:18px;right:18px;display:flex;gap:8px;z-index:50;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.toolbar button,.toolbar a{font:inherit;color:#fff;background:var(--accent);border:none;padding:10px 14px;border-radius:999px;cursor:pointer;text-decoration:none;transition:filter .2s}
+.toolbar button:hover,.toolbar a:hover{filter:brightness(.92)}
+.toolbar a.ghost{background:#0e0e10}
+
+/* HEAD */
+.head{display:grid;grid-template-columns:28mm 1fr;gap:7mm;align-items:flex-end;padding-bottom:3.5mm;border-bottom:1px solid var(--rule)}
+.portrait{aspect-ratio:3/4;background:#f0f0f1;overflow:hidden;border-radius:1mm}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:60% 38%;display:block; transform:scale(2.1); transform-origin:45% 50%;}
+.head-info{display:flex;flex-direction:column;gap:2.5mm}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:8.5pt;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:8px}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(237,28,64,.15)}
+h1.name{font-family:'Outfit',sans-serif;font-weight:400;font-size:38pt;line-height:.92;letter-spacing:-.025em;color:var(--ink)}
+.contact{display:grid;grid-template-columns:repeat(4,auto);gap:1mm 7mm;font-family:'JetBrains Mono',monospace;font-size:6.8pt;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-top:1.5mm}
+.contact strong{display:block;font-weight:400;color:var(--ink-3);font-size:6pt;margin-bottom:.8mm}
+.contact a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.contact-pt2{grid-template-columns:repeat(2,auto);gap:2.5mm 6mm;margin-top:0}
+
+/* BODY GRID */
+.body{display:grid;grid-template-columns:62mm 1fr;gap:6mm;flex:1;min-height:0}
+.col-left{display:flex;flex-direction:column;gap:3.5mm}
+.col-right{display:flex;flex-direction:column;gap:3.5mm}
+
+/* SECTION */
+section{display:flex;flex-direction:column;gap:1.8mm}
+section h2{font-family:'Outfit',sans-serif;font-weight:400;font-size:10pt;letter-spacing:-.005em;text-transform:uppercase;color:var(--ink);padding-bottom:1.2mm;border-bottom:1px solid var(--rule);display:flex;align-items:baseline;justify-content:space-between}
+section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(--ink-3);letter-spacing:.1em}
+
+/* PROFIEL */
+.profiel-text{font-family:'AkzidenzGrotesk',sans-serif;font-weight:400;font-size:9pt;line-height:1.4;color:var(--ink);text-wrap:pretty}
+.profiel-text em{font-style:normal;color:var(--accent);font-weight:500}
+
+/* EXP/EDU bars */
+.bar{display:grid;grid-template-columns:1fr auto;gap:.8mm 4mm;padding:1.5mm 0;border-bottom:1px solid var(--rule-soft)}
+.bar:last-child{border-bottom:0}
+.bar .b-eyebrow{font-family:'JetBrains Mono',monospace;font-size:6.5pt;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+.bar .b-title{font-family:'Outfit',sans-serif;font-weight:500;font-size:9.8pt;color:var(--ink);letter-spacing:-.005em;line-height:1.2}
+.bar .b-desc{font-family:'AkzidenzGrotesk',sans-serif;font-weight:400;font-size:8pt;line-height:1.35;color:var(--ink-2);grid-column:1/-1;margin-top:.4mm;text-wrap:pretty}
+.bar .b-meta{font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);text-align:right;display:flex;flex-direction:column;gap:.5mm;align-items:flex-end;white-space:nowrap}
+.bar .b-meta .yr{color:var(--ink-2)}
+.bar .b-honor{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:6.5pt;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--accent);padding:1px 6px;border-radius:999px;margin-top:1mm;width:fit-content}
+
+/* SKILLS pills */
+.pills{display:flex;flex-wrap:wrap;gap:1.5mm}
+.pill{font-family:'AkzidenzGrotesk',sans-serif;font-size:7.8pt;color:var(--ink);border:1px solid var(--rule);padding:.9mm 2.2mm;border-radius:999px}
+.pill.dashed{border-style:dashed;color:var(--ink-2)}
+
+/* TECH STACK */
+.stack-line{display:grid;grid-template-columns:22mm 1fr;gap:2.5mm;align-items:baseline;padding:1mm 0;border-bottom:1px solid var(--rule-soft)}
+.stack-line:last-child{border-bottom:0}
+.stack-line .cat{font-family:'AkzidenzGrotesk',sans-serif;font-weight:500;font-size:8.6pt;color:var(--ink);letter-spacing:-.005em;display:flex;align-items:baseline;gap:1.5mm}
+.stack-line .cat::before{content:attr(data-n);font-family:'JetBrains Mono',monospace;font-size:6pt;color:var(--ink-3);letter-spacing:.06em;font-weight:400}
+.stack-line .items{font-family:'JetBrains Mono',monospace;font-size:7.2pt;color:var(--ink-2);line-height:1.45;text-transform:lowercase}
+.stack-line .items .sep{color:var(--accent);margin:0 4px;opacity:.7}
+
+/* LANG */
+.lang-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:3mm;padding:1mm 0;border-bottom:1px solid var(--rule-soft);font-family:'AkzidenzGrotesk',sans-serif}
+.lang-row:last-child{border-bottom:0}
+.lang-row .name{font-size:9pt;color:var(--ink)}
+.lang-row .lvl{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase}
+.lang-bars{display:flex;gap:1mm}
+.lang-bars span{width:1.9mm;height:1.9mm;background:rgba(14,14,16,.12);border-radius:.5mm}
+.lang-bars span.on{background:var(--accent)}
+
+/* FOOT */
+.foot{margin-top:auto;padding-top:2.5mm;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.foot .pageno b{color:var(--accent)}
+
+/* PAGE 2 */
+.sheet.p2 .body{grid-template-columns:1fr 1fr}
+
+/* PRINT */
+@page{size:A4;margin:0}
+@media print{
+  html,body{background:#fff !important;padding:0;gap:0}
+  body{display:block}
+  .toolbar{display:none !important}
+  .sheet{box-shadow:none;margin:0;page-break-after:always}
+  .sheet:last-child{page-break-after:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a class="ghost" href="/cv/">← Web-versie</a>
+  <button onclick="window.print()">↓ Print / Save as PDF</button>
+</div>
+
+<!-- PAGE 1 -->
+<article class="sheet p1">
+
+  <header class="head">
+    <figure class="portrait"><img src="/cv/bob.png" alt="Bob Harterink" /></figure>
+    <div class="head-info">
+      <p class="eyebrow"><span class="dot"></span>Front-End Developer · Curriculum Vitae</p>
+      <h1 class="name">Bob Harterink</h1>
+      <div class="contact">
+        <div><strong>Locatie</strong>Antwerpen, BE</div>
+        <div><strong>E-mail</strong><a href="mailto:bobharterink@gmail.com">bobharterink@gmail.com</a></div>
+        <div><strong>Telefoon</strong>+32 456 54 21 13</div>
+        <div><strong>Web</strong><a href="https://bobharterink.com">bobharterink.com</a></div>
+        <div style="grid-column:4"><a href="https://github.com/bobharterink">github.com/bobharterink</a></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <div class="col-left">
+
+      <section>
+        <h2>Profiel</h2>
+        <p class="profiel-text">Front-end developer met een achtergrond in grafisch ontwerp en interactieve media. Gespecialiseerd in het bouwen van performante en visueel sterke webinterfaces met <em>HTML, CSS, JavaScript en React/Next.js</em>. Ervaring met <em>APIs, Git</em>, CMS-systemen en motion libraries zoals GSAP en Three.js. Zelfstandig inzetbaar, sterk in conceptueel denken en gefocust op gebruikerservaring, interactie en detail.</p>
+      </section>
+
+      <section>
+        <h2>Tech Stack</h2>
+        <div class="stack-line"><span class="cat" data-n="01.">Frontend</span><span class="items">html <span class="sep">/</span> css <span class="sep">/</span> javascript <span class="sep">/</span> typescript</span></div>
+        <div class="stack-line"><span class="cat" data-n="02.">React Ecosystem</span><span class="items">react <span class="sep">/</span> next.js</span></div>
+        <div class="stack-line"><span class="cat" data-n="03.">APIs &amp; Backend</span><span class="items">rest apis <span class="sep">/</span> firebase <span class="sep">/</span> mongodb <span class="sep">/</span> aws</span></div>
+        <div class="stack-line"><span class="cat" data-n="04.">Animation &amp; 3D</span><span class="items">gsap <span class="sep">/</span> three.js <span class="sep">/</span> r3f <span class="sep">/</span> lottie</span></div>
+        <div class="stack-line"><span class="cat" data-n="05.">CMS</span><span class="items">craft cms <span class="sep">/</span> wordpress <span class="sep">/</span> drupal <span class="sep">/</span> prismic</span></div>
+        <div class="stack-line"><span class="cat" data-n="06.">Payments &amp; Auth</span><span class="items">stripe <span class="sep">/</span> magic links</span></div>
+        <div class="stack-line"><span class="cat" data-n="07.">Tools</span><span class="items">git <span class="sep">/</span> docker <span class="sep">/</span> figma</span></div>
+      </section>
+
+      <section>
+        <h2>Vaardigheden</h2>
+        <div class="pills">
+          <span class="pill">VS Code</span>
+          <span class="pill">Adobe Illustrator</span>
+          <span class="pill">Adobe Photoshop</span>
+          <span class="pill">Adobe Premiere Pro</span>
+          <span class="pill">Adobe After Effects</span>
+          <span class="pill">Figma</span>
+          <span class="pill">Blender</span>
+        </div>
+        <div class="pills" style="margin-top:2mm">
+          <span class="pill dashed">Arduino &amp; ESP32</span>
+          <span class="pill dashed">3D Printen</span>
+          <span class="pill dashed">KiCad</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Talen</h2>
+        <div class="lang-row"><span class="name">Nederlands</span><span class="lvl">Moedertaal</span><span class="lang-bars"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span></div>
+        <div class="lang-row"><span class="name">Engels</span><span class="lvl">Uitstekend</span><span class="lang-bars"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></span></div>
+      </section>
+
+    </div>
+
+    <div class="col-right">
+
+      <section>
+        <h2>Ervaring <span class="meta">2017 — heden</span></h2>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Part-time · Founder &amp; Developer</p>
+            <h3 class="b-title">Studio Harterink</h3>
+            <p class="b-desc">Eigen studio waarin ik digitale producten ontwerp en ontwikkel — van webshop tot interactieve front-ends in React/Next.js, gekoppeld aan APIs en CMS. Conceptie, design en code in één hand.</p>
+          </div>
+          <div class="b-meta"><span>Antwerpen</span><span class="yr">2021 — heden</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Café Beestenbos · Full-time</p>
+            <h3 class="b-title">Café Manager</h3>
+            <p class="b-desc">Verantwoordelijk voor de dagelijkse werking van het café, inclusief personeelsopleiding, voorraadbeheer en het zelfstandig runnen van de zaak.</p>
+          </div>
+          <div class="b-meta"><span>Antwerpen</span><span class="yr">2020 — heden</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Maalsen Optiek · Part-time</p>
+            <h3 class="b-title">Website Onderhoud</h3>
+            <p class="b-desc">Onderhoud en doorontwikkeling van de website met focus op actualiteit, SEO-vindbaarheid en gebruiksvriendelijkheid.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2019 — 2020</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Ensie · Part-time</p>
+            <h3 class="b-title">Parsen van Encyclopedie</h3>
+            <p class="b-desc">Digitalisering van gedrukte encyclopedieën — gescande content omzetten naar gestructureerde online data via parsing- en correctieprocessen.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2019 — 2020</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Clipit · Full-time</p>
+            <h3 class="b-title">XML Developer</h3>
+            <p class="b-desc">Ontwikkeling van een platform dat online media-exposure en campagneresultaten meet via analyse van bedrijfsvermeldingen in nieuws- en online media.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2018 — 2019</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Sharp Digital Design · Part-time · Co-founder</p>
+            <h3 class="b-title">Website Development — WordPress / Divi</h3>
+            <p class="b-desc">Co-founder van een kleinschalige webdesignstudio, gericht op websites voor kleine ondernemingen en zelfstandigen.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2018 — 2019</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">BliXem Internet · Part-time</p>
+            <h3 class="b-title">Website Development &amp; SEO</h3>
+            <p class="b-desc">Doorontwikkeling van sterke generieke domeinnamen tot informatieve, commercieel rendabele websites met affiliate-integraties.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2017 — 2019</span></div>
+        </article>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  <footer class="foot">
+    <span>Bob Harterink — Curriculum Vitae · 2026</span>
+    <span class="pageno"><b>01</b> / 04</span>
+  </footer>
+</article>
+
+<!-- PAGE 2 -->
+<article class="sheet p2">
+
+  <header class="head" style="padding-bottom:4mm">
+    <figure class="portrait" style="visibility:hidden"></figure>
+    <div class="head-info">
+      <p class="eyebrow"><span class="dot"></span>Opleiding · Cursussen · Contact</p>
+      <h1 class="name" style="font-size:30pt">Bob Harterink — pt. 02</h1>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <div class="col-left">
+
+      <section>
+        <h2>Opleiding</h2>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Academische Master — KdG Sint Lucas</p>
+            <h3 class="b-title">Digitale Context</h3>
+            <p class="b-desc">Focus op digitale systemen, interactie en de relatie tussen ontwerp en technologie.</p>
+            <span class="b-honor">★ Met onderscheiding</span>
+          </div>
+          <div class="b-meta"><span>Antwerpen</span><span class="yr">2023 — 2024</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Academische Bachelor — KdG Sint Lucas</p>
+            <h3 class="b-title">Grafisch Ontwerp</h3>
+            <p class="b-desc">Sterke nadruk op digitale vormgeving, conceptontwikkeling en webprojecten.</p>
+            <span class="b-honor">★ Met onderscheiding</span>
+          </div>
+          <div class="b-meta"><span>Antwerpen</span><span class="yr">2020 — 2023</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">HBO — Avans Hogeschool</p>
+            <h3 class="b-title">Communicatie &amp; Multimedia Design</h3>
+            <p class="b-desc">Propedeuse behaald.</p>
+          </div>
+          <div class="b-meta"><span>Den Bosch</span><span class="yr">2019 — 2020</span></div>
+        </article>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <div class="contact contact-pt2">
+          <div><strong>E-mail</strong><a href="mailto:bobharterink@gmail.com">bobharterink@gmail.com</a></div>
+          <div><strong>Tel · BE</strong>+32 456 54 21 13</div>
+          <div><strong>Tel · NL</strong>+31 634 890 903</div>
+          <div><strong>Web</strong><a href="https://bobharterink.com">bobharterink.com</a></div>
+          <div><strong>GitHub</strong><a href="https://github.com/bobharterink">github.com/bobharterink</a></div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="col-right">
+
+      <section>
+        <h2>Cursussen</h2>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Bruno Simon</p>
+            <h3 class="b-title">Three.js Journey</h3>
+            <p class="b-desc">Praktische verdieping in interactieve 3D-ervaringen op het web.</p>
+          </div>
+          <div class="b-meta"><span class="yr">2023 — heden</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Marc Lou</p>
+            <h3 class="b-title">CodeFast</h3>
+            <p class="b-desc">Bouwen van echte webapplicaties met moderne stacks.</p>
+          </div>
+          <div class="b-meta"><span class="yr">2025 — heden</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">MIMO.org</p>
+            <h3 class="b-title">MIMO</h3>
+            <p class="b-desc">Introductie tot full-stack development en webapplicatie-fundamentals.</p>
+          </div>
+          <div class="b-meta"><span class="yr">2025 — heden</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Louis Paquet</p>
+            <h3 class="b-title">Awwwards Course</h3>
+            <p class="b-desc">Innovatief webdesign in Figma met focus op concept en high-end webinterfaces.</p>
+          </div>
+          <div class="b-meta"><span class="yr">2026 — heden</span></div>
+        </article>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  <footer class="foot">
+    <span>Bob Harterink — Curriculum Vitae · 2026</span>
+    <span class="pageno"><b>02</b> / 04</span>
+  </footer>
+
+</article>
+
+<!-- PAGE 3 — ENGLISH -->
+<article class="sheet p1">
+
+  <header class="head">
+    <figure class="portrait"><img src="/cv/bob.png" alt="Bob Harterink" /></figure>
+    <div class="head-info">
+      <p class="eyebrow"><span class="dot"></span>Front-End Developer · Curriculum Vitae</p>
+      <h1 class="name">Bob Harterink</h1>
+      <div class="contact">
+        <div><strong>Location</strong>Antwerp, BE</div>
+        <div><strong>E-mail</strong><a href="mailto:bobharterink@gmail.com">bobharterink@gmail.com</a></div>
+        <div><strong>Phone</strong>+32 456 54 21 13</div>
+        <div><strong>Web</strong><a href="https://bobharterink.com">bobharterink.com</a></div>
+        <div style="grid-column:4"><a href="https://github.com/bobharterink">github.com/bobharterink</a></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <div class="col-left">
+
+      <section>
+        <h2>Profile</h2>
+        <p class="profiel-text">Front-end developer with a background in graphic design and interactive media. Specialised in building performant and visually strong web interfaces with <em>HTML, CSS, JavaScript and React/Next.js</em>. Experience with <em>APIs, Git</em>, CMS systems and motion libraries such as GSAP and Three.js. Self-sufficient, strong in conceptual thinking and focused on user experience, interaction and detail.</p>
+      </section>
+
+      <section>
+        <h2>Tech Stack</h2>
+        <div class="stack-line"><span class="cat" data-n="01.">Frontend</span><span class="items">html <span class="sep">/</span> css <span class="sep">/</span> javascript <span class="sep">/</span> typescript</span></div>
+        <div class="stack-line"><span class="cat" data-n="02.">React Ecosystem</span><span class="items">react <span class="sep">/</span> next.js</span></div>
+        <div class="stack-line"><span class="cat" data-n="03.">APIs &amp; Backend</span><span class="items">rest apis <span class="sep">/</span> firebase <span class="sep">/</span> mongodb <span class="sep">/</span> aws</span></div>
+        <div class="stack-line"><span class="cat" data-n="04.">Animation &amp; 3D</span><span class="items">gsap <span class="sep">/</span> three.js <span class="sep">/</span> r3f <span class="sep">/</span> lottie</span></div>
+        <div class="stack-line"><span class="cat" data-n="05.">CMS</span><span class="items">craft cms <span class="sep">/</span> wordpress <span class="sep">/</span> drupal <span class="sep">/</span> prismic</span></div>
+        <div class="stack-line"><span class="cat" data-n="06.">Payments &amp; Auth</span><span class="items">stripe <span class="sep">/</span> magic links</span></div>
+        <div class="stack-line"><span class="cat" data-n="07.">Tools</span><span class="items">git <span class="sep">/</span> docker <span class="sep">/</span> figma</span></div>
+      </section>
+
+      <section>
+        <h2>Skills</h2>
+        <div class="pills">
+          <span class="pill">VS Code</span>
+          <span class="pill">Adobe Illustrator</span>
+          <span class="pill">Adobe Photoshop</span>
+          <span class="pill">Adobe Premiere Pro</span>
+          <span class="pill">Adobe After Effects</span>
+          <span class="pill">Figma</span>
+          <span class="pill">Blender</span>
+        </div>
+        <div class="pills" style="margin-top:2mm">
+          <span class="pill dashed">Arduino &amp; ESP32</span>
+          <span class="pill dashed">3D Printing</span>
+          <span class="pill dashed">KiCad</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Languages</h2>
+        <div class="lang-row"><span class="name">Dutch</span><span class="lvl">Native</span><span class="lang-bars"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span></div>
+        <div class="lang-row"><span class="name">English</span><span class="lvl">Excellent</span><span class="lang-bars"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></span></div>
+      </section>
+
+    </div>
+
+    <div class="col-right">
+
+      <section>
+        <h2>Experience <span class="meta">2017 — present</span></h2>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Part-time · Founder &amp; Developer</p>
+            <h3 class="b-title">Studio Harterink</h3>
+            <p class="b-desc">My own studio where I design and develop digital products — from webshops to interactive front-ends in React/Next.js, connected to APIs and CMS. Concept, design and code in one hand.</p>
+          </div>
+          <div class="b-meta"><span>Antwerp</span><span class="yr">2021 — present</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Café Beestenbos · Full-time</p>
+            <h3 class="b-title">Café Manager</h3>
+            <p class="b-desc">Responsible for the day-to-day operations of the café, including staff training, inventory management and independently running the business.</p>
+          </div>
+          <div class="b-meta"><span>Antwerp</span><span class="yr">2020 — present</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Maalsen Optiek · Part-time</p>
+            <h3 class="b-title">Website Maintenance</h3>
+            <p class="b-desc">Maintenance and further development of the website with a focus on current content, SEO visibility and user-friendliness.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2019 — 2020</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Ensie · Part-time</p>
+            <h3 class="b-title">Encyclopaedia Parsing</h3>
+            <p class="b-desc">Digitisation of printed encyclopaedias — converting scanned content into structured online data through parsing and correction processes.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2019 — 2020</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Clipit · Full-time</p>
+            <h3 class="b-title">XML Developer</h3>
+            <p class="b-desc">Development of a platform measuring online media exposure and campaign results by analysing company mentions in news and online media.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2018 — 2019</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Sharp Digital Design · Part-time · Co-founder</p>
+            <h3 class="b-title">Website Development — WordPress / Divi</h3>
+            <p class="b-desc">Co-founder of a small web design studio focused on websites for small businesses and freelancers.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2018 — 2019</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">BliXem Internet · Part-time</p>
+            <h3 class="b-title">Website Development &amp; SEO</h3>
+            <p class="b-desc">Further development of strong generic domain names into informative, commercially viable websites with affiliate integrations.</p>
+          </div>
+          <div class="b-meta"><span>Nijmegen</span><span class="yr">2017 — 2019</span></div>
+        </article>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  <footer class="foot">
+    <span>Bob Harterink — Curriculum Vitae · 2026</span>
+    <span class="pageno"><b>03</b> / 04</span>
+  </footer>
+</article>
+
+<!-- PAGE 4 — ENGLISH -->
+<article class="sheet p2">
+
+  <header class="head" style="padding-bottom:4mm">
+    <figure class="portrait" style="visibility:hidden"></figure>
+    <div class="head-info">
+      <p class="eyebrow"><span class="dot"></span>Education · Courses · Contact</p>
+      <h1 class="name" style="font-size:30pt">Bob Harterink — pt. 04</h1>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <div class="col-left">
+
+      <section>
+        <h2>Education</h2>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Academic Master — KdG Sint Lucas</p>
+            <h3 class="b-title">Digital Context</h3>
+            <p class="b-desc">Focus on digital systems, interaction and the relationship between design and technology.</p>
+            <span class="b-honor">★ With distinction</span>
+          </div>
+          <div class="b-meta"><span>Antwerp</span><span class="yr">2023 — 2024</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Academic Bachelor — KdG Sint Lucas</p>
+            <h3 class="b-title">Graphic Design</h3>
+            <p class="b-desc">Strong emphasis on digital design, concept development and web projects.</p>
+            <span class="b-honor">★ With distinction</span>
+          </div>
+          <div class="b-meta"><span>Antwerp</span><span class="yr">2020 — 2023</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">HBO — Avans University of Applied Sciences</p>
+            <h3 class="b-title">Communication &amp; Multimedia Design</h3>
+            <p class="b-desc">First year completed (propaedeutic certificate).</p>
+          </div>
+          <div class="b-meta"><span>Den Bosch</span><span class="yr">2019 — 2020</span></div>
+        </article>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <div class="contact contact-pt2">
+          <div><strong>E-mail</strong><a href="mailto:bobharterink@gmail.com">bobharterink@gmail.com</a></div>
+          <div><strong>Tel · BE</strong>+32 456 54 21 13</div>
+          <div><strong>Tel · NL</strong>+31 634 890 903</div>
+          <div><strong>Web</strong><a href="https://bobharterink.com">bobharterink.com</a></div>
+          <div><strong>GitHub</strong><a href="https://github.com/bobharterink">github.com/bobharterink</a></div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="col-right">
+
+      <section>
+        <h2>Courses</h2>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Bruno Simon</p>
+            <h3 class="b-title">Three.js Journey</h3>
+            <p class="b-desc">Hands-on deep dive into interactive 3D experiences on the web.</p>
+          </div>
+          <div class="b-meta"><span class="yr">2023 — present</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Marc Lou</p>
+            <h3 class="b-title">CodeFast</h3>
+            <p class="b-desc">Building real web applications with modern stacks.</p>
+          </div>
+          <div class="b-meta"><span class="yr">2025 — present</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">MIMO.org</p>
+            <h3 class="b-title">MIMO</h3>
+            <p class="b-desc">Introduction to full-stack development and web application fundamentals.</p>
+          </div>
+          <div class="b-meta"><span class="yr">2025 — present</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Louis Paquet</p>
+            <h3 class="b-title">Awwwards Course</h3>
+            <p class="b-desc">Innovative web design in Figma with a focus on concept and high-end web interfaces.</p>
+          </div>
+          <div class="b-meta"><span class="yr">2026 — present</span></div>
+        </article>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  <footer class="foot">
+    <span>Bob Harterink — Curriculum Vitae · 2026</span>
+    <span class="pageno"><b>04</b> / 04</span>
+  </footer>
+
+</article>
+
+</body>
+</html>

@@ -5,9 +5,8 @@
 const translations = {
   nl: {
     // Hero
-    "hero.title": "👋 Ik ben Bob Harterink",
-    "hero.subtitle": "Front-End Developer with full-stack experience",
-
+    "hero.eyebrow": "Front-End Developer",
+    "hero.subtitle": "Three.js · GSAP · Next.js · R3F",
     // Buttons
     "btn.meer": "Meer zien",
     "btn.site": "Website bekijken",
@@ -76,6 +75,21 @@ const translations = {
     "dirk.why.li1": "Abstracte concepten vertaal naar concrete interacties",
     "dirk.why.li2": "Design en techniek combineer in één geheel",
     "dirk.why.li3": "Verder denk dan een standaard \"productpagina\"",
+    // ── BEESTENBOS TIP ──
+    "beestenbos.context.h3": "Betaalde opdracht",
+    "beestenbos.concept.h3": "Concept & functionaliteit",
+    "beestenbos.concept.p": "Beestenbos Tip is een intern fooibeheersysteem, gebouwd in opdracht van een horecazaak. Medewerkers kunnen fooien invoeren per datum; deze worden automatisch verdeeld onder de aanwezige werknemers. Een adminpaneel geeft inzicht in de verdeling en stelt beheerders in staat medewerkers te beheren.",
+    "beestenbos.tech.h3": "Technische uitwerking",
+    "beestenbos.tech.li1": "Full-stack applicatie opgezet in Next.js 15 met App Router",
+    "beestenbos.tech.li2": "MongoDB met Mongoose voor opslag van fooien en medewerkers",
+    "beestenbos.tech.li3": "TypeScript door het hele project voor type-veiligheid",
+    "beestenbos.tech.li4": "UI opgebouwd met Tailwind CSS en shadcn/ui componenten",
+    "beestenbos.tech.li5": "Adminpaneel met authenticatie voor beheer van medewerkers",
+    "beestenbos.tech.li6": "Server Actions voor directe communicatie met de database",
+    "beestenbos.why.h3": "Waarom dit project?",
+    "beestenbos.why.li1": "Een volledig productierijpe full-stack applicatie bouwen",
+    "beestenbos.why.li2": "Werken met een echte opdrachtgever en concrete use case",
+    "beestenbos.why.li3": "Database-design en serverlogica combineren met een strakke UI",
     // ── DOOR HET OOG VAN DE MAKER ──
     "picturemod.context.h3": "Masterproef",
     "picturemod.context.p": "Door het oog van de maker verbindt de digitale wereld met het tastbare. Bezoekers worden actieve deelnemers en ontdekken mijn fascinatie voor moiré-patronen door zelf een unieke postkaart te ontwerpen. Zo komen digitale structuren spelenderwijs tot leven in de fysieke wereld.",
@@ -99,9 +113,8 @@ const translations = {
 
   en: {
     // Hero
-    "hero.title": "👋 I'm Bob Harterink",
-    "hero.subtitle": "Front-End Developer with full-stack experience",
-
+    "hero.eyebrow": "Front-End Developer",
+    "hero.subtitle": "Three.js · GSAP · Next.js · R3F",
     // Buttons
     "btn.meer": "See more",
     "btn.site": "Visit website",
@@ -170,6 +183,21 @@ const translations = {
     "dirk.why.li1": "translate abstract concepts into concrete interactions",
     "dirk.why.li2": "combine design and technology into a single whole",
     "dirk.why.li3": "think beyond a standard \"product page\"",
+    // ── BEESTENBOS TIP ──
+    "beestenbos.context.h3": "Paid assignment",
+    "beestenbos.concept.h3": "Concept & functionality",
+    "beestenbos.concept.p": "Beestenbos Tip is an internal tip management system, built on commission for a hospitality venue. Staff can log tips per date; these are automatically distributed among the employees present. An admin panel provides insight into the distribution and allows managers to manage staff.",
+    "beestenbos.tech.h3": "Technical implementation",
+    "beestenbos.tech.li1": "Full-stack application built with Next.js 15 and App Router",
+    "beestenbos.tech.li2": "MongoDB with Mongoose for storing tips and employees",
+    "beestenbos.tech.li3": "TypeScript throughout the project for type safety",
+    "beestenbos.tech.li4": "UI built with Tailwind CSS and shadcn/ui components",
+    "beestenbos.tech.li5": "Admin panel with authentication for managing employees",
+    "beestenbos.tech.li6": "Server Actions for direct database communication",
+    "beestenbos.why.h3": "Why this project?",
+    "beestenbos.why.li1": "Building a fully production-ready full-stack application",
+    "beestenbos.why.li2": "Working with a real client and a concrete use case",
+    "beestenbos.why.li3": "Combining database design and server logic with a clean UI",
     // ── DOOR HET OOG VAN DE MAKER ──
     "picturemod.context.h3": "Master’s thesis",
     "picturemod.context.p": "Through the Eye of the Maker connects the digital world with the tangible. Visitors become active participants, exploring my fascination with moiré patterns by designing their own unique postcard. In this way, digital structures playfully come to life in the physical world.",

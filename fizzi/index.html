@@ -1,8 +1,8 @@
 <!DOCTYPE html><html lang="nl"><head>
-
+<script>if(localStorage.getItem('theme')!=='dark')document.documentElement.classList.add('light');</script>
 
 <meta charset="UTF-8">
-<title>Showreel — Dirk Nielandt website</title>
+<title>Fizzi — Cursus</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -129,6 +129,11 @@
 
   .hud-spacer { flex: 1; }
 
+  .hud.hud-on-dark {
+    --ink: #f4f4f5; --ink-2: #a1a1aa; --ink-3: #52525b;
+    --ink-rgb: 244, 244, 245; --bg: #0e0e10; --bg-rgb: 14, 14, 16;
+  }
+
   .chips {
     display: flex;
     gap: 6px;
@@ -144,19 +149,32 @@
     flex-shrink: 0;
   }
 
-  .back-btn {
+  .hud-pill {
+    background: rgba(var(--ink-rgb),0.04);
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid rgba(var(--ink-rgb),0.06);
     display: flex;
-    align-items: center;
-    gap: 7px;
-    text-decoration: none;
+    transition: border-color 0.2s;
   }
-  .back-btn svg {
-    width: 10px;
-    height: 10px;
-    flex-shrink: 0;
-    display: block;
-    margin-top: -1px;
+  .hud-pill:hover { border-color: rgba(var(--ink-rgb),0.25); }
+  .hud-btn {
+    background: transparent;
+    color: var(--ink-2);
+    border: none;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: color 0.2s;
+    pointer-events: auto;
   }
+  .hud-btn:hover { color: var(--ink); }
+  .back-btn { display: flex; align-items: center; gap: 7px; text-decoration: none; }
+  .back-btn svg { width: 10px; height: 10px; flex-shrink: 0; }
   .chip {
     background: transparent;
     color: var(--ink-2);
@@ -222,6 +240,8 @@
   .hud > *:nth-child(4) { animation-delay: 0.39s; }
   .hud > *:nth-child(5) { animation-delay: 0.46s; }
   .hud > *:nth-child(6) { animation-delay: 0.53s; }
+  .hud > *:nth-child(7) { animation-delay: 0.60s; }
+  .hud > *:nth-child(8) { animation-delay: 0.67s; }
 
   /* ─────────────── Project header ─────────────── */
   .project-header {
@@ -327,6 +347,12 @@
     animation: scrollIndicatorIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1.05s both;
     white-space: nowrap;
   }
+
+    @media (max-width: 600px) {
+.scroll-indicator {
+  bottom: 20px;
+}
+    }
   .scroll-indicator svg {
     width: 22px;
     height: 22px;
@@ -335,11 +361,11 @@
 
   /* ─────────────── Reel layout ─────────────── */
   .reel {
-    padding: 60px 0 140px;
+    padding: 60px 0 60px;
     display: flex;
     flex-direction: column;
     gap: 80px;
-    align-items: center;
+    /* align-items: center; */
   }
 
   .scene {
@@ -347,6 +373,7 @@
     display: flex;
     flex-direction: column;
     gap: 22px;
+    margin: 0 auto;
   }
 
   .scene-label {
@@ -359,12 +386,8 @@
     letter-spacing: 0.12em;
     color: var(--ink-3);
   }
-  .scene-label .num {
-    display: none;
-  }
   .scene-label .name {
     color: var(--accent);
-    font-weight: 500;
     letter-spacing: 0.04em;
   }
   .scene-label .desc {
@@ -419,6 +442,34 @@
     color: #1a1a1a;
     /* No internal scrollbars — we want everything inline so the page-scroll IS the showreel */
   }
+  .browser-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 10;
+  }
+  .browser-stage:hover .browser-overlay { opacity: 1; }
+  @media (max-width: 600px) { .browser-overlay { opacity: 0; transition: opacity 0.8s ease; } .browser-overlay.is-visible { opacity: 1; } }
+  .browser-overlay-btn {
+    background: var(--bg);
+    color: var(--ink);
+    border: 1px solid rgba(var(--ink-rgb), 0.12);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 12px 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .browser-overlay-btn:hover { background: var(--accent); color: #fff; border-color: transparent; }
 
   /* ─────────────── Site content shared styles ─────────────── */
   .site, .site * {
@@ -997,17 +1048,6 @@
     transform: translateY(-110%);
     animation: cl-slideCoverDown 1s 5s forwards;
   }
-  /* paused by default — first frame shown until anim-running is added */
-  .cover-loader .outer-circle,
-  .cover-loader .middle-circle,
-  .cover-loader .inner-circle,
-  .cover-loader .text,
-  .cover-loader .cover-screen { animation-play-state: paused; }
-  .cover-loader.anim-running .outer-circle,
-  .cover-loader.anim-running .middle-circle,
-  .cover-loader.anim-running .inner-circle,
-  .cover-loader.anim-running .text,
-  .cover-loader.anim-running .cover-screen { animation-play-state: running; }
   .cover-loader .cover-screen::before {
     content: "";
     position: absolute;
@@ -1352,16 +1392,13 @@
   /* End slide */
   .end-slide {
     width: min(1180px, 92vw);
-    height: 60vh;
-    min-height: 380px;
-    display: grid;
-    place-items: center;
-    text-align: center;
-    background: var(--bg-2);
-    border-radius: 14px;
-    border: 1px solid var(--frame-edge);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
-  .end-inner { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+  .end-browser-header { display: flex; align-items: center; justify-content: space-between; }
+  .end-next-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .end-replay-btn { background: none; border: none; font: inherit; font-size: 11px; color: var(--ink-2); cursor: pointer; text-decoration: underline; }
   .end-title {
     font-family: 'PlaywriteDEGrund', sans-serif;
     font-size: 48px;
@@ -1390,7 +1427,7 @@
     width: 100%;
     min-height: 100vh;
     align-items: center;
-    background-color: color-mix(in srgb, var(--scene-color, #fff) var(--duo-bg-mix, 0%), var(--bg));
+    background-color: color-mix(in srgb, var(--duo-color, var(--scene-color, #fff)) var(--duo-bg-mix, 0%), var(--bg));
     transition: opacity 0.5s ease;
   }
   .scene-duo.duo-hiding { opacity: 0; }
@@ -1420,6 +1457,38 @@
     gap: 48px;
     border-top: none;
   }
+
+  .scene-duo .scene[data-scene="logo"] {
+    --carousel-color: #710523;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.45s ease;
+  }
+  .scene-carousel-waves {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: min(580px, 90%);
+    max-width: none;
+    color: rgba(255,255,255,0.34);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+  }
+  .scene-carousel-waves .wavy-circles-outer {
+    transform-box: view-box;
+    transform-origin: center;
+    animation: carouselSceneSpinOuter 22s linear infinite;
+  }
+  .scene-carousel-waves .wavy-circles-inner {
+    transform-box: view-box;
+    transform-origin: center;
+    animation: carouselSceneSpinInner 16s linear infinite;
+  }
+  .scene-duo .scene[data-scene="logo"] .closeup {
+    position: relative;
+    z-index: 1;
+  }
   .scene-duo .closeup {
     width: 100%;
     height: auto;
@@ -1447,11 +1516,13 @@
   .scene-duo .closeup-body,
   .scene-duo .closeup-meta,
   .scene-duo .closeup > .demo-card,
-  .scene-duo .closeup > .demo-logo { opacity: 0; }
+  .scene-duo .closeup > .demo-logo,
+  .scene-duo .closeup > .fizzi-carousel-demo { opacity: 0; }
 
   /* left column */
   .scene-duo.duo-visible .scene:first-child .closeup > .demo-card,
-  .scene-duo.duo-visible .scene:first-child .closeup > .demo-logo
+  .scene-duo.duo-visible .scene:first-child .closeup > .demo-logo,
+  .scene-duo.duo-visible .scene:first-child .closeup > .fizzi-carousel-demo
     { animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.05s both; }
   .scene-duo.duo-visible .scene:first-child .closeup-eyebrow
     { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s both; }
@@ -1464,7 +1535,8 @@
 
   /* right column — slight extra stagger */
   .scene-duo.duo-visible .scene:last-child .closeup > .demo-card,
-  .scene-duo.duo-visible .scene:last-child .closeup > .demo-logo
+  .scene-duo.duo-visible .scene:last-child .closeup > .demo-logo,
+  .scene-duo.duo-visible .scene:last-child .closeup > .fizzi-carousel-demo
     { animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.2s both; }
   .scene-duo.duo-visible .scene:last-child .closeup-eyebrow
     { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.3s both; }
@@ -1475,11 +1547,16 @@
   .scene-duo.duo-visible .scene:last-child .closeup-meta
     { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.69s both; }
   .scene-duo .closeup > .demo-card,
-  .scene-duo .closeup > .demo-logo {
+  .scene-duo .closeup > .demo-logo,
+  .scene-duo .closeup > .fizzi-carousel-demo {
     height: 300px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+  }
+  .scene-duo .closeup > .fizzi-carousel-demo {
+    height: 410px;
+    justify-content: center;
   }
   .scene-duo .demo-card { width: auto; }
   .scene-duo .demo-card img { height: 100%; width: auto; }
@@ -1491,6 +1568,72 @@
   .scene-duo .demo-logo .pupil-bg { width: 104px; height: 104px; }
   .scene-duo .demo-logo .pupil { width: 60px; height: 60px; }
 
+  .fizzi-carousel-demo {
+    --carousel-color: #710523;
+    position: relative;
+    width: min(430px, 100%);
+    min-height: 410px;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 0;
+    background: transparent;
+    color: #fff;
+    box-shadow: none;
+  }
+  .fizzi-carousel-demo--passive {
+    width: min(620px, 115%);
+  }
+  .fizzi-carousel-demo::before {
+    display: none;
+  }
+  .carousel-shell {
+    width: 100%;
+    height: 100%;
+    min-height: 410px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+  .carousel-main {
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+  .carousel-can-button {
+    width: min(400px, 76vw);
+    height: 395px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    display: block;
+  }
+  .carousel-can-button--passive {
+    width: min(580px, 100%);
+    cursor: default;
+    pointer-events: none;
+  }
+  .carousel-can-button:focus-visible {
+    outline: 3px solid rgba(255,255,255,0.9);
+    outline-offset: 6px;
+    border-radius: 8px;
+  }
+  .carousel-can-canvas {
+    position: absolute;
+    inset: 0;
+  }
+  .carousel-can-canvas canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  @keyframes carouselSceneSpinOuter {
+    to { transform: rotate(-360deg); }
+  }
+  @keyframes carouselSceneSpinInner {
+    to { transform: rotate(360deg); }
+  }
   .link {
         transition: background-color 0.3s ease;
       cursor: pointer;
@@ -1509,9 +1652,49 @@
     background: transparent;
   }
 
+  /* ─── Fizzi mockup ─── */
+  .fizzi-mockup {
+    position: absolute; left: 0; right: 0; z-index: 1;
+    top: 50%; transform: translateY(-50%);
+    height: 50%;
+    background: #f5e03e;
+    border-radius: 16px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px 36px;
+    overflow: hidden; text-align: center;
+  }
+  .fizzi-mock-headline {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900; color: #f97316;
+    line-height: 0.9; letter-spacing: -0.01em;
+    margin-bottom: 12px; white-space: pre;
+  }
+  .fizzi-mock-cursor {
+    display: inline-block; width: 4px; height: 0.8em;
+    background: #f97316; margin-left: 3px;
+    vertical-align: -0.05em;
+    animation: cursorBlink 0.75s step-end infinite;
+  }
+  @keyframes cursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .fizzi-cursor-hidden { display: none; }
+  .fizzi-mock-sub .fizzi-mock-cursor { width: 2px; background: #1b2d5b; }
+  .fizzi-mock-body .fizzi-mock-cursor { width: 2px; background: #1b2d5b; }
+  .fizzi-mock-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    font-weight: 700; color: #1b2d5b;
+    letter-spacing: -0.01em; margin-bottom: 6px;
+  }
+  .fizzi-mock-body {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+    color: #1b2d5b; opacity: 0.7;
+  }
+
   /* ─── CMS showcase: sticky scroll section ─── */
   .cms-section {
-    width: 90%;
     height: 300vh;
     position: relative;
   }
@@ -1526,6 +1709,7 @@
   .cms-left {
     position: relative;
     overflow: hidden;
+    /* order: 2; */
   }
   .cms-cat {
     position: absolute;
@@ -1544,36 +1728,36 @@
     pointer-events: auto;
   }
   .cms-cat .site-main { padding-top: 0; }
-  .cms-cat .row-3 { gap: 36px;     padding: 48px 5% 48px 5%; margin: 0; }
-  .cms-cat .site-main h1 { margin-left: 3%; }
-  .cms-cat .sticker-badge { width: 88px; height: 88px; top: -32px; left: -32px; font-size: 0.68em; padding: 13px; }
+  .cms-cat .row-3 { gap: 24px; padding: 28px 28px 32px; margin: 0 28px; }
+  .cms-cat .site-main h1 { margin-left: 28px; }
+  .cms-cat .sticker-badge { width: 64px; height: 64px; top: -22px; left: -22px; font-size: 0.58em; padding: 10px; }
   .cms-right {
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
     padding: 80px 8vw;
   }
-  .cms-right-inner { max-width: 500px; text-align: right; }
+  .cms-right-inner { max-width: 460px; text-align: right; }
   .cms-eyebrow {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 32px;
+    margin-bottom: 28px;
   }
   .cms-title {
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(2.4rem, 4.5vw, 4.4rem);
+    font-size: clamp(2rem, 4vw, 3.8rem);
     font-weight: 800;
     color: var(--ink);
     line-height: 1;
     letter-spacing: -0.02em;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
   .cms-body {
     color: var(--ink-2);
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.65;
     max-width: 38ch;
     margin-left: auto;
@@ -1592,51 +1776,11 @@
     { animation: slideUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.42s both; }
   .cms-sticky.cms-visible .cms-body
     { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.56s both; }
+  .fizzi-mockup { opacity: 0; transition: opacity 0.8s ease; margin: 0 80px;}
+  .cms-sticky.cms-visible .fizzi-mockup { opacity: 1; transition-delay: 0.9s; }
   .cms-sticky { transition: opacity 0.5s ease; }
   .cms-sticky.cms-hiding { opacity: 0; }
 
-  /* ─── Mobile browser scene fixes ─── */
-  @media (max-width: 640px) {
-    .browser-stage .site-header { padding: 14px 0 6px; }
-    .browser-stage .logo-eye { width: 30px; height: 30px; }
-    .browser-stage .logo-eye .pupil-bg { width: 17px; height: 17px; }
-    .browser-stage .logo-eye .pupil { width: 10px; height: 10px; }
-    .browser-stage .logo-mark { gap: 8px; }
-    .browser-stage .logo-mark h1 { font-size: 0.85em; }
-    .browser-stage .site-nav { gap: 10px; font-size: 0.7em; }
-    .browser-stage .sticker-badge { width: 48px; height: 48px; top: -18px; left: -18px; font-size: 0.45em; padding: 7px; }
-    .browser-stage .pill-btn { font-size: 0.6em; padding: 5px 14px; }
-    .browser-stage .site-main { margin: 0 4%; }
-    .browser-stage .site-main h1 { font-size: 1em; margin: 30px 0 10px; }
-  }
-
-  /* ─── CMS mobile stacked ─── */
-  @media (max-width: 640px) {
-    .cms-sticky {
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr auto;
-    }
-    .cms-left {
-      /* height is driven by 1fr row; absolute .cms-cat children fill it */
-      min-height: 0;
-    }
-    .cms-right {
-      border-left: none;
-      border-top: 1px solid rgba(var(--ink-rgb), 0.06);
-      padding: 24px 6vw 28px;
-      align-items: flex-start;
-      justify-content: flex-start;
-    }
-    .cms-right-inner {
-      max-width: 100%;
-      text-align: left;
-    }
-    .cms-body { margin-left: 0; max-width: 100%; }
-    .cms-cat .row-3 { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px 16px 16px; margin: 0 12px; }
-    .cms-cat .site-main h1 { margin-left: 16px; font-size: 1rem; }
-    .cms-cat .sticker-badge { width: 52px; height: 52px; top: -16px; left: -16px; font-size: 0.5em; padding: 8px; }
-    .cms-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
-  }
 
   /* responsive nudge */
   @media (max-width: 800px) {
@@ -1649,6 +1793,8 @@
       padding: 40px 50px 30px;
       width: 100%;
     }
+
+    .fizzi-mockup { margin: 20px;}
     .site .footer-container {
       width: min(100%, 780px);
       flex-direction: column;
@@ -1659,20 +1805,127 @@
     .site .footer-left,
     .site .footer-middle,
     .site .footer-right { width: 100%; }
-    .hud { padding: 10px 10px; gap: 6px; flex-wrap: wrap; }
-    .chips { display: none; }
+    .hud { padding: 14px 14px; gap: 6px; flex-wrap: wrap; }
     .hud-meta { display: none; }
-    #mixPill { display: none; }
-    .sr-theme-btn, .sr-lang-btn { font-size: 9px; padding: 5px 10px; }
-    .sr-pill { padding: 3px; }
+    .chips { display: none; }
+    .hud-btn, .sr-lang-btn, .sr-theme-btn { font-size: 9px; padding: 5px 10px; }
+    .hud-pill, .sr-pill { padding: 3px; }
     .scene-duo { grid-template-columns: 1fr; grid-template-rows: auto 1fr 1fr; min-height: auto; }
-    .scene-duo .scene { min-height: 50vh; align-items: center; }
-    .scene-duo .closeup { align-items: center; }
+    .scene-duo .scene { min-height: 50vh; }
     .scene-duo-header { padding: 16px 6% 0; }
-    .project-header-inner { margin-bottom: 15vh; }
+    .scene-duo .closeup { margin: 0; }
+    .scene-duo .scene { padding: 40px 6%; }
+    .scene-carousel-waves { top: 31%; }
+    .carousel-shell { min-height: 280px; }
+    .carousel-can-button { height: 260px; }
+    /* CMS — single column sticky scroll (text top, mockup bottom) */
+    /* .cms-section { padding: 0 16px; } */
+    .fizzi-mockup { height: 65%; margin: 20px;}
+    .cms-sticky { grid-template-columns: 1fr; grid-template-rows: 1fr auto; border-radius: 14px; overflow: hidden; }
+    .cms-right { order: 2; align-items: flex-start; justify-content: flex-start; padding: 24px 6vw 40px; border-top: 1px solid rgba(var(--ink-rgb), 0.06); border-bottom: none; }
+    .cms-right-inner { max-width: 100%; text-align: left; }
+    .cms-body { max-width: 100%; font-size: 15px; }
+    .cms-title { font-size: clamp(2.2rem, 7vw, 3.2rem); }
+    .cms-left { order: 1; max-height: 60vh; }
   }
+
+  /* ── Fizzi homepage mockup ── */
+  @font-face {
+    font-family: 'Alpino';
+    src: url('assets/Alpino-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+  }
+  .fizzi-home {
+    background: #fde047;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Alpino', ui-sans-serif, system-ui, sans-serif;
+    color: #0c4a6e;
+    overflow: hidden;
+  }
+
+  .fizzi-home__bubbles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .fizzi-home__header {
+    display: flex;
+    justify-content: center;
+    padding: 16px 24px 0;
+    position: relative;
+    z-index: 10;
+  }
+  .fizzi-home__logo { height: clamp(36px, 5vw, 60px); width: auto; color: #075985; cursor: pointer; }
+  .fizzi-home__logo .fh-wave {
+    transition: transform 0.5s ease-in-out;
+    transform-box: fill-box;
+    transform-origin: top center;
+  }
+  .fizzi-home__logo:hover .fh-wave { transform: translateY(80%); }
+  .fizzi-home__hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5% 5%;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .fizzi-home__heading {
+    font-size: clamp(3.5rem, 12vw, 10rem);
+    font-weight: 900;
+    color: #f97316;
+    text-transform: uppercase;
+    line-height: 0.82;
+    letter-spacing: -0.02em;
+    margin-bottom: clamp(0.8rem, 2.5vw, 2.5rem);
+  }
+  .fizzi-home__sub {
+    font-size: clamp(1rem, 3.5vw, 2.8rem);
+    font-weight: 600;
+    color: #082f49;
+    margin-bottom: 0.4em;
+  }
+  .fizzi-home__body {
+    font-size: clamp(0.75rem, 2vw, 1.5rem);
+    font-weight: 400;
+    color: #082f49;
+    line-height: 1.4;
+    max-width: 32em;
+  }
+  .fizzi-home__btn {
+    display: inline-block;
+    background: #ea580c;
+    color: #ffffff;
+    border: none;
+    padding: clamp(10px, 1.4vw, 18px) clamp(18px, 2.5vw, 32px);
+    border-radius: 12px;
+    font-size: clamp(0.8rem, 2vw, 1.5rem);
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    font-family: inherit;
+    transition: background 0.15s;
+    margin-top: clamp(1.2rem, 3.5vw, 3rem);
+  }
+  .fizzi-home__btn:hover { background: #c2410c; }
+
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--ink) transparent;
+  }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--ink); border-radius: 999px; }
 </style>
-<meta id="ConnectiveDocSignExtentionInstalled" name="ConnectiveDocSignExtentionInstalled" data-extension-version="1.0.7"></head>
+</head>
 <body data-cc-id="cc-1" data-show-loading="true" style="cursor: crosshair; font-family: Outfit;">
 
 <!-- progress -->
@@ -1680,14 +1933,13 @@
 
 <!-- top HUD -->
 <div class="hud">
-  <div class="sr-pill"><a class="sr-theme-btn back-btn" href="/"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg><span data-i18n="back">Terug</span></a></div>
+  <div class="hud-pill"><a class="hud-btn back-btn" href="/"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg><span data-i18n="back">Terug</span></a></div>
   <div class="hud-title">
     <span class="hud-dot"></span>
-    <span>Betaalde Opdracht</span>
+    <span data-i18n="hud.context">Cursus</span>
   </div>
-  <div class="hud-meta">dirknielandt.be · <b id="currentScene">Home</b></div>
+  <div class="hud-meta">studioha.vercel.app · <b id="currentScene">Home</b></div>
   <div class="hud-spacer"></div>
-  <div class="sr-pill" id="mixPill"><button class="sr-theme-btn" id="tweakOpenBtn">Mix</button></div>
   <div class="chips" id="sceneChips"></div>
   <div class="sr-pill"><button class="sr-lang-btn" id="srLangBtn">NL</button></div>
   <div class="sr-pill"><button class="sr-theme-btn" id="srThemeBtn" aria-label="Toggle light/dark mode">☀</button></div>
@@ -1699,20 +1951,20 @@
 <div class="project-header">
   <div class="project-header-inner">
     <div class="project-eyebrow">
-      <span>Dirk Nielandt</span>
-      <span>2024</span>
+      <span>Fizzi</span>
+      <span>2026</span>
     </div>
     <h1 class="project-title">
-      <span class="r-line"><span>Website,</span></span>
-      <span class="r-line"><span data-i18n="project.title.line2">huisstijl &amp;</span></span>
-      <span class="r-line"><span>CMS</span></span>
+      <span class="r-line"><span data-i18n="project.title.l1">Scroll,</span></span>
+      <span class="r-line"><span data-i18n="project.title.l2">proef &amp;</span></span>
+      <span class="r-line"><span data-i18n="project.title.l3">beweeg mee.</span></span>
     </h1>
-    <p class="project-desc" data-i18n="project.desc">Voor kinderboekenschrijver Dirk Nielandt heb ik de website, huisstijl en cms gemaakt zodat Dirk zelf eenvoudig nieuwe titels kan toevoegen.</p>
+    <p class="project-desc" data-i18n="project.desc">Een interactieve frisdrankwebsite gebouwd met Next.js, GSAP en Three.js. 3D-blikjes bewegen mee met scroll, click-events laten je het aanbod ontdekken, en content wordt beheerd via Prismic CMS.</p>
     <div class="project-tags">
-      <span class="project-tag">HTML</span>
-      <span class="project-tag">CSS</span>
-      <span class="project-tag">JS</span>
-      <span class="project-tag">Craft CMS</span>
+      <span class="project-tag">Next.js</span>
+      <span class="project-tag">GSAP</span>
+      <span class="project-tag">Three.js</span>
+      <span class="project-tag">Prismic</span>
     </div>
   </div>
   <div class="scroll-indicator">
@@ -1730,47 +1982,16 @@
   <!-- 00 HOME -->
   <section class="scene" data-scene="home" data-name="Home" data-color-index="0" style="--scene-color: #1c88ed; --scene-soft-color: #d9edff; --scene-hover: #1872C7;">
     <div class="scene-label">
-      <span class="num">00</span>
       <span class="name">Home</span>
-      <span class="desc" data-i18n="scene.home.desc">Landingspagina · populaire titels, nieuw werk en het debuut.</span>
+      <span class="desc" data-i18n="scene.home.desc">Landingspagina · 3D-blikjes, scroll-animaties en hero.</span>
     </div>
     <div class="browser">
       <div class="browser-bar">
         <div class="traffic"><span></span><span></span><span></span></div>
-        <div class="url-bar"><span class="scheme">https://</span><span class="host">dirknielandt.be</span><span class="path">/</span></div>
+        <div class="url-bar"><span class="scheme">https://</span><span class="host">studioha.vercel.app</span><span class="path">/</span></div>
       </div>
-      <div class="browser-stage site">
-        <div class="cover-loader" id="coverLoader">
-          <div class="outer-circle" id="outer-circle">
-            <div class="middle-circle">
-              <div class="inner-circle"></div>
-            </div>
-          </div>
-          <div class="text-container">
-            <div class="text">Dirk Nielandt</div>
-          </div>
-          <div class="cover-screen"></div>
-        </div>
-        <header class="site-header">
-          <div class="site-header-content">
-            <a class="logo-mark">
-              <div class="logo-eye"><div class="pupil-bg"><div class="pupil"></div></div></div>
-              <h1>Dirk Nielandt</h1>
-            </a>
-          </div>
-          <nav class="site-nav">
-            <a  class="link">Prijzen</a><a  class="link">Lezingen</a><a  class="link">Boeken</a><a  class="link">Tv</a><a  class="link">Contact</a>
-          </nav>
-        </header>
-        <main class="site-main">
-          <h1>Populair</h1>
-          <section class="row-3">
-            <a class="cover-card"><span class="sticker-badge">Meer dan 12.000 verkocht!</span><img src="assets/covers/dievenschool.jpg" alt=""></a>
-            <a class="cover-card"><span class="sticker-badge">Te zien op Ketnet!</span><img src="assets/covers/ridder muis.jpg" alt=""></a>
-            <a class="cover-card"><span class="sticker-badge">Al 14 keer herdrukt!</span><img src="assets/covers/slim stoer sterk.jpg" alt=""></a>
-            <button class="pill-btn">Alle boeken bekijken</button>
-          </section>
-        </main>
+      <div class="browser-stage" style="height:716px;overflow:hidden;">
+        <iframe src="https://studioha.vercel.app/main" style="width:calc(100% + 20px);height:100%;border:none;display:block;" title="studioha.vercel.app"></iframe>
       </div>
     </div>
   </section>
@@ -1780,94 +2001,70 @@
 
     <section class="scene" data-scene="sticker" data-name="Details" data-color-index="1" style="--scene-color: #1ced6b; --scene-soft-color: #e6ffef; --scene-hover: #1BD863;">
       <div class="closeup">
-        <a class="demo-card">
-          <span class="sticker-badge">Meer dan 12.000 verkocht!</span>
-          <img src="assets/covers/dievenschool.jpg" alt="">
-        </a>
+        <div class="fizzi-carousel-demo fizzi-carousel-demo--passive" id="fizziPassiveCanWrap">
+          <div class="carousel-shell">
+            <div class="carousel-main">
+              <span class="carousel-can-button carousel-can-button--passive" aria-hidden="true">
+                <span class="carousel-can-canvas" id="fizziPassiveCan"></span>
+              </span>
+            </div>
+          </div>
+        </div>
         <div class="closeup-copy">
-          <span class="closeup-eyebrow" data-i18n="sticker.eyebrow">Detail · Sticker</span>
-          <h2 class="closeup-title" data-i18n="sticker.title">Een knipoog naar de oude lapjes­doos.</h2>
-          <p class="closeup-body" data-i18n="sticker.body">Iedere uitgelichte titel draagt een handgeschreven sticker — herdruk-tellers, awards, Ketnet-vermeldingen. Bij hover schiet de boek lichtjes naar voren en kantelt de sticker mee, alsof iemand 'm net opgeplakt heeft.</p>
+          <span class="closeup-eyebrow"><b style="color:var(--accent)">Details</b> · <span data-i18n="sticker.eyebrow.suffix">Beweging</span></span>
+          <h2 class="closeup-title" data-i18n="sticker.title">Een dynamisch blik dat meebeweegt</h2>
+          <p class="closeup-body" data-i18n="sticker.body">Het dynamische blik beweegt vloeiend door de website en draait automatisch mee naar de juiste zijde, zodat zowel het ontwerp van het blik als de bijhorende tekst altijd duidelijk en in balans zichtbaar blijven binnen de layout.</p>
           <dl class="closeup-meta">
-            <dt data-i18n="sticker.meta.book">Boek</dt><dd>scale 1.00 → 1.04</dd>
-            <dt>Sticker</dt><dd>rotate −8° → 10°, scale 1.0 → 1.1</dd>
-            <dt data-i18n="meta.curve">Curve</dt><dd>ease-in-out · 0.35s</dd>
+            <dt>Trigger</dt><dd>scroll</dd>
+            <dt>Element</dt><dd>Three.js mesh</dd>
+            <dt data-i18n="meta.source">Bron</dt><dd>AlternatingText scene</dd>
           </dl>
         </div>
       </div>
     </section>
 
-    <section class="scene" data-scene="logo" data-name="Logo" data-color-index="2" data-duo-secondary="1" style="--scene-color: #ed1cae; --scene-soft-color: #ffe6f7; --scene-hover: #BB178A;">
+    <section class="scene" data-scene="logo" data-name="Carousel" data-color-index="2" data-duo-secondary="1" style="--scene-color: #ed1cae; --scene-soft-color: #ffe6f7; --scene-hover: #BB178A;">
+      <svg class="scene-carousel-waves" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 1165 1166" aria-hidden="true">
+        <path class="wavy-circles-outer" fill="currentColor" d="M1133.5 619c-5 76.2-84.8 126.7-113.5 183.3-28.7 56.6-20.8 149-74 195.6-53 46.6-143.6 26.9-203.4 48-59.9 21.2-120.2 93.8-196.5 88.9-76.2-5-126.6-86.2-183.2-113.5-56.6-28.7-149-20.8-195.6-74-46.7-53-26.9-143.6-46.7-203.4-19.8-59.7-93.7-121.5-88.8-196.4 4.8-74.8 84.8-128 113.6-184.6 28.7-56.6 19.4-149 72.5-195.7 53.1-46.7 143.7-26.9 203.4-46.7C481 100.8 543 26.8 619.1 31.8c76.2 5 126.7 84.7 183.3 113.5 56.6 28.7 149 19.4 195.7 72.5 46.6 53.1 26.8 143.7 48 203.5 19.8 59.7 92.3 121.5 87.4 197.7z" opacity="0.85"/>
+        <path class="wavy-circles-inner" fill="currentColor" d="M827.9 672.6c-12.4 34-55.3 46.3-75.9 68.2-20.5 22-29.2 64.9-59.5 79-30.3 14.2-68.8-6.8-98.7-5.1-30 1.6-67 26.6-101 14.2-33.9-12.3-46-55.9-68-75.8-22-20.5-65-29.2-79-59.5-14.1-30.3 6.9-68.8 5.8-98.6-1-29.7-26.4-67.6-14.2-101 12.1-33.3 55.5-46.9 76-68.8 20.6-21.8 28.6-65 59-79.2 30.2-14.1 68.7 6.9 98.4 5.8 29.8-1 67.7-26.4 101.6-14 34 12.3 46.2 55.2 68.1 75.8 21.9 20.5 65 28.6 79.2 58.9 14.1 30.3-6.9 68.8-5.2 98.8 1 29.7 25.7 67.4 13.4 101.3z"/>
+      </svg>
       <div class="closeup">
-        <div class="demo-logo">
-          <div class="logo-eye"><div class="pupil-bg"><div class="pupil"></div></div></div>
+        <div class="fizzi-carousel-demo" id="fizziFlavorCarousel" style="--carousel-color:#710523;">
+          <div class="carousel-shell">
+            <div class="carousel-main">
+              <button class="carousel-can-button" type="button" aria-label="Next flavor">
+                <span class="carousel-can-canvas" id="fizziCarouselCan"></span>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="closeup-copy">
-          <span class="closeup-eyebrow" data-i18n="logo.eyebrow">Detail · Logo</span>
-          <h2 class="closeup-title" data-i18n="logo.title">Een oog dat met je mee­kijkt.</h2>
-          <p class="closeup-body" data-i18n="logo.body">Het logo is letterlijk een oog — de pupil draait rustig rond als je de pagina laat liggen, en knipoogt terug zodra je er met de muis langs gaat. Een klein gebaar, maar het maakt de site direct levendig.</p>
+          <span class="closeup-eyebrow"><b style="color:var(--accent)">Details</b> · <span data-i18n="logo.eyebrow.suffix">Klik</span></span>
+          <h2 class="closeup-title" data-i18n="logo.title">Klik en ontdek de smaak.</h2>
+          <p class="closeup-body" data-i18n="logo.body">Met elke klik verandert het 3D-model van label, kleur en uitstraling, waardoor ieder blikje een compleet eigen karakter krijgt. Zo word je steeds verder meegezogen in de wereld van het merk en ontdek je de beleving achter iedere variant.</p>
           <dl class="closeup-meta">
-            <dt>Idle</dt><dd>pupil look-around · 28s loop</dd>
-            <dt>Hover</dt><dd>scaleY 1 → 0.05 → 1</dd>
-            <dt data-i18n="meta.curve">Curve</dt><dd>ease-in-out · 0.5s</dd>
+            <dt>Trigger</dt><dd>click event</dd>
+            <dt>Element</dt><dd>Three.js mesh</dd>
+            <dt>Asset</dt><dd>Soda-can.gltf</dd>
           </dl>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- 04 BOEKEN -->
-  <section class="scene" data-scene="boeken" data-name="Boeken" data-color-index="3" style="--scene-color: #ed1cae; --scene-soft-color: #ffe6f7; --scene-hover: #BB178A;">
+  <!-- 02 SMAKEN -->
+  <section class="scene" data-scene="smaken" data-name="Dive" data-color-index="3" style="--scene-color: #ed1cae; --scene-soft-color: #ffe6f7; --scene-hover: #BB178A;">
     <div class="scene-label">
-      <span class="num">02</span>
-      <span class="name">Boeken</span>
-      <span class="desc" data-i18n="scene.boeken.desc">De bibliotheek — gegroepeerd per leeftijd: +9 jaar, 6–9 jaar en 2–5 jaar.</span>
+      <span class="name">Dive</span>
+      <span class="desc" data-i18n="scene.dive.desc">Sky dive · scroll-animatie met het 3D-blikje in vrije val.</span>
     </div>
     <div class="browser">
       <div class="browser-bar">
         <div class="traffic"><span></span><span></span><span></span></div>
-        <div class="url-bar"><span class="scheme">https://</span><span class="host">dirknielandt.be</span><span class="path">/boeken</span></div>
+        <div class="url-bar"><span class="scheme">https://</span><span class="host">studioha.vercel.app</span><span class="path">/</span></div>
       </div>
-      <div class="browser-stage site">
-        <header class="site-header">
-          <div class="site-header-content">
-            <a class="logo-mark"><div class="logo-eye"><div class="pupil-bg"><div class="pupil"></div></div></div><h1>Dirk Nielandt</h1></a>
-          </div>
-          <nav class="site-nav">
-            <a  class="link">Prijzen</a><a  class="link">Lezingen</a><a class="is-current"  class="link">Boeken</a><a  class="link">Tv</a><a  class="link">Contact</a>
-          </nav>
-        </header>
-        <main class="site-main">
-          <h1>+9 jaar</h1>
-          <section class="row-5">
-            <a class="cover-card"><span class="sticker-badge">Meer dan 12.000 verkocht!</span><img src="assets/covers/dievenschool.jpg" alt=""></a>
-            <a class="cover-card"><span class="sticker-badge">Te zien op Ketnet!</span><img src="assets/covers/ridder muis.jpg" alt=""></a>
-            <a class="cover-card"><span class="sticker-badge">Al 14 keer herdrukt!</span><img src="assets/covers/slim stoer sterk.jpg" alt=""></a>
-            <a class="cover-card"><img src="assets/covers/heksenclub.jpg" alt=""></a>
-          </section>
-          <h1>6 — 9 jaar</h1>
-          <section class="row-5">
-            <a class="cover-card"><img src="assets/covers/weg met dieven school.jpg" alt=""></a>
-            <a class="cover-card"><img src="assets/covers/buit gevonden.jpg" alt=""></a>
-            <a class="cover-card"><img src="assets/covers/dievenschool op vrije voeten.jpeg" alt=""></a>
-            <a class="cover-card"><span class="sticker-badge">Verschijnt in 2025</span><img src="assets/covers/onzichtbare ik.jpg" alt=""></a>
-          </section>
-          <h1>2 — 5 jaar</h1>
-          <section class="row-5">
-            <a class="cover-card"><img src="assets/covers/fred en wolk.jpeg" alt=""></a>
-            <a class="cover-card"><img src="assets/covers/Wie.jpeg" alt=""></a>
-            <a class="cover-card"><img src="assets/covers/baas van de wereld.jpg" alt=""></a>
-            <a class="cover-card"><img src="assets/covers/ridder muis.jpg" alt=""></a>
-          </section>
-          <h1>Debuut</h1>
-          <section class="feature-row">
-            <img src="assets/covers/traan keert terug.jpeg" alt="">
-            <div class="text-col">
-              <h2>Traan keert terug — 1996</h2>
-              <p>Traan is geboren in een vrouwengevangenis, in blok M, waar de namen van de gevangenen allemaal met een M beginnen. Hij wordt vertroeteld door al die vrouwen en wanneer hij op een dag uit de gevangenis gezet wordt, staat blok M in rep en roer. Traan is ondertussen met de bus naar de stad getrokken, waar hij probeert te overleven. Hij ontmoet een man met mussen in zijn baard die hem de haven toont. Eén musje blijft bij Traan als hij stiekem aan boord van een schip kruipt. Nadat een matroos hem ontdekt en redt als het schip vergaat, spoelt hij aan bij Mo en Mulke. Ondertussen zijn alle vrouwen van blok M ontslagen uit de gevangenis en op zoek naar Traan. Zullen ze hem nog terugvinden…?</p>
-            </div>
-          </section>
-        </main>
+      <div class="browser-stage" style="height:716px;overflow:hidden;">
+        <iframe src="https://studioha.vercel.app/dive" style="width:calc(100% + 20px);height:100%;border:none;display:block;" title="studioha.vercel.app/dive"></iframe>
       </div>
     </div>
   </section>
@@ -1876,94 +2073,51 @@
   <div class="cms-section" id="cms-section">
     <div class="cms-sticky">
       <div class="cms-left">
-        <div class="cms-cat is-active" data-cat="0">
-          <div class="site">
-            <main class="site-main">
-              <h1>Populair</h1>
-              <section class="row-3">
-                <a class="cover-card"><span class="sticker-badge">Meer dan 12.000 verkocht!</span><img src="assets/covers/dievenschool.jpg" alt=""></a>
-                <a class="cover-card"><span class="sticker-badge">Te zien op Ketnet!</span><img src="assets/covers/ridder muis.jpg" alt=""></a>
-                <a class="cover-card"><span class="sticker-badge">Al 14 keer herdrukt!</span><img src="assets/covers/slim stoer sterk.jpg" alt=""></a>
-              </section>
-            </main>
-          </div>
+        <div class="fizzi-mockup">
+          <h2 class="fizzi-mock-headline"><span id="fizziTw0">LIVE
+GUTSY</span><span class="fizzi-mock-cursor"></span></h2>
+          <p class="fizzi-mock-sub"><span id="fizziTw1">Soda Perfected</span><span class="fizzi-mock-cursor fizzi-cursor-hidden"></span></p>
+          <p class="fizzi-mock-body"><span id="fizziTw2">3-5g sugar. 9g fiber. 5 delicious flavors.</span><span class="fizzi-mock-cursor fizzi-cursor-hidden"></span></p>
         </div>
-        <div class="cms-cat" data-cat="0">
-          <div class="site">
-            <main class="site-main">
-              <h1>Nieuw</h1>
-              <section class="row-3">
-                <a class="cover-card"><span class="sticker-badge">Vanaf Juni!</span><img src="assets/covers/zoek de dader.jpg" alt=""></a>
-                <a class="cover-card"><span class="sticker-badge">Ketnet podcast</span><img src="assets/covers/bedankt voor niks.jpg" alt=""></a>
-                <a class="cover-card"><span class="sticker-badge">toneel tekst</span><img src="assets/covers/onzichtbare ik.jpg" alt=""></a>
-              </section>
-            </main>
-          </div>
-        </div>
-        <div class="cms-cat" data-cat="0">
-          <div class="site">
-            <main class="site-main">
-              <h1>+9 jaar</h1>
-              <section class="row-3">
-                <a class="cover-card"><img src="assets/covers/Help-Verliefd.jpg" alt=""></a>
-                <a class="cover-card"><img src="assets/covers/sir-mouse-to-the-Rescue.jpg" alt=""></a>
-                <a class="cover-card"><img src="assets/covers/de-griezelwinkel.jpg" alt=""></a>
-              </section>
-            </main>
-          </div>
-        </div>
-        <div class="cms-cat" data-cat="1">
-          <div class="site">
-            <main class="site-main">
-              <h1>6 — 9 jaar</h1>
-              <section class="row-3">
-                <a class="cover-card"><img src="assets/covers/weg met dieven school.jpg" alt=""></a>
-                <a class="cover-card"><img src="assets/covers/buit gevonden.jpg" alt=""></a>
-                <a class="cover-card"><img src="assets/covers/dievenschool op vrije voeten.jpeg" alt=""></a>
-              </section>
-            </main>
-          </div>
-        </div>
-        <div class="cms-cat" data-cat="2">
-          <div class="site">
-            <main class="site-main">
-              <h1>2 — 5 jaar</h1>
-              <section class="row-3">
-                <a class="cover-card"><img src="assets/covers/fred en wolk.jpeg" alt=""></a>
-                <a class="cover-card"><img src="assets/covers/Wie.jpeg" alt=""></a>
-                <a class="cover-card"><img src="assets/covers/baas van de wereld.jpg" alt=""></a>
-              </section>
-            </main>
-          </div>
-        </div>
+        <div class="cms-cat is-active" data-cat="0"></div>
+        <div class="cms-cat" data-cat="1"></div>
+        <div class="cms-cat" data-cat="2"></div>
+        <div class="cms-cat" data-cat="3"></div>
+        <div class="cms-cat" data-cat="4"></div>
       </div>
       <div class="cms-right">
         <div class="cms-right-inner">
-          <div class="cms-eyebrow">CMS</div>
+          <div class="cms-eyebrow">Prismic</div>
           <h2 class="cms-title">
-            <span class="r-line"><span>Eenvoudig de</span></span>
-            <span class="r-line"><span>juiste content</span></span>
-            <span class="r-line"><span>op de juiste plek</span></span>
+            <span class="r-line"><span data-i18n="cms.title.l1">Flexibele</span></span>
+            <span class="r-line"><span data-i18n="cms.title.l2">content,</span></span>
+            <span class="r-line"><span data-i18n="cms.title.l3">eenvoudig beheerd</span></span>
           </h2>
-          <p class="cms-body">Dirk beheert zijn volledige bibliotheek zelf via Craft CMS — nieuwe titels toevoegen, stickers aanpassen, categorieën bijwerken. Alles zonder technische kennis.</p>
+          <p class="cms-body" data-i18n="cms.body">Via Prismic CMS beheert de opdrachtgever zelf smaken, teksten en afbeeldingen, zonder code. De front-end haalt alles op via de API en rendert het dynamisch.</p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- END -->
-  <section class="scene" data-scene="end" data-name="Verder" data-color-index="0" style="--scene-color: #ed1cae; --scene-soft-color: #ffe6f7; --scene-hover: #BB178A;">
+  <section class="scene" data-scene="end" data-name="CashUp" data-color-index="0" style="--scene-color: #ed1cae; --scene-soft-color: #ffe6f7; --scene-hover: #BB178A;">
     <div class="scene-label">
-      <span class="num">04</span>
-      <span class="name" data-i18n="scene.end.name">Verder</span>
-      <span class="desc" data-i18n="scene.end.desc">Bedankt voor het kijken.</span>
+      <span class="name" data-i18n="scene.end.label">Beestenbos CashUp</span>
+      <span class="desc" data-i18n="scene.end.desc">Invoerpagina · fooi bedrag, datum en medewerker­selectie.
+</span>
     </div>
     <div class="end-slide">
-      <div class="end-inner">
-        <div class="cover-eye" style="width:80px;height:80px;"><div class="ce-mid" style="width:46px;height:46px;"><div class="ce-pupil" style="width:26px;height:26px;"></div></div></div>
-        <div class="end-title">Dat was het!</div>
-        <div class="end-sub">Klaar om opnieuw te beginnen, of scroll terug om iets nog eens te bekijken.</div>
-        <button class="restart-btn" id="restartBtn">↺ Opnieuw afspelen</button>
+      <div class="browser">
+        <div class="browser-bar">
+          <div class="traffic"><span></span><span></span><span></span></div>
+          <div class="url-bar"><span class="scheme">https://</span><span class="host">bbfooi.vercel.app</span><span class="path">/</span></div>
+        </div>
+        <div class="browser-stage" style="height:716px;overflow:hidden;">
+          <iframe src="https://bbfooi.vercel.app/demo" style="width:100%;height:100%;border:none;display:block;" title="bbfooi.vercel.app"></iframe>
+          <div class="browser-overlay">
+            <a class="browser-overlay-btn" href="/beestenbos-cashup/" data-i18n="end.btn">project bekijken</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1985,7 +2139,7 @@
       }, 5000);
     };
 
-    // timer is started from JS when anim-running is added
+    window.__scheduleOuterCircleDone();
   });
 </script>
 
@@ -2070,11 +2224,11 @@
   // Build chips (jump-to-scene), inserting CMS chip after Boeken
   const cmsChipBtn = document.createElement('button');
   cmsChipBtn.className = 'chip';
-  cmsChipBtn.textContent = 'CMS';
+  cmsChipBtn.textContent = 'Prismic';
   cmsChipBtn.addEventListener('click', () => {
     const el = document.getElementById('cms-section');
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    const top = el.getBoundingClientRect().top + window.scrollY + window.innerHeight * 0.01;
     window.scrollTo({ top, behavior: 'smooth' });
   });
 
@@ -2088,14 +2242,16 @@
       window.scrollTo({ top, behavior: 'smooth' });
     });
     sceneChips.appendChild(btn);
-    if (s.dataset.scene === 'boeken') sceneChips.appendChild(cmsChipBtn);
+    if (s.dataset.scene === 'smaken') sceneChips.appendChild(cmsChipBtn);
   });
 
   const chips = [...sceneChips.querySelectorAll('.chip')];
+  // mark end chip for translation
+  chips.find(c => c.textContent === 'CashUp')?.setAttribute('data-i18n', 'scene.end.name');
 
   // (auto-scroll removed — user scrolls manually)
 
-  restartBtn.addEventListener('click', () => {
+  restartBtn?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
@@ -2137,7 +2293,9 @@
     // chipScenes indices >= cmsChipIdx need +1 to account for the CMS chip inserted in chips
     const adjustedChipIdx = activeChipIdx >= cmsChipIdx ? activeChipIdx + 1 : activeChipIdx;
     chips.forEach((c, i) => c.classList.toggle('is-active', inCms ? i === cmsChipIdx : i === adjustedChipIdx));
-    currentSceneEl.textContent = inCms ? 'CMS' : chipScenes[activeChipIdx].dataset.name;
+    const _lang = localStorage.getItem('lang') || 'nl';
+    const _rawName = chipScenes[activeChipIdx].dataset.name;
+    currentSceneEl.textContent = inCms ? 'Prismic' : _rawName;
 
     // Full scenes index needed for loader replay
     let activeIdx = 0;
@@ -2153,27 +2311,89 @@
   // back to transparent as it exits. Progress = min(entryFraction, exitFraction).
   const duoEl = document.getElementById('duo-details');
   const duoScenes = duoEl ? [...duoEl.querySelectorAll('.scene')] : [];
+  let _sceneColorRgb = { r: 113, g: 5, b: 35 }; // #710523 default
+  let _bgMix = 0;
+
+  function updateHudContrast() {
+    const mix = _bgMix / 100;
+    const isLight = document.documentElement.classList.contains('light');
+    const bg = isLight ? { r: 244, g: 244, b: 245 } : { r: 14, g: 14, b: 16 };
+    const lum = (0.299 * (_sceneColorRgb.r * mix + bg.r * (1 - mix)) +
+                 0.587 * (_sceneColorRgb.g * mix + bg.g * (1 - mix)) +
+                 0.114 * (_sceneColorRgb.b * mix + bg.b * (1 - mix))) / 255;
+    document.querySelector('.hud').classList.toggle('hud-on-dark', lum < 0.45);
+  }
+
+  function setDuoColor(color) {
+    if (!color) return;
+    duoEl?.style.setProperty('--duo-color', color);
+    document.documentElement.style.setProperty('--scene-color', color);
+    const hex = color.replace('#', '');
+    _sceneColorRgb = { r: parseInt(hex.slice(0,2),16), g: parseInt(hex.slice(2,4),16), b: parseInt(hex.slice(4,6),16) };
+    updateHudContrast();
+  }
+  window.__setFizziDuoColor = setDuoColor;
+  setDuoColor('#710523');
+
   function updateDuoBg() {
     if (!duoEl) return;
     const { top, bottom, height } = duoEl.getBoundingClientRect();
     const vh = window.innerHeight;
     const visiblePx = Math.max(0, Math.min(bottom, vh) - Math.max(top, 0));
     const fraction = visiblePx / Math.min(height, vh);
-    const pct = (Math.min(1, Math.max(0, (fraction - 0.6) / 0.2)) * 100).toFixed(1) + '%';
+    _bgMix = Math.min(1, Math.max(0, (fraction - 0.6) / 0.2)) * 100;
+    const pct = _bgMix.toFixed(1) + '%';
     duoEl.style.setProperty('--duo-bg-mix', pct);
     document.documentElement.style.setProperty('--page-bg-mix', pct);
+    updateHudContrast();
   }
   updateDuoBg();
 
   const cmsSectionEl = document.getElementById('cms-section');
   const cmsStickyEl = cmsSectionEl?.querySelector('.cms-sticky');
   const cmsCats = cmsSectionEl ? [...cmsSectionEl.querySelectorAll('.cms-cat')] : [];
+
+  const fizziMockTransitions = [
+    { elIdx: 0, from: 'LIVE\nGUTSY',    to: 'NEW\nFLAVOURS' },
+    { elIdx: 1, from: 'Soda Perfected', to: 'BUBBLY SODA' },
+    { elIdx: 2, from: '3-5g sugar. 9g fiber. 5 delicious flavors.', to: 'zero sugar, no caffeine, very flavorfull.' },
+  ];
+  const fizziTwEls = [
+    document.getElementById('fizziTw0'),
+    document.getElementById('fizziTw1'),
+    document.getElementById('fizziTw2'),
+  ];
+  const fizziCursors = fizziTwEls.map(el => el?.nextElementSibling);
+
+  function updateFizziTypewriter(progress) {
+    const n = fizziMockTransitions.length;
+    fizziMockTransitions.forEach((t, i) => {
+      const el = fizziTwEls[t.elIdx];
+      const cursor = fizziCursors[t.elIdx];
+      const start = i / n, end = (i + 1) / n, mid = (start + end) / 2;
+      if (progress <= start) {
+        el.textContent = t.from;
+        cursor?.classList.toggle('fizzi-cursor-hidden', i !== 0);
+      } else if (progress < mid) {
+        const p = (progress - start) / (mid - start);
+        el.textContent = t.from.slice(0, Math.round(t.from.length * (1 - p)));
+        cursor?.classList.remove('fizzi-cursor-hidden');
+      } else if (progress < end) {
+        const p = (progress - mid) / (end - mid);
+        el.textContent = t.to.slice(0, Math.round(t.to.length * p));
+        cursor?.classList.remove('fizzi-cursor-hidden');
+      } else {
+        el.textContent = t.to;
+        cursor?.classList.add('fizzi-cursor-hidden');
+      }
+    });
+  }
+
   function updateCmsSection() {
     if (!cmsSectionEl || !cmsCats.length || !cmsStickyEl) return;
     const { top, height } = cmsSectionEl.getBoundingClientRect();
     const vh = window.innerHeight;
     const scrollable = height - vh;
-    // JS-driven sticky: lock panel while in range, scroll naturally after
     if (top > 0) {
       cmsStickyEl.style.transform = '';
     } else if (-top <= scrollable) {
@@ -2184,6 +2404,7 @@
     const progress = Math.max(0, Math.min(1, -top / scrollable));
     const activeIdx = Math.min(cmsCats.length - 1, Math.floor(progress * cmsCats.length));
     cmsCats.forEach((cat, i) => cat.classList.toggle('is-active', i === activeIdx));
+    updateFizziTypewriter(progress);
   }
   updateCmsSection();
 
@@ -2198,31 +2419,6 @@
   });
 
   let homeWasOffscreen = false;
-  function updateHomeLoader() {
-    if (!scenes[0]) return;
-    const r = scenes[0].getBoundingClientRect();
-    const vh = window.innerHeight;
-    const fullyInView = r.top >= -1 && (r.bottom <= vh + 1 || r.height > vh * 0.85);
-    const fullyOffscreen = r.bottom < 0 || r.top > vh;
-    const loader = document.getElementById('coverLoader');
-    if (!loader) return;
-
-    if (fullyOffscreen && !homeWasOffscreen) {
-      homeWasOffscreen = true;
-      // reset to first frame
-      const fresh = loader.cloneNode(true);
-      fresh.classList.remove('anim-running', 'is-done', 'clear-display');
-      fresh.querySelector('#outer-circle')?.classList.remove('is-done');
-      loader.parentNode.replaceChild(fresh, loader);
-      lastActive = 0;
-    } else if (fullyInView && !loader.classList.contains('anim-running') && !loader.classList.contains('clear-display')) {
-      homeWasOffscreen = false;
-      loader.classList.add('anim-running');
-      window.__scheduleOuterCircleDone?.(loader);
-    } else if (!fullyOffscreen) {
-      homeWasOffscreen = false;
-    }
-  }
   lenis.on('scroll', () => {
     updateUi();
     updateDuoBg();
@@ -2261,7 +2457,24 @@
         }
       }
     }
-    updateHomeLoader();
+    if (scenes[0]) {
+      const r = scenes[0].getBoundingClientRect();
+      const isOff = r.bottom < 0 || r.top > window.innerHeight;
+      if (isOff) {
+        homeWasOffscreen = true;
+      } else if (homeWasOffscreen) {
+        homeWasOffscreen = false;
+        const loader = document.getElementById('coverLoader');
+        if (loader && loader.classList.contains('clear-display')) {
+          const fresh = loader.cloneNode(true);
+          fresh.querySelector('#outer-circle')?.classList.remove('is-done');
+          fresh.classList.remove('clear-display');
+          loader.parentNode.replaceChild(fresh, loader);
+          window.__scheduleOuterCircleDone?.(fresh);
+          lastActive = 0;
+        }
+      }
+    }
   });
 
   function raf(time) {
@@ -2275,46 +2488,62 @@
 (function () {
   const T = {
     nl: {
-      'back':                'Terug',
-      'project.title.line2': 'huisstijl &',
-      'project.desc':        'Voor kinderboekenschrijver Dirk Nielandt heb ik de website, huisstijl en cms gemaakt zodat Dirk zelf eenvoudig nieuwe titels kan toevoegen.',
-      'cover.sub':           'Kinderboeken, lezingen, prijzen, tv-werk en contact — alles in één scrollende doorloop.',
-      'scene.intro.desc':    'Een rustige doorloop van de website van kinderboekenschrijver Dirk Nielandt.',
-      'scene.home.desc':     'Landingspagina · populaire titels, nieuw werk en het debuut.',
-      'scene.sticker.desc':  'Detail — de wapperende sticker op een boekomslag bij hover.',
-      'scene.logo.desc':     'Detail — het oog-logo geeft een knipoog bij hover.',
-      'scene.boeken.desc':   'De bibliotheek — gegroepeerd per leeftijd: +9 jaar, 6–9 jaar en 2–5 jaar.',
-      'scene.end.name':      'Verder',
-      'scene.end.desc':      'Bedankt voor het kijken.',
-      'sticker.eyebrow':     'Detail · Sticker',
-      'sticker.title':       'Een knipoog naar de oude lapjes­doos.',
-      'sticker.body':        'Iedere uitgelichte titel draagt een handgeschreven sticker — herdruk-tellers, awards, Ketnet-vermeldingen. Bij hover schiet de boek lichtjes naar voren en kantelt de sticker mee, alsof iemand \'m net opgeplakt heeft.',
-      'sticker.meta.book':   'Boek',
-      'logo.eyebrow':        'Detail · Logo',
-      'logo.title':          'Een oog dat met je mee­kijkt.',
-      'logo.body':           'Het logo is letterlijk een oog — de pupil draait rustig rond als je de pagina laat liggen, en knipoogt terug zodra je er met de muis langs gaat. Een klein gebaar, maar het maakt de site direct levendig.',
-      'meta.curve':          'Curve',
+      'back':              'Terug',
+      'hud.context':       'Cursus',
+      'project.title.l1':  'Scroll,',
+      'project.title.l2':  'proef &',
+      'project.title.l3':  'beweeg mee.',
+      'project.desc':      'Een interactieve frisdrankwebsite gebouwd met Next.js, GSAP en Three.js. 3D-blikjes bewegen mee met scroll, click-events laten je het aanbod ontdekken, en content wordt beheerd via Prismic CMS.',
+      'scene.home.desc':   'Landingspagina · 3D-blikjes, scroll-animaties en hero.',
+      'sticker.eyebrow.suffix': 'Beweging',
+      'sticker.title':     'Een dynamisch blik dat meebeweegt',
+      'sticker.body':      'Het dynamische blik beweegt vloeiend door de website en draait automatisch mee naar de juiste zijde, zodat zowel het ontwerp van het blik als de bijhorende tekst altijd duidelijk en in balans zichtbaar blijven binnen de layout.',
+      'meta.source':       'Bron',
+      'logo.eyebrow.suffix': 'Klik',
+      'logo.title':        'Klik en ontdek de smaak.',
+      'logo.body':         'Met elke klik verandert het 3D-model van label, kleur en uitstraling, waardoor ieder blikje een compleet eigen karakter krijgt. Zo word je steeds verder meegezogen in de wereld van het merk en ontdek je de beleving achter iedere variant.',
+      'scene.dive.desc':   'Sky dive · scroll-animatie met het 3D-blikje in vrije val.',
+      'cms.title.l1':      'Flexibele',
+      'cms.title.l2':      'content,',
+      'cms.title.l3':      'eenvoudig beheerd',
+      'cms.body':          'Via Prismic CMS beheert de opdrachtgever zelf smaken, teksten en afbeeldingen, zonder code. De front-end haalt alles op via de API en rendert het dynamisch.',
+      'end.next.label':    'Volgend project',
+      'end.title':         'Beestenbos CashUp',
+      'end.sub':           'Een intern fooibeheersysteem gebouwd met Next.js, MongoDB en TypeScript.',
+      'end.btn':           'project bekijken',
+      'end.replay':        '↺ Opnieuw afspelen',
+      'scene.end.name':    'CashUp',
+      'scene.end.label':   'Beestenbos CashUp',
+      'scene.end.desc':    'Invoerpagina · fooi bedrag, datum en medewerker­selectie.',
     },
     en: {
-      'back':                'Back',
-      'project.title.line2': 'branding &',
-      'project.desc':        'For children\'s book author Dirk Nielandt I built the website, visual identity and CMS so Dirk can easily add new titles himself.',
-      'cover.sub':           'Books, lectures, awards, TV work and contact — all in one scrollable walkthrough.',
-      'scene.intro.desc':    'A gentle walkthrough of children\'s book author Dirk Nielandt\'s website.',
-      'scene.home.desc':     'Landing page · popular titles, new work and the debut.',
-      'scene.sticker.desc':  'Detail — the animated sticker on a book cover on hover.',
-      'scene.logo.desc':     'Detail — the eye logo winks on hover.',
-      'scene.boeken.desc':   'The library — grouped by age: 9+, 6–9 years and 2–5 years.',
-      'scene.end.name':      'Next',
-      'scene.end.desc':      'Thanks for watching.',
-      'sticker.eyebrow':     'Detail · Sticker',
-      'sticker.title':       'A nod to the old sticker box.',
-      'sticker.body':        'Every featured title carries a handwritten sticker — reprint counters, awards, Ketnet mentions. On hover the book nudges forward and the sticker tilts with it, as if someone just stuck it on.',
-      'sticker.meta.book':   'Book',
-      'logo.eyebrow':        'Detail · Logo',
-      'logo.title':          'An eye that looks back at you.',
-      'logo.body':           'The logo is literally an eye — the pupil slowly wanders when the page is idle, and winks back as soon as you mouse over it. A small touch, but it makes the site feel instantly alive.',
-      'meta.curve':          'Curve',
+      'back':              'Back',
+      'hud.context':       'Course',
+      'project.title.l1':  'Scroll,',
+      'project.title.l2':  'taste &',
+      'project.title.l3':  'move along.',
+      'project.desc':      'An interactive soda website built with Next.js, GSAP and Three.js. 3D cans move with scroll, click events let you discover the range, and content is managed via Prismic CMS.',
+      'scene.home.desc':   'Landing page · 3D cans, scroll animations and hero.',
+      'sticker.eyebrow.suffix': 'Motion',
+      'sticker.title':     'A dynamic can that moves with you',
+      'sticker.body':      'The can moves fluidly through the website and automatically rotates to the right side, keeping both the can design and the accompanying text clearly and balanced within the layout.',
+      'meta.source':       'Source',
+      'logo.eyebrow.suffix': 'Click',
+      'logo.title':        'Click and discover the flavor.',
+      'logo.body':         'With every click the 3D model changes its label, color and character, giving each can a unique identity. You get drawn deeper into the brand world as you explore the story behind each variant.',
+      'scene.dive.desc':   'Sky dive · scroll animation with the 3D can in free fall.',
+      'cms.title.l1':      'Flexible',
+      'cms.title.l2':      'content,',
+      'cms.title.l3':      'easily managed',
+      'cms.body':          'Via Prismic CMS the client manages flavors, texts and images themselves, without code. The front-end fetches everything via the API and renders it dynamically.',
+      'end.next.label':    'Next project',
+      'end.title':         'Beestenbos CashUp',
+      'end.sub':           'An internal tip management system built with Next.js, MongoDB and TypeScript.',
+      'end.btn':           'View project',
+      'end.replay':        '↺ Play again',
+      'scene.end.name':    'CashUp',
+      'scene.end.label':   'Beestenbos CashUp',
+      'scene.end.desc':    'Input page · tip amount, date and employee selection.',
     },
   };
 
@@ -2344,22 +2573,20 @@
       document.documentElement.classList.remove('light');
       themeBtn.textContent = '☀';
     }
-    localStorage.setItem('sr-theme', theme);
+    localStorage.setItem('theme', theme);
+    updateHudContrast();
   }
   themeBtn.addEventListener('click', () => {
     srSetTheme(document.documentElement.classList.contains('light') ? 'dark' : 'light');
   });
-  srSetTheme(localStorage.getItem('sr-theme') || 'dark');
+  srSetTheme(localStorage.getItem('theme') || 'light');
 
-  document.getElementById('tweakOpenBtn').addEventListener('click', () => {
-    pickPaletteForScenes('random', 0);
-  });
 
   // Back button transition
   document.querySelector('.back-btn').addEventListener('click', e => {
     e.preventDefault();
     const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:#0e0e10;opacity:0;z-index:9999;transition:opacity 0.5s ease;pointer-events:all;';
+    overlay.style.cssText = 'position:fixed;inset:0;background:'+(localStorage.getItem('theme')==='light'?'#f4f4f5':'#0e0e10')+';opacity:0;z-index:9999;transition:opacity 0.5s ease;pointer-events:all;';
     document.body.appendChild(overlay);
     requestAnimationFrame(() => {
       requestAnimationFrame(() => { overlay.style.opacity = '1'; });
@@ -2367,6 +2594,387 @@
     setTimeout(() => { window.location.href = '/?from=showreel'; }, 600);
   });
 })();
+</script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+
+window.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('fizziBubbles');
+  if (!container) return;
+  const root = container.closest('.fizzi-home') || container.parentElement;
+
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;';
+  container.appendChild(canvas);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.8;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+  camera.position.set(0, 0, 8);
+
+  const ambient = new THREE.AmbientLight(0xffffff, 1.5);
+  scene.add(ambient);
+  const dir = new THREE.DirectionalLight(0xffffff, 2);
+  dir.position.set(3, 5, 5);
+  scene.add(dir);
+
+  function resize() {
+    const w = root.clientWidth  || 800;
+    const h = root.clientHeight || 450;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  new ResizeObserver(resize).observe(root);
+
+  new RGBELoader().load('assets/hdr/lobby.hdr', tex => {
+    tex.mapping = THREE.EquirectangularReflectionMapping;
+    scene.environment = tex;
+    ambient.intensity = 0;
+    dir.intensity = 0;
+  });
+
+  // back.out(1.4) easing — matches GSAP Scene.tsx intro
+  function backOut(t, s = 1.4) {
+    return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2);
+  }
+
+  // Final resting positions from Scene.tsx (after scroll animation)
+  const flavors = ['cherry', 'lemon-lime', 'grape', 'strawberry', 'watermelon'];
+  const targets = [
+    { x: -2.5, y:  0.0, z:  0.0, rz: -0.5 },
+    { x:  2.5, y:  0.0, z:  0.0, rz:  0.5 },
+    { x: -0.3, y:  0.5, z: -1.0, rz: -0.1 },
+    { x:  0.0, y: -0.3, z:  0.5, rz:  0.3 },
+    { x:  0.3, y:  0.5, z: -0.5, rz: -0.25 },
+  ];
+  // Intro "from" positions for can1 & can2 (matching Scene.tsx: .from groups y:∓5, x:1 offset)
+  const introFrom = [
+    { x: -1.5, y: -5.0, rz: 2.5 },
+    { x:  3.5, y:  5.0, rz: 3.5 },
+    null, null, null,
+  ];
+  const INTRO_DUR = 3.0;
+
+  const cans = [];
+  const texLoader = new THREE.TextureLoader();
+  const metalMat = new THREE.MeshStandardMaterial({ roughness: 0.3, metalness: 1, color: '#bbbbbb' });
+
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath('https://unpkg.com/three@0.162.0/examples/jsm/libs/draco/');
+  const gltfLoader = new GLTFLoader();
+  gltfLoader.setDRACOLoader(dracoLoader);
+
+  gltfLoader.load('assets/Soda-can.gltf', (gltf) => {
+
+    targets.forEach((cfg, i) => {
+      if (i >= 2) return; // cans 3-5 stay off screen
+      const group = gltf.scene.clone(true);
+      group.scale.setScalar(3.5);
+
+      const from = introFrom[i];
+      group.position.set(from ? from.x : cfg.x, from ? from.y : cfg.y, cfg.z);
+      group.rotation.set(0, -Math.PI, from ? from.rz : cfg.rz);
+
+      const tex = texLoader.load('assets/labels/' + flavors[i] + '.png');
+      tex.flipY = false;
+      tex.colorSpace = THREE.SRGBColorSpace;
+      const labelMat = new THREE.MeshStandardMaterial({ roughness: 0.15, metalness: 0.7, map: tex });
+
+      const meshes = [];
+      group.traverse(o => { if (o.isMesh) meshes.push(o); });
+      meshes.forEach((mesh, mi) => { mesh.material = mi === 1 ? labelMat : metalMat.clone(); });
+
+      scene.add(group);
+      cans.push({ group, cfg, from, phase: i * 1.2 });
+    });
+
+    // Instanced bubbles matching studioha Bubbles component (count=300, speed=2)
+    const COUNT = 300;
+    const dummy = new THREE.Object3D();
+    const bMesh = new THREE.InstancedMesh(
+      new THREE.SphereGeometry(0.05, 8, 8),
+      new THREE.MeshStandardMaterial({ color: '#fde047', transparent: true, opacity: 0.5, roughness: 0.1 }),
+      COUNT
+    );
+    scene.add(bMesh);
+
+    const minSpd = 0.002, maxSpd = 0.010;
+    const speeds = new Float32Array(COUNT);
+    for (let i = 0; i < COUNT; i++) {
+      dummy.position.set((Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8);
+      dummy.updateMatrix();
+      bMesh.setMatrixAt(i, dummy.matrix);
+      speeds[i] = minSpd + Math.random() * (maxSpd - minSpd);
+    }
+    bMesh.instanceMatrix.needsUpdate = true;
+
+    let startTime = null;
+    let t = 0;
+
+    (function tick(ts) {
+      requestAnimationFrame(tick);
+      if (!startTime) startTime = ts;
+      const elapsed = (ts - startTime) / 1000;
+      t += 0.016;
+
+      // Intro + float for cans
+      const introProgress = Math.min(elapsed / INTRO_DUR, 1);
+      const eased = backOut(introProgress);
+
+      cans.forEach(({ group, cfg, from, phase }) => {
+        // Float: sinusoidal y offset + slow x sway (matches @react-three/drei Float)
+        const floatY  = Math.sin(t * 1.5 + phase) * 0.1;
+        const floatRx = Math.sin(t * 0.8 + phase) * 0.05;
+        const floatRz = Math.sin(t * 1.1 + phase + 1) * 0.03;
+
+        if (from) {
+          group.position.x = from.x + (cfg.x - from.x) * eased;
+          group.position.y = (from.y + (cfg.y - from.y) * eased) + floatY;
+          group.rotation.z = (from.rz + (cfg.rz - from.rz) * eased) + floatRz;
+          group.rotation.x = floatRx;
+        } else {
+          group.position.y = cfg.y + floatY;
+          group.rotation.z = cfg.rz + floatRz;
+          group.rotation.x = floatRx;
+        }
+        group.rotation.y = -Math.PI + t * 0.3;
+      });
+
+      // Animate bubbles upward (matches Bubbles.tsx useFrame)
+      for (let i = 0; i < COUNT; i++) {
+        bMesh.getMatrixAt(i, dummy.matrix);
+        dummy.position.setFromMatrixPosition(dummy.matrix);
+        dummy.position.y += speeds[i];
+        if (dummy.position.y > 4) {
+          dummy.position.y = -4;
+          dummy.position.x = (Math.random() - 0.5) * 8;
+          dummy.position.z = Math.random() * 8;
+        }
+        dummy.updateMatrix();
+        bMesh.setMatrixAt(i, dummy.matrix);
+      }
+      bMesh.instanceMatrix.needsUpdate = true;
+
+      renderer.render(scene, camera);
+    })(performance.now());
+
+  }, undefined, err => console.error('[FizziScene] GLTF load error:', err));
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const stage = document.getElementById('fizziCarouselCan');
+  const passiveStage = document.getElementById('fizziPassiveCan');
+  const carousel = document.getElementById('fizziFlavorCarousel');
+  if (!stage || !carousel) return;
+
+  const button = carousel.querySelector('.carousel-can-button');
+  const carouselScene = carousel.closest('.scene');
+  const carouselFlavors = [
+    { color: '#710523', name: 'Black Cherry', label: 'assets/labels/cherry.png' },
+    { color: '#572981', name: 'Grape Goodness', label: 'assets/labels/grape.png' },
+    { color: '#164405', name: 'Lemon Lime', label: 'assets/labels/lemon-lime.png' },
+    { color: '#690B3D', name: 'Strawberry Lemonade', label: 'assets/labels/strawberry.png' },
+    { color: '#4B7002', name: 'Watermelon Crush', label: 'assets/labels/watermelon.png' },
+  ];
+
+  const textureLoader = new THREE.TextureLoader();
+  const textures = carouselFlavors.map(flavor => {
+    const tex = textureLoader.load(flavor.label);
+    tex.flipY = false;
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+  });
+  const canViews = [];
+  let currentFlavor = 0;
+
+  function createCanView(targetStage, { interactive = false } = {}) {
+    if (!targetStage) return null;
+
+    const canvas = document.createElement('canvas');
+    targetStage.appendChild(canvas);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.45;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+    camera.position.set(0, 0, 6);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambient);
+    const key = new THREE.DirectionalLight(0xffffff, 3.5);
+    key.position.set(2.5, 4, 5);
+    scene.add(key);
+    const fill = new THREE.DirectionalLight(0xffffff, 1.5);
+    fill.position.set(-3, 1, 3);
+    scene.add(fill);
+
+    function resize() {
+      const w = targetStage.clientWidth || 230;
+      const h = targetStage.clientHeight || 190;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    new ResizeObserver(resize).observe(targetStage);
+
+    new RGBELoader().load('assets/hdr/lobby.hdr', tex => {
+      tex.mapping = THREE.EquirectangularReflectionMapping;
+      scene.environment = tex;
+      ambient.intensity = 0.15;
+      key.intensity = 1.1;
+      fill.intensity = 0.4;
+    });
+
+    const metalMaterial = new THREE.MeshStandardMaterial({
+      roughness: 0.3,
+      metalness: 1,
+      color: '#bbbbbb',
+    });
+    const labelMaterial = new THREE.MeshStandardMaterial({
+      roughness: 0.15,
+      metalness: 0.7,
+      map: textures[0],
+    });
+    const view = {
+      renderer,
+      scene,
+      camera,
+      labelMaterial,
+      canGroup: null,
+      spin: 0,
+      spinTarget: 0,
+      interactive,
+    };
+    canViews.push(view);
+    return view;
+  }
+
+  const activeCanView = createCanView(stage, { interactive: true });
+  const passiveCanView = createCanView(passiveStage, { interactive: false });
+
+  function setCarouselFlavor(index) {
+    currentFlavor = (index + carouselFlavors.length) % carouselFlavors.length;
+    const flavor = carouselFlavors[currentFlavor];
+    carousel.style.setProperty('--carousel-color', flavor.color);
+    carouselScene?.style.setProperty('--carousel-color', flavor.color);
+    window.__setFizziDuoColor?.(flavor.color);
+    canViews.forEach(view => {
+      view.labelMaterial.map = textures[currentFlavor];
+      view.labelMaterial.needsUpdate = true;
+      if (view.interactive) view.spinTarget -= Math.PI * 2 * 2;
+    });
+  }
+
+  button?.addEventListener('click', () => {
+    setCarouselFlavor(currentFlavor + 1);
+  });
+
+  const carouselDracoLoader = new DRACOLoader();
+  carouselDracoLoader.setDecoderPath('https://unpkg.com/three@0.162.0/examples/jsm/libs/draco/');
+  const carouselGltfLoader = new GLTFLoader();
+  carouselGltfLoader.setDRACOLoader(carouselDracoLoader);
+
+  function addCanToView(view, gltf) {
+    if (!view) return;
+    const canGroup = gltf.scene.clone(true);
+    canGroup.scale.setScalar(3.7);
+    canGroup.position.set(0, -0.12, 0);
+    canGroup.rotation.set(0.12, -Math.PI, -0.08);
+
+    const meshes = [];
+    canGroup.traverse(o => { if (o.isMesh) meshes.push(o); });
+    meshes.forEach((mesh, meshIndex) => {
+      mesh.material = meshIndex === 1
+        ? view.labelMaterial
+        : new THREE.MeshStandardMaterial({ roughness: 0.3, metalness: 1, color: '#bbbbbb' });
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+    });
+
+    view.canGroup = canGroup;
+    view.scene.add(canGroup);
+  }
+
+  carouselGltfLoader.load('assets/Soda-can.gltf', (gltf) => {
+    addCanToView(activeCanView, gltf);
+    addCanToView(passiveCanView, gltf);
+  }, undefined, err => console.error('[FizziCarousel] GLTF load error:', err));
+
+  let start = null;
+  function tick(ts) {
+    requestAnimationFrame(tick);
+    if (!start) start = ts;
+    const t = (ts - start) / 1000;
+    canViews.forEach(view => {
+      if (view.canGroup) {
+        view.spin += (view.spinTarget - view.spin) * 0.08;
+        if (view.interactive) {
+          view.canGroup.position.y = -0.12 + Math.sin(t * 1.8) * 0.08;
+          view.canGroup.rotation.x = 0.12 + Math.sin(t * 1.1) * 0.04;
+          view.canGroup.rotation.y = -Math.PI + view.spin + Math.sin(t * 0.9) * 0.1;
+          view.canGroup.rotation.z = -0.08 + Math.sin(t * 1.35) * 0.03;
+        } else {
+          const loop = (Math.sin(t * 0.72 - Math.PI / 2) + 1) / 2;
+          const eased = loop < 0.5
+            ? 4 * loop * loop * loop
+            : 1 - Math.pow(-2 * loop + 2, 3) / 2;
+          const sideToSide = eased * 2 - 1;
+          view.canGroup.position.x = sideToSide * 1.05;
+          view.canGroup.position.y = -0.12;
+          view.canGroup.rotation.x = 0.12;
+          view.canGroup.rotation.y = -Math.PI + sideToSide * -0.55;
+          view.canGroup.rotation.z = sideToSide * 0.28;
+        }
+      }
+      view.renderer.render(view.scene, view.camera);
+    });
+  }
+  tick(performance.now());
+});
+</script>
+<script>
+// Logo hover — JS fallback for SVG mask transform across browsers
+document.addEventListener('DOMContentLoaded', () => {
+  const logo = document.querySelector('.fizzi-home__logo');
+  const wave = logo && logo.querySelector('.fh-wave');
+  if (!logo || !wave) return;
+  logo.addEventListener('mouseenter', () => { wave.style.transform = 'translateY(80%)'; });
+  logo.addEventListener('mouseleave', () => { wave.style.transform = 'translateY(0%)'; });
+});
+</script>
+<script>
+  if (window.matchMedia("(max-width: 600px)").matches) {
+    document.querySelectorAll(".browser-stage").forEach(stage => {
+      const overlay = stage.querySelector(".browser-overlay");
+      if (!overlay) return;
+      new IntersectionObserver(([e]) => {
+        overlay.classList.toggle("is-visible", e.isIntersecting);
+      }, { threshold: 0.7 }).observe(stage);
+    });
+  }
 </script>
 </body>
 </html>

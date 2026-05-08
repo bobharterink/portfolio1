@@ -15,323 +15,70 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script>if(new URLSearchParams(location.search).get('from')==='showreel'){var __o=document.createElement('div');__o.id='__back-overlay';__o.style.cssText='position:fixed;inset:0;background:#0e0e10;z-index:9999;pointer-events:all;';document.documentElement.appendChild(__o);}</script>
+    <script>if(localStorage.getItem('theme')!=='dark')document.documentElement.classList.add('light');</script>
+    <script>if(new URLSearchParams(location.search).get('from')==='showreel'){var __o=document.createElement('div');__o.id='__back-overlay';__o.style.cssText='position:fixed;inset:0;background:'+(localStorage.getItem('theme')==='light'?'#f4f4f5':'#0e0e10')+';z-index:9999;pointer-events:all;';document.documentElement.appendChild(__o);}</script>
 </head>
 <body>
 
+<div class="dirk-eye-bg" aria-hidden="true">
+  <div class="dirk-eye-bg__middle">
+    <div class="dirk-eye-bg__pupil"></div>
+  </div>
+</div>
+<div class="dirk-eye-bg dirk-eye-bg--blend" aria-hidden="true">
+  <div class="dirk-eye-bg__middle">
+    <div class="dirk-eye-bg__pupil"></div>
+  </div>
+</div>
+
+<div class="oog-hover-bg" aria-hidden="true"></div>
+<div class="oog-hover-bg oog-hover-bg--blend" aria-hidden="true"></div>
+
 <div class="hud">
-  <div class="hud-spacer"></div>
+<div class="hud-spacer"></div>
+  <div class="plus-button" tabindex="0" role="button" aria-label="CV">
+    <svg viewBox="0 0 24 24" class="plus-icon" aria-hidden="true">
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </svg>
+    <svg class="plus-circle-text" viewBox="0 0 50 50" aria-hidden="true">
+      <defs>
+        <path id="plus-text-path" d="M 25,25 m -19,0 a 19,19 0 1,1 38,0 a 19,19 0 1,1 -38,0" />
+      </defs>
+      <text xml:space="preserve"><textPath href="#plus-text-path" textLength="119.4" lengthAdjust="spacing">cv * cv * cv * cv * cv * </textPath></text>
+    </svg>
+  </div>
   <div class="chips" id="projectChips"></div>
   <div class="sr-pill"><button class="sr-lang-btn" id="langToggle">NL</button></div>
   <div class="sr-pill"><button class="sr-theme-btn" id="themeToggle" aria-label="Toggle light/dark mode">☀</button></div>
 </div>
 
 <header class="hero">
-  <h1 class="title" data-i18n="hero.title">👋 Ik ben Bob Harterink</h1>
-  <h2 class="subtitle" data-i18n="hero.subtitle">Front-End Developer with full-stack experience</h2>
+  <div class="hero-inner">
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow">Front-End Developer</p>
+    <div class="hero-name">
+      <div class="title-clip"><h1 class="title">Bob</h1></div>
+      <div class="title-clip"><h1 class="title">Harterink</h1></div>
+    </div>
+  </div>
 </header>
 
 <main class="stage">
-  <div class="marquee">
+
+  <div class="projects-list">
     <div class="bar">
 
-      <!-- Studio Harterink -->
-      <div class="bar-inner" data-project="studio" tabindex="0">
-        <div class="line">
-          <span class="pill-title">Studio Harterink</span>
-        </div>
-
-        <div class="info" tabindex="-1">
-          <h2 class="project-title">Studio Harterink</h2>
-          <div class="code-lang">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JS</span>
-            <span>THREE.JS</span>
-            <span>R3F</span>
-            <span>STRIPE</span>
-            <span>VITE</span>
-          </div>
-          <div class="context">
-            <h3 data-i18n="studio.context.h3">Eigen webshop</h3>
-            <p data-i18n="studio.context.p">Studio Harterink ontstond vanuit modulaire vazen die door de brievenbus passen en door de gebruiker zelf worden geassembleerd. Dat gevoel van eigenaarschap en maakproces is vertaald naar een interactieve website, waarin het fysieke assemblageproces digitaal wordt ervaren.</p>
-            <button data-i18n="btn.meer" class="more-btn">Meer zien</button>
-          </div>
-        </div>
-
-        <div class="details">
-          <h2 class="project-title">Studio Harterink</h2>
-          <div class="code-lang">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JS</span>
-            <span>THREE.JS</span>
-            <span>R3F</span>
-            <span>STRIPE</span>
-          </div>
-          <div class="details-wrapper">
-            <div class="details-grid">
-              <div class="details-content">
-                <div>
-                  <h3 data-i18n="studio.concept.h3">Concept & interactie</h3>
-                  <p data-i18n="studio.concept.p">Tijdens het scrollen wordt de vaas digitaal opgebouwd in een 3D-omgeving. Elk onderdeel verschijnt stap voor stap, waardoor de gebruiker het gevoel krijgt het object zelf samen te stellen. Scrollen wordt zo een essentieel onderdeel van de ervaring, in plaats van enkel navigatie. Bij het aanklikken van andere versies loopt het scroll-proces naadloos door met een nieuwe vaas. Daarnaast is er een aparte pagina voor varianten in luxere materialen, waaronder een lamp, waarin met dezelfde technieken een verfijndere sfeer wordt neergezet.</p>
-                </div>
-                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-                                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-
-                                                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-                                                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-                                                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-                                                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-                                                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-                                                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-                                                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-                                <div>
-                  <h3 data-i18n="studio.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="studio.tech.li1">Opzetten van een custom scroll-gedreven interactie</li>
-                    <li data-i18n="studio.tech.li2">Integratie van 3D-objecten met Three.js</li>
-                    <li data-i18n="studio.tech.li3">Performance-bewuste rendering van 3D content in de browser</li>
-                    <li data-i18n="studio.tech.li4">Volledig custom frontend zonder frameworks</li>
-                    <li data-i18n="studio.tech.li5">Focus op responsive gedrag en vloeiende animaties</li>
-                    <li data-i18n="studio.tech.li6">Intergratie van Stripe op producten te verkopen</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 data-i18n="studio.iter.h3">Iteratie</h3>
-                  <p class="last" data-i18n="studio.iter.p">Met hetzelfde concept heb ik ook lampen ontworpen. Hiervoor heb ik een aparte website ontwikkeld:</p>
-                  <div class="details-buttons">
-                    <a href="https://studioharterinkv2.netlify.app/" target="_blank" tabindex="-1"><button class="site-btn" data-i18n="studio.iter.btn">Iteratie Bezoeken</button></a>
-                  </div>
-                </div>
-              </div>
-              <div class="details-right">
-                <div class="details-image">
-                  <video muted playsinline preload="metadata">
-                    <source src="videos/studio-harterink-comp.mp4" type="video/mp4">
-                  </video>
-                  <div class="video-controls">
-                    <button class="video-play-btn" data-i18n="btn.afspelen">▶ Afspelen</button>
-                  </div>
-                </div>
-                <div class="details-extra">
-                  <h3 data-i18n="studio.why.h3">Waarom dit project?</h3>
-                  <ul>
-                    <li data-i18n="studio.why.li1">Abstracte concepten vertaal naar concrete interacties</li>
-                    <li data-i18n="studio.why.li2">Design en techniek combineer in één geheel</li>
-                    <li data-i18n="studio.why.li3">Verder denk dan een standaard "productpagina"</li>
-                  </ul>
-                  <div class="details-buttons">
-                    <a href="https://studioharterink.com" target="_blank" tabindex="-1"><button class="site-btn" data-i18n="btn.site">Website bekijken</button></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Door het oog van de Maker -->
-      <div class="bar-inner" data-project="oog" tabindex="0">
-        <div class="line">
-          <span class="pill-title">Door het Oog</span>
-        </div>
-
-        <div class="info" tabindex="-1">
-          <h2 class="project-title long">Door het oog van de Maker</h2>
-          <div class="code-lang">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JS</span>
-            <span>PY</span>
-            <span>S3</span>
-            <span>FIRESTORE</span>
-            <span>NODEBOX</span>
-          </div>
-          <div class="context">
-            <h3 data-i18n="picturemod.context.h3">Masterproef</h3>
-            <p data-i18n="picturemod.context.p">Door het oog van de maker verbindt de digitale wereld met het tastbare. Bezoekers worden actieve deelnemers en ontdekken mijn fascinatie voor moiré-patronen door zelf een unieke postkaart te ontwerpen. Zo komen digitale structuren spelenderwijs tot leven in de fysieke wereld.</p>
-            <button data-i18n="btn.meer" class="more-btn">Meer zien</button>
-          </div>
-        </div>
-
-        <div class="details">
-          <h2 class="project-title">Door het oog van de Maker</h2>
-          <div class="code-lang">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JS</span>
-            <span>PY</span>
-            <span>S3</span>
-            <span>FIRESTORE</span>
-            <span>NODEBOX</span>
-          </div>
-          <div class="details-wrapper">
-            <div class="details-grid">
-              <div class="details-content">
-                <div>
-                  <h3 data-i18n="picturemod.concept.h3">Concept & interactie</h3>
-                  <p data-i18n="picturemod.concept.p">Het project vertrekt vanuit mijn fascinatie voor moiré-patronen, die ik wil delen met de bezoeker. Via de website maken bezoekers een wazige foto met hun camera, waarop cirkels, vierkanten en lijnen reageren op lichte en donkere zones. Met sliders kan het ontwerp volledig worden aangepast: vorm, intensiteit en kleur. Bij het printen worden de kleurlagen opgesplitst en één voor één naar de AxiDraw gestuurd, waarna de bezoeker telkens de juiste kleur plaatst. Zo ontstaat een uniek, zelfgemaakt moiré-postkaartje.</p>
-                </div>
-                <div>
-                  <h3 data-i18n="picturemod.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="picturemod.tech.li1">Web-based interface gebouwd met HTML, CSS en JavaScript</li>
-                    <li data-i18n="picturemod.tech.li2">Gebruik van de device camera om een wazige foto te maken</li>
-                    <li data-i18n="picturemod.tech.li3">Analyse van licht- en donkerwaarden in de afbeelding</li>
-                    <li data-i18n="picturemod.tech.li4">Realtime aanpasbaar ontwerp via sliders (vorm, intensiteit, dichtheid)</li>
-                    <li data-i18n="picturemod.tech.li5">Automatische opsplitsing van het ontwerp in kleur-lagen</li>
-                    <li data-i18n="picturemod.tech.li6">Elke kleurlaag wordt sequentieel naar de AxiDraw gestuurd</li>
-                    <li data-i18n="picturemod.tech.li7">Handmatige kleurwissel door de gebruiker tijdens het plotten</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 data-i18n="picturemod.extra.h3">Extra</h3>
-                  <p class="last" data-i18n="picturemod.extra.p">Pssst! Shift+klik op de site om de Docs in het menu te zien!</p>
-                  <div class="details-buttons">
-                    <a href="https://picturemod.netlify.app/docs" target="_blank" tabindex="-1"><button class="site-btn" data-i18n="picturemod.extra.btn1">Bekijk de Docs</button></a>
-                    <a href="https://picturemod.netlify.app/beelden" target="_blank" tabindex="-1"><button class="site-btn" data-i18n="picturemod.extra.btn2">Bekijk de media</button></a>
-                  </div>
-                </div>
-                <div>
-                  <h3 data-i18n="picturemod.bonus.h3"></h3>
-                  <p data-i18n="picturemod.bonus.p"></p>
-                </div>
-              </div>
-              <div class="details-right">
-                <div class="details-image">
-                  <video muted playsinline preload="metadata">
-                    <source src="videos/doorhetoog-comp.mp4" type="video/mp4">
-                  </video>
-                  <div class="video-controls">
-                    <button class="video-play-btn" data-i18n="btn.afspelen">▶ Afspelen</button>
-                  </div>
-                </div>
-                <div class="details-extra">
-                  <h3 data-i18n="picturemod.why.h3">Waarom dit project?</h3>
-                  <p data-i18n="picturemod.why.p">Door het oog van de maker is een project waarin front- en back-end samenkomen, verschillende systemen met elkaar samenwerken en data en databases worden geïntegreerd binnen een interactief creatief proces.</p>
-                  <div class="details-buttons">
-                    <a href="https://picturemod.netlify.app/" target="_blank" tabindex="-1"><button class="site-btn" data-i18n="btn.site">Website bekijken</button></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- Fizzi -->
-      <div class="bar-inner" data-project="fizzi" tabindex="0">
-        <div class="line">
-          <span class="pill-title">Fizzi</span>
-        </div>
-
-        <div class="info" tabindex="-1">
-          <h2 class="project-title">Fizzi</h2>
-          <div class="code-lang">
-            <span>NEXT.JS</span>
-            <span>JS</span>
-            <span>GSAP</span>
-            <span>TAILWIND</span>
-            <span>THREE.JS</span>
-            <span>R3F</span>
-            <span>PRISMIC CMS</span>
+      <div class="bar-inner" data-project="fizzi" tabindex="0" role="button">
+        <div class="card-face">
+          <span class="card-num">01</span>
+          <div class="card-info">
+            <span class="card-eyebrow" data-i18n="fizzi.context.h3">Cursus</span>
+            <h2 class="card-title">Fizzi</h2>
           </div>
-          <div class="context">
-            <h3 data-i18n="fizzi.context.h3">Cursus</h3>
-            <p data-i18n="fizzi.context.p">Fizzi is een professioneel opgebouwde website, ontwikkeld aan de hand van een cursus, waarin ik onderzocht hoe interactieve front-end met Next.js, GSAP en Three/R3F kan samengaan met dynamische content uit een CMS. Het resultaat is een visueel rijke site met flexibel beheerbare content.</p>
-            <button data-i18n="btn.meer" class="more-btn">Meer zien</button>
-          </div>
+          <div class="card-tags">NEXT.JS · GSAP · THREE.JS · PRISMIC</div>
+          <div class="card-cta"><span data-i18n="btn.meer">Meer zien</span> →</div>
         </div>
 
         <div class="details">
@@ -387,112 +134,761 @@
         </div>
       </div>
 
-      <!-- Dirk Nielandt -->
-      <div class="bar-inner" data-project="dirk" tabindex="0">
-        <div class="line">
-          <span class="pill-title">Dirk Nielandt</span>
-        </div>
-
-        <div class="info" tabindex="-1">
-          <h2 class="project-title">Dirk Nielandt</h2>
-          <div class="code-lang">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JS</span>
-            <span>CRAFT CMS</span>
+      <!-- Beestenbos -->
+      <div class="bar-inner" data-project="beestenbos" tabindex="0" role="button">
+        <div class="card-face">
+          <span class="card-num">02</span>
+          <div class="card-info">
+            <span class="card-eyebrow" data-i18n="beestenbos.context.h3">Betaalde opdracht</span>
+            <h2 class="card-title">Café Beestenbos CashUp</h2>
           </div>
-          <div class="context">
-            <h3 data-i18n="dirk.context.h3">Betaalde opdracht</h3>
-            <p data-i18n="dirk.context.p">Dirk Nielandt is een kinderboekenschrijver die zijn werk online beter zichtbaar wilde maken. De website biedt een overzicht van zijn boeken, duidelijke informatie per titel en een laagdrempelig contactpunt, binnen een eenvoudig en zelfstandig te beheren platform.</p>
-            <button data-i18n="btn.meer" class="more-btn">Meer zien</button>
-          </div>
-        </div>
-
-        <div class="details">
-          <h2 class="project-title">Dirk Nielandt</h2>
-          <div class="code-lang">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JS</span>
-            <span>CRAFT CMS</span>
-          </div>
-          <div class="details-wrapper">
-            <div class="details-grid">
-              <div class="details-content">
-                <div>
-                  <h3 data-i18n="dirk.concept.h3">Concept & interactie</h3>
-                  <p data-i18n="dirk.concept.p">De website van Dirk Nielandt is vormgegeven in een stijl die aansluit bij zijn werk als kinderboekenschrijver en de belevingswereld van zijn doelgroep. Via Craft CMS kan hij eenvoudig boeken beheren, uitlichten en taggen, bijvoorbeeld bij een nieuwe release of prijs. De website is bewust overzichtelijk gehouden, met subtiele speelse details zoals hover-animaties bij bekroonde boeken en een logo-oog dat periodiek tot leven komt.</p>
-                </div>
-                <div>
-                  <h3 data-i18n="dirk.tech.h3">Technische uitwerking</h3>
-                  <ul>
-                    <li data-i18n="dirk.tech.li1">Opzet van een custom frontend in HTML, CSS en JavaScript</li>
-                    <li data-i18n="dirk.tech.li2">Implementatie van Craft CMS voor contentbeheer</li>
-                    <li data-i18n="dirk.tech.li3">Opzetten van gestructureerde contenttypes voor boeken</li>
-                    <li data-i18n="dirk.tech.li4">Mogelijkheid om per boek:</li>
-                    <ul class="nested-list">
-                      <li data-i18n="dirk.tech.li4a">Leeftijdscategorie toe te kennen</li>
-                      <li data-i18n="dirk.tech.li4b">Plaatsing op specifieke pagina's te bepalen</li>
-                      <li data-i18n="dirk.tech.li4c">Een optionele "sticker" met eigen tekst toe te voegen</li>
-                    </ul>
-                    <li data-i18n="dirk.tech.li5">Focus op duidelijke contenthiërarchie en onderhoudbaarheid</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="details-right">
-                <div class="details-image">
-                  <video muted playsinline preload="metadata">
-                    <source src="videos/dirk-nielandt-comp.mp4" type="video/mp4">
-                  </video>
-                  <div class="video-controls">
-                    <button class="video-play-btn" data-i18n="btn.afspelen">▶ Afspelen</button>
-                  </div>
-                </div>
-                <div class="details-extra">
-                  <h3 data-i18n="dirk.why.h3">Waarom dit project?</h3>
-                  <ul>
-                    <li data-i18n="dirk.why.li1">Abstracte concepten vertaal naar concrete interacties</li>
-                    <li data-i18n="dirk.why.li2">Design en techniek combineer in één geheel</li>
-                    <li data-i18n="dirk.why.li3">Verder denk dan een standaard "productpagina"</li>
-                  </ul>
-                  <div class="details-buttons">
-                    <a href="https://dirknielandt.be" target="_blank" tabindex="-1"><button class="site-btn" data-i18n="btn.site">Website bekijken</button></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="card-tags">NEXT.JS · MONGODB · TYPESCRIPT · TAILWIND · PWA</div>
+          <div class="card-cta"><span data-i18n="btn.meer">Meer zien</span> →</div>
         </div>
       </div>
 
+
+
+      <!-- Studio -->
+      <div class="bar-inner" data-project="studio" tabindex="0" role="button">
+        <div class="card-face">
+          <span class="card-num">03</span>
+          <div class="card-info">
+            <span class="card-eyebrow" data-i18n="studio.context.h3">Eigen webshop</span>
+            <h2 class="card-title">Studio Harterink</h2>
+            <div class="wip-badge">🚧 Under construction</div>
+          </div>
+          <div class="card-tags">HTML · CSS · THREE.JS · R3F · STRIPE</div>
+          <div class="card-cta"><span data-i18n="btn.meer">Meer zien</span> →</div>
+        </div>
+      </div>
+
+      <!-- Dirk -->
+      <div class="bar-inner" data-project="dirk" tabindex="0" role="button">
+        <div class="card-face">
+          <span class="card-num">04</span>
+          <div class="card-info">
+            <span class="card-eyebrow" data-i18n="dirk.context.h3">Betaalde opdracht</span>
+            <h2 class="card-title">Dirk Nielandt</h2>
+          </div>
+          <div class="card-tags">HTML · CSS · JS · CRAFT CMS</div>
+          <div class="card-cta"><span data-i18n="btn.meer">Meer zien</span> →</div>
+        </div>
+      </div>
+
+      <!-- Oog -->
+      <div class="bar-inner" data-project="oog" tabindex="0" role="button">
+        <div class="card-face">
+          <span class="card-num">05</span>
+          <div class="card-info">
+            <span class="card-eyebrow" data-i18n="picturemod.context.h3">Masterproef</span>
+            <h2 class="card-title">Door het Oog van de Maker</h2>
+          </div>
+          <div class="card-tags">HTML5 · NODEBOX LIVE · FLASK · AXIDRAW · FIREBASE · JS</div>
+          <div class="card-cta"><span data-i18n="btn.meer">Meer zien</span> →</div>
+        </div>
+      </div>    
     </div>
   </div>
 
-  <div class="plus-button" tabindex="0">
-    <svg viewBox="0 0 24 24" class="plus-icon" aria-hidden="true">
-      <line x1="12" y1="5" x2="12" y2="19" />
-      <line x1="5" y1="12" x2="19" y2="12" />
-    </svg>
-    <svg class="plus-circle-text" viewBox="0 0 60 60" aria-hidden="true">
-      <defs>
-        <path id="plus-text-path" d="M 30,30 m -24,0 a 24,24 0 1,1 48,0 a 24,24 0 1,1 -48,0" />
-      </defs>
-      <text><textPath href="#plus-text-path">cv * cv * cv * cv * cv * cv * </textPath></text>
-    </svg>
-  </div>
+  </div><!-- /.projects-list -->
 
 
 </main>
 
 <footer class="footer-socials">
+  <span class="footer-name">Bob Harterink</span>
   <nav class="socials">
     <a href="mailto:bobharterink@gmail.com">Mail</a>
-    <!-- <a href="#" target="_blank">LinkedIn</a> -->
     <a href="https://github.com/bobharterink" target="_blank">GitHub</a>
+    <a href="/cv/">CV</a>
   </nav>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+</script>
+<!-- BBF hover preview -->
+<style>
+  .bbf-hover-preview {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, calc(-50% + 18px));
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 24px 64px rgba(0,0,0,0.45));
+  }
+  .bbf-hover-preview.is-visible {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  @media (max-width: 900px) { .bbf-hover-preview { display: none; } }
+
+  .bhp-card {
+    background: white; border-radius: 14px; padding: 20px; width: 380px;
+    font-family: ui-sans-serif, system-ui, sans-serif; color: #111827;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative; overflow: hidden;
+  }
+  .bhp-worker-name { font-size: 1.05rem; font-weight: 700; color: #111827; }
+  .bhp-total-card {
+    background: #111827; border-radius: 8px; padding: 10px 14px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  }
+  .bhp-total-lbl { font-size: 0.6rem; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
+  .bhp-total-amt { font-size: 1.2rem; font-weight: 700; color: #fff; }
+  .bhp-receive-btn {
+    background: #fff; color: #111827; border-radius: 6px; padding: 6px 12px;
+    font-size: 0.7rem; font-weight: 600; white-space: nowrap; cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .bhp-receive-btn.is-pressing { opacity: 0.7; transform: scale(0.96); }
+  .bhp-section-title { font-size: 0.7rem; font-weight: 600; color: #374151; }
+  .bhp-rows { display: flex; flex-direction: column; }
+  .bhp-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 5px 0; border-bottom: 1px solid #f3f4f6; gap: 8px;
+  }
+  .bhp-row-main { flex: 1; min-width: 0; }
+  .bhp-row-date { font-size: 0.7rem; font-weight: 500; color: #111827; }
+  .bhp-row-workers { font-size: 0.58rem; color: #9ca3af; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+  .bhp-row-aside { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+  .bhp-row-amt { font-size: 0.7rem; font-weight: 600; color: #111827; transition: color 0.3s; }
+  .bhp-recv-check { display: none; font-size: 0.7rem; font-weight: 700; color: #16a34a; }
+  .bhp-row.is-received .bhp-row-amt { color: #16a34a; }
+  .bhp-row.is-received .bhp-recv-check { display: block; }
+  /* modal */
+  .bhp-modal {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.45); border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+  }
+  .bhp-modal.is-open { opacity: 1; }
+  .bhp-modal-inner {
+    background: white; border-radius: 10px; padding: 14px; width: 88%;
+    display: flex; flex-direction: column; gap: 8px;
+    transform: translateY(10px); transition: transform 0.25s ease;
+  }
+  .bhp-modal.is-open .bhp-modal-inner { transform: translateY(0); }
+  .bhp-modal-title { font-weight: 700; font-size: 0.85rem; color: #111827; }
+  .bhp-modal-desc { font-size: 0.62rem; color: #6b7280; }
+  .bhp-modal-option {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid #e5e7eb; border-radius: 7px;
+    padding: 7px 11px; font-size: 0.7rem; color: #374151;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .bhp-modal-option.is-checked { border-color: #111827; background: #f3f4f6; }
+  .bhp-radio {
+    width: 13px; height: 13px; border-radius: 50%;
+    border: 1.5px solid #d1d5db; flex-shrink: 0;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .bhp-modal-option.is-checked .bhp-radio { border-color: #111827; background: #111827; box-shadow: inset 0 0 0 3px white; }
+  .bhp-rest { color: #111827; margin-left: auto; font-size: 0.85em; }
+  .bhp-modal-footer { display: flex; gap: 8px; justify-content: flex-end; }
+  .bhp-modal-cancel { border: 1px solid #e5e7eb; border-radius: 6px; padding: 5px 12px; font-size: 0.68rem; color: #374151; }
+  .bhp-modal-confirm { background: #111827; color: white; border-radius: 6px; padding: 5px 12px; font-size: 0.68rem; font-weight: 500; transition: opacity 0.15s; }
+  .bhp-modal-confirm.is-pressing { opacity: 0.7; }
+</style>
+
+<div class="bbf-hover-preview" id="bbfHoverPreview">
+  <div class="bhp-card" id="bhpCard">
+    <div class="bhp-worker-name">Luna</div>
+    <div class="bhp-total-card">
+      <div>
+        <div class="bhp-total-lbl">Totaal Openstaande Fooien</div>
+        <div class="bhp-total-amt" id="bhpTotalAmt">€ 8,50</div>
+      </div>
+      <div class="bhp-receive-btn" id="bhpReceiveBtn">Ontvangen</div>
+    </div>
+    <div class="bhp-section-title">Fooi Geschiedenis</div>
+    <div class="bhp-rows">
+      <div class="bhp-row" data-open>
+        <div class="bhp-row-main">
+          <div class="bhp-row-date">3 mei 2024</div>
+          <div class="bhp-row-workers">Gedeeld met: Michiel, Manou, Luna, Camerone</div>
+        </div>
+        <div class="bhp-row-aside">
+          <div class="bhp-row-amt">€ 2,01</div>
+          <div class="bhp-recv-check">✓</div>
+        </div>
+      </div>
+      <div class="bhp-row" data-open>
+        <div class="bhp-row-main">
+          <div class="bhp-row-date">2 mei 2024</div>
+          <div class="bhp-row-workers">Gedeeld met: Nina, Bob, Luna, Camerone</div>
+        </div>
+        <div class="bhp-row-aside">
+          <div class="bhp-row-amt">€ 1,92</div>
+          <div class="bhp-recv-check">✓</div>
+        </div>
+      </div>
+      <div class="bhp-row" data-open>
+        <div class="bhp-row-main">
+          <div class="bhp-row-date">1 mei 2024</div>
+          <div class="bhp-row-workers">Gedeeld met: Michiel, Carlos, Luna, Camerone</div>
+        </div>
+        <div class="bhp-row-aside">
+          <div class="bhp-row-amt">€ 2,20</div>
+          <div class="bhp-recv-check">✓</div>
+        </div>
+      </div>
+      <div class="bhp-row" data-open>
+        <div class="bhp-row-main">
+          <div class="bhp-row-date">30 apr 2024</div>
+          <div class="bhp-row-workers">Gedeeld met: Nina, Luna</div>
+        </div>
+        <div class="bhp-row-aside">
+          <div class="bhp-row-amt">€ 2,37</div>
+          <div class="bhp-recv-check">✓</div>
+        </div>
+      </div>
+      <div class="bhp-row is-received">
+        <div class="bhp-row-main">
+          <div class="bhp-row-date">27 mrt 2024</div>
+          <div class="bhp-row-workers">Gedeeld met: Luna, Camerone</div>
+        </div>
+        <div class="bhp-row-aside">
+          <div class="bhp-row-amt">€ 1,98</div>
+          <div class="bhp-recv-check">✓</div>
+        </div>
+      </div>
+    </div>
+    <div class="bhp-modal" id="bhpModal">
+      <div class="bhp-modal-inner">
+        <div class="bhp-modal-title">Fooi Ontvangen</div>
+        <div class="bhp-modal-desc">Kies het bedrag dat je wilt ontvangen.</div>
+        <div class="bhp-modal-option is-checked" id="bhpOptExact">
+          <div class="bhp-radio"></div>
+          <span>Exact bedrag: € 8,50</span>
+        </div>
+        <div class="bhp-modal-option" id="bhpOpt5">
+          <div class="bhp-radio"></div>
+          <span>€ 5,00</span>
+          <span class="bhp-rest">(Rest: +€ 3,50)</span>
+        </div>
+        <div class="bhp-modal-footer">
+          <div class="bhp-modal-cancel">Annuleren</div>
+          <div class="bhp-modal-confirm" id="bhpConfirm">Bevestigen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cursor browser previews -->
+<style>
+#cursorPreviewFizzi { width: 480px; }
+#cursorPreviewFizzi .cp-browser-stage { height: 300px; }
+</style>
+
+<div class="cursor-preview" id="cursorPreviewFizzi">
+  <div class="cp-browser">
+    <div class="cp-browser-bar">
+      <div class="cp-traffic"><span></span><span></span><span></span></div>
+      <div class="cp-url-bar"><span class="cp-scheme">https://</span><span class="cp-host">studioha.vercel.app</span><span style="color:#fe6334">/</span></div>
+    </div>
+    <div class="cp-browser-stage">
+      <iframe src="https://studioha.vercel.app/" style="width:calc(200% + 15px);height:600px;border:none;display:block;pointer-events:none;transform:scale(0.5);transform-origin:top left;flex-shrink:0;" title="Fizzi preview"></iframe>
+    </div>
+  </div>
+</div>
+
+<style>
+#cursorPreviewBeestenbos { width: 480px; }
+#cursorPreviewBeestenbos .cp-browser-stage { height: 300px; position: relative; }
+.cp-bbf { position: absolute; inset: 0; background: #f9fafb; display: flex; flex-direction: column; font-family: ui-sans-serif, system-ui, sans-serif; color: #111827; overflow: hidden; padding: 10px; }
+.cp-bbf-card { background: white; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.cp-bbf-card-header { padding: 9px 12px; border-bottom: 1px solid #f3f4f6; flex-shrink: 0; }
+.cp-bbf-card-title { color: #111827; font-size: 11px; font-weight: 600; line-height: 1.3; }
+.cp-bbf-card-desc { font-size: 9px; color: #6b7280; margin-top: 1px; }
+.cp-bbf-card-body { padding: 9px 12px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.cp-bbf-field label { display: block; font-size: 9px; font-weight: 500; margin-bottom: 2px; color: #374151; }
+.cp-bbf-date-btn { display: flex; align-items: center; gap: 5px; border: 1px solid #e5e7eb; border-radius: 5px; padding: 4px 8px; font-size: 10px; background: white; color: #374151; }
+.cp-bbf-input { border: 1px solid #e5e7eb; border-radius: 5px; padding: 4px 8px; font-size: 11px; color: #111827; min-height: 26px; display: flex; align-items: center; }
+.cp-bbf-workers { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.cp-bbf-worker { display: flex; align-items: center; gap: 5px; border: 1px solid #e5e7eb; border-radius: 5px; padding: 4px 7px; font-size: 10px; color: #111827; transition: border-color 0.15s, background 0.15s; }
+.cp-bbf-worker.checked { border-color: #111827; background: #f3f4f6; font-weight: 500; }
+.cp-bbf-check { width: 12px; height: 12px; border: 1.5px solid #d1d5db; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s, border-color 0.15s; }
+.cp-bbf-worker.checked .cp-bbf-check { background: #111827; border-color: #111827; }
+.cp-bbf-check svg path { stroke-dasharray: 25; stroke-dashoffset: 25; animation: cpCheckDraw 0.28s cubic-bezier(0.22,1,0.36,1) forwards; }
+@keyframes cpCheckDraw { to { stroke-dashoffset: 0; } }
+.cp-bbf-card-footer { padding: 8px 12px; border-top: 1px solid #f3f4f6; flex-shrink: 0; }
+.cp-bbf-submit { width: 100%; background: #111827; color: white; border-radius: 5px; padding: 7px; font-size: 10px; font-weight: 500; text-align: center; transition: background 0.25s, opacity 0.15s, transform 0.15s; cursor: default; }
+.cp-bbf-submit.is-pressing { opacity: 0.7; transform: scale(0.97); }
+.cp-bbf-submit.is-success { background: #16a34a; }
+</style>
+
+<div class="cursor-preview" id="cursorPreviewBeestenbos">
+  <div class="cp-browser">
+    <div class="cp-browser-bar">
+      <div class="cp-traffic"><span></span><span></span><span></span></div>
+      <div class="cp-url-bar"><span class="cp-scheme">https://</span><span class="cp-host">bbfooi.vercel.app</span><span id="bbfUrlPath" style="color:#111827">/</span></div>
+    </div>
+    <div class="cp-browser-stage">
+      <div class="cp-bbf">
+        <div class="cp-bbf-card">
+          <div class="cp-bbf-card-header">
+            <div class="cp-bbf-card-title">Dagelijkse Fooi Invoer</div>
+            <div class="cp-bbf-card-desc">Selecteer wie er vandaag heeft gewerkt</div>
+          </div>
+          <div class="cp-bbf-card-body">
+            <div class="cp-bbf-field">
+              <label>Datum</label>
+              <div class="cp-bbf-date-btn">📅 &nbsp;7 mei 2026</div>
+            </div>
+            <div class="cp-bbf-field">
+              <label>Fooi Bedrag</label>
+              <div class="cp-bbf-input" id="cpBbfAmount">&nbsp;</div>
+            </div>
+            <div class="cp-bbf-field">
+              <label>Selecteer Medewerkers</label>
+              <div class="cp-bbf-workers">
+                <div class="cp-bbf-worker" id="cpBbfW1"><div class="cp-bbf-check"></div> Michiel</div>
+                <div class="cp-bbf-worker" id="cpBbfW2"><div class="cp-bbf-check"></div> Manou</div>
+                <div class="cp-bbf-worker" id="cpBbfW3"><div class="cp-bbf-check"></div> Luna</div>
+                <div class="cp-bbf-worker" id="cpBbfW4"><div class="cp-bbf-check"></div> Camerone</div>
+              </div>
+            </div>
+          </div>
+          <div class="cp-bbf-card-footer">
+            <div class="cp-bbf-submit" id="cpBbfSubmit">Bevestigen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const amount = document.getElementById('cpBbfAmount');
+  const workers = ['cpBbfW1','cpBbfW2','cpBbfW3','cpBbfW4'].map(id => document.getElementById(id));
+  const submitBtn = document.getElementById('cpBbfSubmit');
+  const preview = document.getElementById('cursorPreviewBeestenbos');
+  if (!amount || !submitBtn || !preview) return;
+  const checkSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:9px;height:9px;display:block"><path d="M20 6 9 17l-5-5"/></svg>';
+  let timers = [];
+  function check(w) {
+    w.classList.add('checked');
+    w.querySelector('.cp-bbf-check').innerHTML = checkSvg;
+  }
+  function clearVisuals() {
+    amount.innerHTML = '&nbsp;';
+    workers.forEach(w => { w.classList.remove('checked'); w.querySelector('.cp-bbf-check').innerHTML = ''; });
+    submitBtn.classList.remove('is-pressing', 'is-success');
+    submitBtn.textContent = 'Bevestigen';
+  }
+  function stop() {
+    timers.forEach(clearTimeout); timers = [];
+    clearVisuals();
+  }
+  function run() {
+    clearVisuals();
+    const t = (ms, fn) => timers.push(setTimeout(fn, ms));
+    t(600,  () => { amount.textContent = '8'; });
+    t(720,  () => { amount.textContent = '8,'; });
+    t(880,  () => { amount.textContent = '8,0'; });
+    t(1020, () => { amount.textContent = '8,02'; });
+    t(1700, () => check(workers[0]));
+    t(2100, () => check(workers[1]));
+    t(2500, () => check(workers[2]));
+    t(3400, () => submitBtn.classList.add('is-pressing'));
+    t(3800, () => { submitBtn.classList.remove('is-pressing'); submitBtn.classList.add('is-success'); submitBtn.textContent = '✓ Opgeslagen'; });
+    t(5800, () => clearVisuals());
+    t(6400, () => run());
+  }
+  let running = false;
+  new MutationObserver(() => {
+    const visible = preview.classList.contains('is-visible');
+    if (visible && !running) { running = true; run(); }
+    if (!visible && running) { running = false; stop(); }
+  }).observe(preview, { attributes: true, attributeFilter: ['class'] });
+})();
+</script>
+
+<style>
+@font-face {
+  font-family: 'PlaywriteDEGrund';
+  src: url('/dirk-nielandt/assets/PlaywriteDEGrund-VariableFont_wght.ttf') format('truetype');
+}
+#cursorPreviewDirk { width: 480px; }
+#cursorPreviewDirk .cp-browser-stage { height: 300px; overflow: hidden; position: relative; }
+.cpd-inner {
+  width: 960px; height: 600px;
+  transform: scale(0.5); transform-origin: top left;
+  position: relative;
+  background: white;
+  font-family: 'PlaywriteDEGrund', serif;
+  color: #1a1a1a;
+  --cpd-accent: #1c88ed;
+  --cpd-soft: #d9edff;
+}
+.cpd-header { display: flex; flex-direction: column; align-items: center; padding: 30px 0 10px; }
+.cpd-logo-mark { display: flex; align-items: center; gap: 16px; }
+.cpd-logo-eye { position: relative; width: 50px; height: 50px; border-radius: 50%; background: var(--cpd-accent); display: grid; place-items: center; }
+.cpd-pupil-bg { width: 29px; height: 29px; border-radius: 50%; background: white; display: grid; place-items: center; overflow: hidden; }
+.cpd-pupil { width: 17px; height: 17px; border-radius: 50%; background: black; }
+.cpd-logo-name { font-size: 1.6em; color: #1a1a1a; text-transform: uppercase; }
+.cpd-nav { display: flex; gap: 60px; margin-top: 18px; }
+.cpd-nav a { text-decoration: none; color: #1a1a1a; font-size: 0.95em; font-family: 'PlaywriteDEGrund', serif; }
+.cpd-main { margin: 0 8%; }
+.cpd-main h1 { text-align: center; margin: 40px 0 16px; font-size: 1.4em; text-transform: uppercase; color: #1a1a1a; font-family: 'PlaywriteDEGrund', serif; }
+.cpd-row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 70px; padding: 50px 60px 60px; position: relative; background: var(--cpd-soft); border-radius: 20px; margin: 0 60px; }
+.cpd-cover { position: relative; display: block; }
+.cpd-cover img { width: 100%; display: block; box-shadow: 0 6px 14px rgba(0,0,0,0.18); }
+.cpd-sticker { position: absolute; top: -30px; left: -30px; width: 80px; height: 80px; background-image: url('/dirk-nielandt/assets/wavy-cirkel.svg'); background-size: contain; background-repeat: no-repeat; display: grid; place-items: center; text-align: center; font-size: 0.65em; line-height: 1.2; color: #1a1a1a; padding: 12px; transform: rotate(-8deg); font-family: 'PlaywriteDEGrund', serif; }
+.cpd-pill { position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); background: var(--cpd-accent); color: white; border: none; border-radius: 999px; padding: 12px 28px; font-size: 0.95em; font-family: 'PlaywriteDEGrund', serif; white-space: nowrap; cursor: default; }
+.cpd-loader { position: absolute; inset: 0; z-index: 30; background: white; display: flex; align-items: center; justify-content: center; overflow: hidden; pointer-events: none; }
+.cpd-loader .cpd-outer { position: relative; width: 150px; height: 150px; border-radius: 50%; background: var(--cpd-accent); display: flex; justify-content: center; align-items: center; animation: cl-expandCircle 1s ease-in 4s forwards; transform-origin: center; }
+.cpd-loader .cpd-middle { width: 90px; height: 90px; border-radius: 50%; background: #fff; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; animation: cl-moveMiddleCircle 3s forwards; }
+.cpd-loader .cpd-inner-c { width: 50px; height: 50px; border-radius: 50%; background: #000; position: absolute; animation: cl-moveInnerCircle 3s forwards; }
+.cpd-loader .cpd-text-wrap { margin-left: 20px; overflow: hidden; height: 2em; }
+.cpd-loader .cpd-text { font-family: 'PlaywriteDEGrund', serif; font-size: 1.5em; font-weight: bold; color: #000; text-transform: uppercase; animation: cl-slideDownText 1s 3s forwards; }
+.cpd-loader .cpd-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 5; transform: translateY(-110%); animation: cl-slideCoverDown 1s 5s forwards; }
+.cpd-loader .cpd-screen::before { content: ""; position: absolute; bottom: 600px; left: 0; width: 100%; height: 100px; background: black; clip-path: ellipse(75% 75% at 50% 100%); }
+.cpd-loader .cpd-outer, .cpd-loader .cpd-middle, .cpd-loader .cpd-inner-c, .cpd-loader .cpd-text, .cpd-loader .cpd-screen { animation-play-state: paused; }
+.cpd-loader.anim-running .cpd-outer, .cpd-loader.anim-running .cpd-middle, .cpd-loader.anim-running .cpd-inner-c, .cpd-loader.anim-running .cpd-text, .cpd-loader.anim-running .cpd-screen { animation-play-state: running; }
+.cpd-loader .cpd-outer.is-done { display: none; }
+.cpd-loader.clear-display { background: transparent; }
+.cpd-cover { transition: transform 0.3s ease; }
+.cpd-cover.is-hovered { transform: scale(1.04); }
+.cpd-sticker { transition: transform 0.35s ease-in-out; }
+.cpd-cover.is-hovered .cpd-sticker { transform: rotate(10deg) scale(1.1); }
+@keyframes cl-moveInnerCircle {
+  0%   { top: calc(50% - 25px); left: calc(50% - 25px); }
+  33%  { top: 5px; left: 5px; }
+  66%  { top: 5px; left: calc(100% - 55px); }
+  100% { top: calc(50% - 25px); left: calc(50% - 25px); }
+}
+@keyframes cl-moveMiddleCircle {
+  0%   { transform: translate(5px, 5px); }
+  33%  { transform: translate(-5px, -5px); }
+  66%  { transform: translate(5px, -5px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes cl-slideDownText {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(110%); }
+}
+@keyframes cl-expandCircle {
+  0%   { transform: scale(1); }
+  100% { transform: scale(50); }
+}
+@keyframes cl-slideCoverDown {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(120%); }
+}
+</style>
+
+<div class="cursor-preview" id="cursorPreviewDirk">
+  <div class="cp-browser">
+    <div class="cp-browser-bar">
+      <div class="cp-traffic"><span></span><span></span><span></span></div>
+      <div class="cp-url-bar"><span class="cp-scheme">https://</span><span class="cp-host">dirknielandt.be</span><span id="cpdUrlPath" style="color:#1c88ed">/</span></div>
+    </div>
+    <div class="cp-browser-stage">
+      <div class="cpd-inner">
+        <div class="cpd-loader" id="cpdLoader">
+          <div class="cpd-outer"><div class="cpd-middle"><div class="cpd-inner-c"></div></div></div>
+          <div class="cpd-text-wrap"><div class="cpd-text">Dirk Nielandt</div></div>
+          <div class="cpd-screen"></div>
+        </div>
+        <header class="cpd-header">
+          <div class="cpd-logo-mark">
+            <div class="cpd-logo-eye"><div class="cpd-pupil-bg"><div class="cpd-pupil"></div></div></div>
+            <span class="cpd-logo-name">Dirk Nielandt</span>
+          </div>
+          <nav class="cpd-nav">
+            <a>Prijzen</a><a>Lezingen</a><a>Boeken</a><a>Tv</a><a>Contact</a>
+          </nav>
+        </header>
+        <main class="cpd-main">
+          <h1>Populair</h1>
+          <div class="cpd-row3">
+            <div class="cpd-cover"><div class="cpd-sticker">Meer dan 12.000 verkocht!</div><img src="/dirk-nielandt/assets/covers/dievenschool.jpg" alt=""></div>
+            <div class="cpd-cover"><div class="cpd-sticker">Te zien op Ketnet!</div><img src="/dirk-nielandt/assets/covers/ridder muis.jpg" alt=""></div>
+            <div class="cpd-cover"><div class="cpd-sticker">Al 14 keer herdrukt!</div><img src="/dirk-nielandt/assets/covers/slim stoer sterk.jpg" alt=""></div>
+            <button class="cpd-pill">Alle boeken bekijken</button>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+#cursorPreviewOog { width: 480px; }
+#cursorPreviewOog .cp-browser-stage { height: 300px; position: relative; overflow: hidden; }
+.cp-oog { position: absolute; inset: 0; display: flex; background: #fff; font-family: 'Outfit', sans-serif; }
+.cp-oog-sidebar { width: 120px; flex-shrink: 0; padding: 8px 10px; background: #fff; display: flex; flex-direction: column; gap: 6px; border-left: 1px solid #eee; }
+.cp-oog-section { background: #f3f3f3; border-radius: 5px; padding: 5px; display: flex; flex-direction: column; gap: 4px; }
+.cp-oog-colors { display: flex; flex-wrap: wrap; gap: 2px; }
+.cp-oog-swatch { flex: 1; min-width: 0; height: 7px; border-radius: 10px; }
+.cp-oog-swatch.active { height: 11px; border: 1.5px solid #fff; border-radius: 4px; }
+.cp-oog-range { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: #ddd; border-radius: 3px; outline: none; }
+.cp-oog-range::-webkit-slider-thumb { -webkit-appearance: none; width: var(--th, 14px); height: var(--th, 14px); border-radius: 50%; background: var(--oog-thumb, #ed1c40); cursor: pointer; transition: border-radius 0.4s ease, background 0.4s ease; }
+.cp-oog-range.is-square::-webkit-slider-thumb { border-radius: 2px; }
+.cp-oog-btn { margin-top: auto; background: #ed1c40; color: #fff; border: none; border-radius: 5px; padding: 6px 4px; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; cursor: default; text-align: center; flex-shrink: 0; }
+.cp-oog-canvas-wrap { flex: 1; position: relative; }
+.cp-oog-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+</style>
+
+<div class="cursor-preview" id="cursorPreviewOog">
+  <div class="cp-browser">
+    <div class="cp-browser-bar">
+      <div class="cp-traffic"><span></span><span></span><span></span></div>
+      <div class="cp-url-bar"><span class="cp-scheme">https://</span><span class="cp-host">picturemod.netlify.app</span><span style="color:#ed1c40">/</span></div>
+    </div>
+    <div class="cp-browser-stage">
+      <div class="cp-oog">
+        <div class="cp-oog-canvas-wrap">
+          <canvas id="cpOogCanvas"></canvas>
+        </div>
+        <div class="cp-oog-sidebar">
+          <div class="cp-oog-section">
+            <input class="cp-oog-range" id="cpOogSpacing" type="range" min="40" max="100" value="55" style="--th:22px;">
+          </div>
+          <div class="cp-oog-section">
+            <div class="cp-oog-colors" id="cpOogColors1">
+              <div class="cp-oog-swatch active" style="background:#0B4DA1"></div><div class="cp-oog-swatch" style="background:#0095D5"></div><div class="cp-oog-swatch" style="background:#A1CC3A"></div><div class="cp-oog-swatch" style="background:#00A15C"></div><div class="cp-oog-swatch" style="background:#FFCB09"></div><div class="cp-oog-swatch" style="background:#F68D2C"></div><div class="cp-oog-swatch" style="background:#ED1C24"></div><div class="cp-oog-swatch" style="background:#D1204E"></div><div class="cp-oog-swatch" style="background:#F4899D"></div><div class="cp-oog-swatch" style="background:#A3238E"></div><div class="cp-oog-swatch" style="background:#714B3A"></div><div class="cp-oog-swatch" style="background:#001722"></div>
+            </div>
+            <input class="cp-oog-range" id="cpOogSize1" type="range" min="5" max="30" value="17" style="--th:16px;">
+          </div>
+          <div class="cp-oog-section">
+            <div class="cp-oog-colors" id="cpOogColors2">
+              <div class="cp-oog-swatch" style="background:#0B4DA1"></div><div class="cp-oog-swatch" style="background:#0095D5"></div><div class="cp-oog-swatch" style="background:#A1CC3A"></div><div class="cp-oog-swatch" style="background:#00A15C"></div><div class="cp-oog-swatch" style="background:#FFCB09"></div><div class="cp-oog-swatch" style="background:#F68D2C"></div><div class="cp-oog-swatch" style="background:#ED1C24"></div><div class="cp-oog-swatch" style="background:#D1204E"></div><div class="cp-oog-swatch" style="background:#F4899D"></div><div class="cp-oog-swatch active" style="background:#A3238E"></div><div class="cp-oog-swatch" style="background:#714B3A"></div><div class="cp-oog-swatch" style="background:#001722"></div>
+            </div>
+            <input class="cp-oog-range" id="cpOogSize2" type="range" min="5" max="30" value="13" style="--th:20px;">
+          </div>
+          <div class="cp-oog-section">
+            <div class="cp-oog-colors" id="cpOogColors3">
+              <div class="cp-oog-swatch" style="background:#0B4DA1"></div><div class="cp-oog-swatch active" style="background:#0095D5"></div><div class="cp-oog-swatch" style="background:#A1CC3A"></div><div class="cp-oog-swatch" style="background:#00A15C"></div><div class="cp-oog-swatch" style="background:#FFCB09"></div><div class="cp-oog-swatch" style="background:#F68D2C"></div><div class="cp-oog-swatch" style="background:#ED1C24"></div><div class="cp-oog-swatch" style="background:#D1204E"></div><div class="cp-oog-swatch" style="background:#F4899D"></div><div class="cp-oog-swatch" style="background:#A3238E"></div><div class="cp-oog-swatch" style="background:#714B3A"></div><div class="cp-oog-swatch" style="background:#001722"></div>
+            </div>
+            <input class="cp-oog-range" id="cpOogSize3" type="range" min="5" max="30" value="16" style="--th:17px;">
+          </div>
+          <div class="cp-oog-section">
+            <input class="cp-oog-range" id="cpOogScale" type="range" min="0.5" max="2" value="1" style="width:66%;">
+          </div>
+          <button class="cp-oog-btn">Laten Maken!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const preview = document.getElementById('cursorPreviewOog');
+  const canvas  = document.getElementById('cpOogCanvas');
+  const wrap    = canvas?.parentElement;
+  if (!canvas || !preview) return;
+
+  const sliders = {
+    spacing: document.getElementById('cpOogSpacing'),
+    size1:   document.getElementById('cpOogSize1'),
+    size2:   document.getElementById('cpOogSize2'),
+    size3:   document.getElementById('cpOogSize3'),
+    scale:   document.getElementById('cpOogScale'),
+  };
+
+  const colorSets = [
+    ['#0B4DA1', '#A3238E', '#0095D5'],
+    ['#ED1C24', '#FFCB09', '#00A15C'],
+    ['#F68D2C', '#D1204E', '#A1CC3A'],
+    ['#F4899D', '#0095D5', '#714B3A'],
+  ];
+  const colors = [...colorSets[0]];
+  const swatchContainers = [
+    document.getElementById('cpOogColors1'),
+    document.getElementById('cpOogColors2'),
+    document.getElementById('cpOogColors3'),
+  ];
+  const sidebar = document.querySelector('.cp-oog-sidebar');
+
+  function applyColorSet(set) {
+    colors[0] = set[0]; colors[1] = set[1]; colors[2] = set[2];
+    swatchContainers.forEach((container, i) => {
+      if (!container) return;
+      const target = set[i].toUpperCase();
+      container.querySelectorAll('.cp-oog-swatch').forEach(s => {
+        const m = (s.getAttribute('style') || '').match(/#[0-9A-Fa-f]{6}/);
+        s.classList.toggle('active', m ? m[0].toUpperCase() === target : false);
+      });
+    });
+  }
+
+  function resize() {
+    canvas.width  = wrap.clientWidth;
+    canvas.height = wrap.clientHeight;
+    draw();
+  }
+
+  function draw() {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    if (!W || !H) return;
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, W, H);
+
+    const spacing = parseFloat(sliders.spacing.value) * 0.55;
+    const r1 = parseFloat(sliders.size1.value) * 0.52;
+    const r2 = parseFloat(sliders.size2.value) * 0.52;
+    const r3 = parseFloat(sliders.size3.value) * 0.52;
+    const scale = parseFloat(sliders.scale.value);
+
+    const offsets = [
+      { dx: 0,            dy: 0 },
+      { dx: spacing * 0.4, dy: spacing * 0.25 },
+      { dx: spacing * 0.2, dy: spacing * 0.5 },
+    ];
+    const radii = [r1 * scale, r2 * scale, r3 * scale];
+
+    const shape = draw._shape || 'circles';
+    ctx.globalAlpha = 0.82;
+
+    if (shape === 'golf') {
+      const lineSpacing = spacing * 0.7;
+      const amps = [r1 * scale * 0.6, r2 * scale * 0.55, r3 * scale * 0.58];
+      const freq = 0.04;
+      for (let l = 0; l < 3; l++) {
+        ctx.strokeStyle = colors[l];
+        ctx.lineWidth = 1.4;
+        const phaseOff = offsets[l].dx * 0.15;
+        const yOff = offsets[l].dy;
+        for (let y = -lineSpacing; y <= H + lineSpacing; y += lineSpacing) {
+          ctx.beginPath();
+          for (let x = 0; x <= W; x += 2) {
+            const wy = y + yOff + Math.sin(x * freq + phaseOff) * amps[l];
+            x === 0 ? ctx.moveTo(x, wy) : ctx.lineTo(x, wy);
+          }
+          ctx.stroke();
+        }
+      }
+    } else {
+      for (let l = 0; l < 3; l++) {
+        ctx.strokeStyle = colors[l];
+        ctx.lineWidth = 1.4;
+        const ox = offsets[l].dx, oy = offsets[l].dy;
+        for (let x = -spacing; x <= W + spacing; x += spacing) {
+          for (let y = -spacing; y <= H + spacing; y += spacing) {
+            const r = radii[l];
+            ctx.beginPath();
+            if (shape === 'squares') ctx.rect(x + ox - r, y + oy - r, r * 2, r * 2);
+            else ctx.arc(x + ox, y + oy, r, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  Object.values(sliders).forEach(s => s?.addEventListener('input', draw));
+
+  // Auto-animate sliders
+  const allRanges = Object.values(sliders);
+  let rafId, t = 0, animating = false, lastPhase = -1;
+  function animStep() {
+    if (!animating) return;
+    t += 0.008;
+    sliders.spacing.value = 55 + Math.sin(t * 0.7) * 22;
+    sliders.size1.value   = 17 + Math.sin(t * 1.1) * 8;
+    sliders.size2.value   = 13 + Math.sin(t * 0.9 + 1) * 7;
+    sliders.scale.value   = 1  + Math.sin(t * 0.5) * 0.35;
+    const phase = Math.floor(t / 0.96);
+    if (phase !== lastPhase) {
+      lastPhase = phase;
+      const shapes = ['circles', 'squares', 'golf'];
+      const shape = shapes[phase % shapes.length];
+      draw._shape = shape;
+      allRanges.forEach(s => s?.classList.toggle('is-square', shape === 'squares'));
+      applyColorSet(colorSets[phase % colorSets.length]);
+    }
+    draw();
+    rafId = requestAnimationFrame(animStep);
+  }
+
+  new MutationObserver(() => {
+    if (preview.classList.contains('is-visible')) {
+      if (!animating) { animating = true; resize(); animStep(); }
+    } else {
+      animating = false;
+      cancelAnimationFrame(rafId);
+    }
+  }).observe(preview, { attributes: true, attributeFilter: ['class'] });
+})();
+</script>
+
+<script>
+(function () {
+  const preview = document.getElementById('cursorPreviewDirk');
+  const inner = preview?.querySelector('.cpd-inner');
+  if (!inner) return;
+
+  const PALETTE = [
+    { color: '#ed1c40', soft: '#ffe6ea' },
+    { color: '#1c88ed', soft: '#d9edff' },
+    { color: '#1ced6b', soft: '#e6ffef' },
+    { color: '#ed1cae', soft: '#ffe6f7' },
+    { color: '#edb71c', soft: '#fff8e6' },
+  ];
+  let paletteIndex = 1;
+
+  new MutationObserver(() => {
+    if (!preview.classList.contains('is-visible')) {
+      clearTimeout(window.__cpdDoneTimer);
+      clearTimeout(window.__cpdHoverTimer);
+      inner.querySelectorAll('.cpd-cover').forEach(c => c.classList.remove('is-hovered'));
+      return;
+    }
+    paletteIndex = (paletteIndex + 1) % PALETTE.length;
+    const { color, soft } = PALETTE[paletteIndex];
+    inner.style.setProperty('--cpd-accent', color);
+    inner.style.setProperty('--cpd-soft', soft);
+    const urlPath = document.getElementById('cpdUrlPath');
+    if (urlPath) urlPath.style.color = color;
+
+    const old = inner.querySelector('.cpd-loader');
+    if (!old) return;
+    const fresh = old.cloneNode(true);
+    fresh.classList.remove('anim-running', 'clear-display');
+    fresh.querySelector('.cpd-outer')?.classList.remove('is-done');
+    old.replaceWith(fresh);
+    void fresh.offsetWidth;
+    fresh.classList.add('anim-running');
+    clearTimeout(window.__cpdDoneTimer);
+    clearTimeout(window.__cpdHoverTimer);
+    const covers = inner.querySelectorAll('.cpd-cover');
+    window.__cpdDoneTimer = setTimeout(() => {
+      fresh.querySelector('.cpd-outer')?.classList.add('is-done');
+      fresh.classList.add('clear-display');
+    }, 5000);
+    function hoverCycle(i) {
+      covers.forEach(c => c.classList.remove('is-hovered'));
+      covers[i % covers.length].classList.add('is-hovered');
+      window.__cpdHoverTimer = setTimeout(() => hoverCycle(i + 1), 1200);
+    }
+    window.__cpdHoverTimer = setTimeout(() => hoverCycle(0), 6600);
+  }).observe(preview, { attributes: true, attributeFilter: ['class'] });
+})();
+</script>
 <script type="module" src="/script.js"></script>
 <script type="module" src="three-bg.js"></script>
 <script type="module" src="translate.js"></script>

@@ -1,32 +1,778 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex, follow">  
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <title>CV — Bob Harterink</title>
-  <style>
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-    }
+<script>if(new URLSearchParams(location.search).get('from')==='home'){var __o=document.createElement('div');__o.id='__back-overlay';__o.style.cssText='position:fixed;inset:0;background:'+(localStorage.getItem('theme')==='light'?'#f4f4f5':'#0e0e10')+';z-index:9999;pointer-events:all;';document.documentElement.appendChild(__o);}</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>CV — Bob Harterink</title>
+<meta name="description" content="Curriculum Vitae van Bob Harterink — Front-End Developer." />
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>if(localStorage.getItem('theme')!=='dark')document.documentElement.classList.add('light');</script>
+<style>
+@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Light.woff2") format("woff2");font-weight:300;font-style:normal}
+@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Regular.woff2") format("woff2");font-weight:400;font-style:normal}
+@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Medium.woff2") format("woff2");font-weight:500;font-style:normal}
+@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Bold.woff2") format("woff2");font-weight:700;font-style:normal}
 
-    embed {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  </style>
+:root{
+  --bg:#0e0e10;--bg-2:#16161a;--ink:#f4f4f5;--ink-2:#a1a1aa;--ink-3:#52525b;
+  --ink-rgb:244,244,245;--accent:#ed1c40;--accent-soft:#ffe6ea;--accent-hover:#D01937;
+  --frame:#1f1f24;--frame-edge:#2a2a31;--paper:#fff;
+}
+html.light{--bg:#f4f4f5;--bg-2:#e4e4e7;--ink:#0e0e10;--ink-2:#52525b;--ink-3:#a1a1aa;--ink-rgb:14,14,16;--frame:#e0e0e4;--frame-edge:#d4d4d8}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-width:thin;scrollbar-color:var(--ink) transparent}
+body{
+  background:var(--bg);color:var(--ink);min-height:100dvh;
+  font-family:'Outfit','AkzidenzGrotesk',sans-serif;
+  overflow-x:hidden;cursor:crosshair;
+}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--ink);border-radius:999px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+
+/* HUD */
+.hud{position:fixed;inset:0 0 auto 0;z-index:9999;padding:18px 24px;display:flex;align-items:center;gap:18px;pointer-events:none;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+@keyframes hudIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+.hud > *{pointer-events:auto;opacity:0;animation:hudIn 0.6s cubic-bezier(0.22,1,0.36,1) both}
+.hud > *:nth-child(1){animation-delay:.15s}
+.hud > *:nth-child(2){animation-delay:.25s}
+.hud > *:nth-child(3){animation-delay:.32s}
+.hud > *:nth-child(4){animation-delay:.39s}
+.hud > *:nth-child(5){animation-delay:.46s}
+.hud > *:nth-child(6){animation-delay:.53s}
+.hud > *:nth-child(7){animation-delay:.60s}
+.hud-spacer{flex:1}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+.hud-pill{background:rgba(var(--ink-rgb),.04);padding:4px;border-radius:999px;border:1px solid rgba(var(--ink-rgb),.06);display:flex;transition:border-color .2s}
+.hud-pill:hover{border-color:rgba(var(--ink-rgb),.25)}
+.hud-btn{background:transparent;color:var(--ink-2);border:none;padding:7px 12px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:color .2s;display:flex;align-items:center;gap:7px;text-decoration:none}
+.hud-btn:hover{color:var(--ink)}
+.hud-btn svg{width:10px;height:10px;flex-shrink:0}
+.hud-title{display:flex;align-items:center;gap:10px;color:var(--ink)}
+.hud-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(237,28,64,.6);animation:pulse 1.6s infinite;flex-shrink:0}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(237,28,64,.5)}70%{box-shadow:0 0 0 8px rgba(237,28,64,0)}100%{box-shadow:0 0 0 0 rgba(237,28,64,0)}}
+.hud-meta{color:var(--ink-3)}
+.hud-meta b{color:var(--ink-2);font-weight:500}
+
+.sr-pill{background:rgba(var(--ink-rgb),.04);padding:4px;border-radius:999px;border:1px solid rgba(var(--ink-rgb),.06);display:flex;transition:border-color .2s}
+.sr-pill:hover{border-color:rgba(var(--ink-rgb),.25)}
+.sr-btn{background:transparent;color:var(--ink-2);padding:7px 12px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;transition:.2s;cursor:pointer}
+.sr-btn:hover{color:var(--ink)}
+.sr-btn:focus-visible{outline:2px solid var(--accent);outline-offset:.1rem}
+
+.chips{display:flex;gap:6px;background:rgba(var(--ink-rgb),.04);padding:4px;border-radius:999px;border:1px solid rgba(var(--ink-rgb),.06)}
+.chip{background:transparent;color:var(--ink-2);border:none;padding:7px 12px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:color .2s;text-decoration:none;display:inline-block}
+.chip:hover{color:var(--ink)}
+.chip.is-active{background:var(--ink);color:var(--bg)}
+@media(max-width:700px){.chips{display:none}.hud-meta{display:none}.hud{padding:14px;gap:6px}.hud-btn,.sr-btn{font-size:9px;padding:5px 10px}.hud-pill,.sr-pill{padding:3px}}
+
+/* HERO */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes titleReveal{from{transform:translateY(110%)}to{transform:translateY(0)}}
+.hero{min-height:62vh;padding:clamp(100px,15vh,160px) clamp(20px,5vw,80px) 0;display:flex;flex-direction:column;justify-content:flex-end;position:relative;z-index:1}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:14px;opacity:0;animation:fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both;animation-delay:.3s}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(237,28,64,.18)}
+.hero-name{line-height:.88;margin-bottom:28px}
+.title-clip{overflow:hidden}
+.title{font-size:clamp(4.5rem,17vw,16rem);color:var(--ink);font-weight:400;letter-spacing:-.03em;display:block;animation:titleReveal 0.7s cubic-bezier(0.22,1,0.36,1) both}
+.title-clip:nth-child(1) .title{animation-delay:.38s}
+.title-clip:nth-child(2) .title{animation-delay:.48s}
+
+.hero-meta{display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,40px);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:24px 0 60px;border-top:1px solid rgba(var(--ink-rgb),.1);margin-top:24px;opacity:0;animation:fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both;animation-delay:.65s}
+.hero-meta a{color:var(--ink-2);transition:color .2s;border-bottom:1px solid transparent}
+.hero-meta a:hover{color:var(--ink);border-bottom-color:var(--accent)}
+.hero-meta strong{color:var(--ink-3);font-weight:400;display:block;margin-bottom:6px;font-size:9px}
+
+/* PROFIEL */
+.profiel{padding:clamp(40px,8vh,100px) clamp(20px,5vw,80px);display:grid;grid-template-columns:280px 1fr;gap:clamp(40px,5vw,80px);border-top:1px solid rgba(var(--ink-rgb),.1);opacity:0;transform:translateY(24px);transition:opacity 0.6s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1)}
+.profiel.is-visible{opacity:1;transform:translateY(0)}
+.profiel-body{display:grid;grid-template-columns:220px 1fr;gap:clamp(28px,4vw,56px);align-items:start}
+.portrait{position:relative;aspect-ratio:4/5;background:var(--bg-2);overflow:hidden;border-radius:2px}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:center 50%;display:block; transform:scale(2.1);transform-origin:45% 50%;}
+.portrait::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(14,14,16,.35));pointer-events:none}
+.portrait-tag{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;color:#fff;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;z-index:1}
+.portrait-tag .accent{color:var(--accent)}
+.section-head{display:flex;flex-direction:column;gap:8px}
+.section-title{font-size:clamp(1.4rem,2.5vw,2.4rem);font-weight:400;letter-spacing:-.01em;color:var(--ink);text-transform:uppercase}
+.profiel-text{font-family:'AkzidenzGrotesk',sans-serif;font-weight:300;font-size:clamp(1.2rem,1.8vw,1.6rem);line-height:1.4;color:var(--ink);max-width:60ch;text-wrap:pretty}
+.profiel-text em{font-style:normal;color:var(--accent)}
+
+/* SECTIE */
+.section{padding:clamp(40px,6vh,80px) clamp(20px,5vw,80px);border-top:1px solid rgba(var(--ink-rgb),.1)}
+.section-grid{display:grid;grid-template-columns:280px 1fr;gap:clamp(40px,5vw,80px)}
+
+/* BAR */
+.bars{display:flex;flex-direction:column;border-top:1px solid rgba(var(--ink-rgb),.1)}
+.bar{position:relative;border-bottom:1px solid rgba(var(--ink-rgb),.1);overflow:hidden;background:transparent;transition:background .3s}
+.bar::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.bar:hover::before{transform:scaleY(1)}
+.bar:hover{background:rgba(237,28,64,.03)}
+.bar-face{display:grid;grid-template-columns:52px 1fr auto;align-items:start;gap:clamp(16px,3vw,48px);padding:clamp(20px,2.4vw,28px) clamp(8px,2vw,20px);transition:opacity .3s}
+.bar-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;padding-top:6px;transition:color .25s}
+.bar:hover .bar-num{color:var(--accent)}
+.bar-info{display:flex;flex-direction:column;gap:6px;min-width:0}
+.bar-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+.bar-title{font-size:clamp(1.4rem,2.6vw,2.2rem);font-weight:400;letter-spacing:-.01em;color:var(--ink);line-height:1.15;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.bar:hover .bar-title{transform:translateX(6px)}
+.bar-desc{font-family:'AkzidenzGrotesk',sans-serif;font-weight:300;color:var(--ink-2);font-size:clamp(.95rem,1.1vw,1.05rem);line-height:1.45;max-width:62ch;margin-top:6px}
+.bar-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;text-align:right;padding-top:6px;display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex-shrink:0}
+.bar-meta .yr{color:var(--ink-2)}
+.bar-honor{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--accent);padding:3px 8px;border-radius:999px;margin-top:8px;width:fit-content}
+
+/* TECH STACK */
+.stack-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:rgba(var(--ink-rgb),.1);border:1px solid rgba(var(--ink-rgb),.1)}
+.stack-cell{background:var(--bg);padding:20px 18px;display:flex;flex-direction:column;gap:10px}
+.stack-cell h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.stack-cell ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.stack-cell ul li{font-family:'JetBrains Mono',monospace;font-size:clamp(.8rem,.95vw,.88rem);color:var(--ink-2);text-transform:lowercase;letter-spacing:.02em}
+@media (max-width:1050px){
+  .stack-grid{grid-template-columns:repeat(4,1fr)}
+  .stack-grid .stack-cell:last-child{grid-column:span 2}
+}
+@media (max-width:480px){
+  .stack-grid{grid-template-columns:repeat(2,1fr)}
+  .stack-grid .stack-cell:last-child{grid-column:span 2}
+}
+
+/* SKILLS */
+.skills-list{display:flex;flex-wrap:wrap;gap:8px}
+.skill{font-family:'AkzidenzGrotesk',sans-serif;font-size:.95rem;color:var(--ink);border:1px solid rgba(var(--ink-rgb),.15);padding:8px 14px;border-radius:6px;transition:border-color .25s,background .25s}
+.skill:hover{border-color:var(--accent);background:rgba(237,28,64,.05)}
+.skill-extra{border-style:dashed;color:var(--ink-2)}
+
+/* TALEN */
+.lang-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:24px;padding:18px 0;border-bottom:1px solid rgba(var(--ink-rgb),.08);font-family:'AkzidenzGrotesk',sans-serif}
+.lang-row:last-child{border-bottom:0}
+.lang-name{font-size:1.1rem;color:var(--ink)}
+.lang-level{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-2);letter-spacing:.08em;text-transform:uppercase}
+.lang-bars{display:flex;gap:4px}
+.lang-bars span{width:10px;height:10px;background:rgba(var(--ink-rgb),.12);border-radius:2px}
+.lang-bars span.on{background:var(--accent)}
+
+/* FOOTER */
+.footer{position:relative;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:28px clamp(20px,5vw,80px) 40px;border-top:1px solid rgba(var(--ink-rgb),.1)}
+.footer-name,.footer a{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);transition:color .2s}
+.footer a:hover{color:var(--ink)}
+.footer .socials{display:flex;gap:24px}
+.footer .download{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border:1px solid var(--accent);padding:10px 16px;border-radius:999px;transition:background .25s,color .25s;cursor:pointer}
+.footer .download:hover{background:var(--accent);color:#fff}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .profiel,.section-grid{grid-template-columns:1fr;gap:24px}
+  .profiel-body{grid-template-columns:160px 1fr;gap:20px}
+}
+@media(max-width:600px){
+  .profiel-body{grid-template-columns:1fr;gap:20px}
+  .portrait{max-width:180px}
+  .stack-line{grid-template-columns:1fr;gap:6px;padding:16px 4px}
+  .stack-line:hover{padding-left:8px}
+  .bar-face{grid-template-columns:32px 1fr;grid-template-rows:auto auto;gap:6px 12px;padding:20px 8px}
+  .bar-meta{grid-column:2;text-align:left;align-items:flex-start;flex-direction:row;flex-wrap:wrap;font-size:9px}
+  .bar-meta .bar-honor{margin-top:0}
+  .bar-title{font-size:clamp(1.2rem,5vw,1.7rem)}
+  .hero{padding:80px 20px 0;min-height:auto}
+  .hero-meta{padding:20px 0 40px;gap:18px}
+  .footer{padding:24px 20px 36px;gap:12px}
+  .footer .download{order:1;width:100%;text-align:center}
+  .footer-name{order:2;flex:1}
+  .footer .socials{order:3}
+}
+
+/* PRINT */
+@media print{
+  html.light,html{--bg:#fff;--bg-2:#fff;--ink:#0e0e10;--ink-2:#52525b;--ink-3:#71717a;--ink-rgb:14,14,16}
+  .hud,.footer .download{display:none !important}
+  body{cursor:auto}
+  .hero{min-height:auto;padding:24px 24px 0;break-inside:avoid}
+  .title{font-size:5rem !important}
+  .section,.profiel{padding:14px 24px;break-inside:avoid;border-color:#ddd !important}
+  .bar{break-inside:avoid}
+  .bar:hover{background:transparent}
+  .bar-desc,.profiel-text{color:#333 !important}
+  @page{margin:14mm;size:A4}
+}
+</style>
 </head>
 <body>
-  <embed 
-    src="/cv/CV_Bob_Harterink.pdf" 
-    type="application/pdf" 
-    width="100%" 
-    height="100%"
-  />
+
+<!-- HUD -->
+<div class="hud">
+  <div class="hud-pill"><a class="hud-btn" href="/"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg><span data-i18n="back">Terug</span></a></div>
+  <div class="hud-title"><span class="hud-dot"></span><span data-i18n="hud.title">Curriculum Vitae</span></div>
+  <div class="hud-meta">bobharterink.com/cv · <b data-i18n="hud.meta">Front-End Developer</b></div>
+  <div class="hud-spacer"></div>
+  <nav class="chips" id="cvChips">
+    <a class="chip is-active" href="#profiel" data-i18n="sec.profiel">Profiel</a>
+    <a class="chip" href="#ervaring" data-i18n="sec.ervaring">Ervaring</a>
+    <a class="chip" href="#opleiding" data-i18n="sec.opleiding">Opleiding</a>
+    <a class="chip" href="#stack" data-i18n="sec.stack">Tech Stack</a>
+    <a class="chip" href="#skills" data-i18n="sec.skills">Vaardigheden</a>
+  </nav>
+  <div class="sr-pill"><button class="sr-btn" id="langToggle">NL</button></div>
+  <div class="sr-pill"><button class="sr-btn" id="themeToggle" aria-label="Toggle light/dark mode">☀</button></div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-eyebrow"><span data-i18n="hero.eyebrow">Front-End Developer · Curriculum Vitae</span></p>
+  <div class="hero-name">
+    <div class="title-clip"><h1 class="title">Bob</h1></div>
+    <div class="title-clip"><h1 class="title">Harterink</h1></div>
+  </div>
+  <div class="hero-meta">
+    <div>
+      <strong data-i18n="meta.locatie">Locatie</strong>
+      <span>Antwerpen, BE</span>
+    </div>
+    <div>
+      <strong data-i18n="meta.email">E-mail</strong>
+      <a href="mailto:bobharterink@gmail.com">bobharterink@gmail.com</a>
+    </div>
+    <div>
+      <strong data-i18n="meta.tel">Telefoon</strong>
+      <a href="tel:+32456542113">+32 456 54 21 13</a> · <a href="tel:+31634890903">+31 634 890 903</a>
+    </div>
+    <div>
+      <strong data-i18n="meta.web">Web</strong>
+      <a href="https://bobharterink.com" target="_blank" rel="noopener">bobharterink.com</a>
+    </div>
+    <div>
+      <strong data-i18n="meta.git">GitHub</strong>
+      <a href="https://github.com/bobharterink" target="_blank" rel="noopener">github.com/bobharterink</a>
+    </div>
+  </div>
+</header>
+
+<!-- PROFIEL -->
+<section class="profiel" id="profiel">
+  <div class="section-head">
+    <h2 class="section-title" data-i18n="sec.profiel">Profiel</h2>
+  </div>
+  <div class="profiel-body">
+    <figure class="portrait">
+      <img src="/cv/bob.png" alt="Bob Harterink" loading="lazy" />
+      <figcaption class="portrait-tag"><span>Bob Harterink</span><span class="accent">26 / BE</span></figcaption>
+    </figure>
+    <p class="profiel-text" data-i18n="profiel.body">
+      Front-end developer met een achtergrond in grafisch ontwerp en interactieve media. Gespecialiseerd in het bouwen van performante en visueel sterke webinterfaces met <em>HTML, CSS, JavaScript en React/Next.js</em>. Ervaring met <em>APIs, Git</em>, CMS-systemen en motion libraries zoals GSAP en Three.js. Zelfstandig inzetbaar, sterk in conceptueel denken en gefocust op gebruikerservaring, interactie en detail.
+    </p>
+  </div>
+</section>
+
+<!-- ERVARING -->
+<section class="section" id="ervaring">
+  <div class="section-grid">
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="sec.ervaring">Ervaring</h2>
+    </div>
+    <div class="bars">
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">01</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.studio.tag">Part-time · Founder & Developer</span>
+            <h3 class="bar-title">Studio Harterink</h3>
+            <p class="bar-desc" data-i18n="exp.studio.desc">Eigen studio waarin ik digitale producten ontwerp en ontwikkel — van webshop tot interactieve front-ends in React/Next.js, gekoppeld aan APIs en CMS. Conceptie, design en code in één hand.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Antwerpen</span>
+            <span class="yr">2021 — <span data-i18n="now">heden</span></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">02</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.bbf.tag">Café Beestenbos · Full-time</span>
+            <h3 class="bar-title" data-i18n="exp.bbf.title">Café Manager</h3>
+            <p class="bar-desc" data-i18n="exp.bbf.desc">Verantwoordelijk voor de dagelijkse werking van het café, inclusief personeelsopleiding, voorraadbeheer en het zelfstandig runnen van de zaak.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Antwerpen</span>
+            <span class="yr">2020 — <span data-i18n="now">heden</span></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">03</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.maalsen.tag">Maalsen Optiek · Part-time</span>
+            <h3 class="bar-title" data-i18n="exp.maalsen.title">Website Onderhoud</h3>
+            <p class="bar-desc" data-i18n="exp.maalsen.desc">Verantwoordelijk voor het onderhoud en de doorontwikkeling van de website, met focus op actualiteit, SEO-vindbaarheid en gebruiksvriendelijkheid.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Nijmegen</span>
+            <span class="yr">2019 — 2020</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">04</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.ensie.tag">Ensie · Part-time</span>
+            <h3 class="bar-title" data-i18n="exp.ensie.title">Parsen van Encyclopedie</h3>
+            <p class="bar-desc" data-i18n="exp.ensie.desc">Betrokken bij het digitaliseren van gedrukte encyclopedieën en het verwerken van gescande content naar gestructureerde online data via parsing- en correctieprocessen.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Nijmegen</span>
+            <span class="yr">2019 — 2020</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">05</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.clipit.tag">Clipit · Full-time</span>
+            <h3 class="bar-title" data-i18n="exp.clipit.title">XML Developer</h3>
+            <p class="bar-desc" data-i18n="exp.clipit.desc">Werkte mee aan de ontwikkeling van een platform dat online media-exposure en campagneresultaten meet via analyse van bedrijfsvermeldingen in nieuws- en online media.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Nijmegen</span>
+            <span class="yr">2018 — 2019</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">06</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.sharp.tag">Sharp Digital Design · Part-time · Co-founder</span>
+            <h3 class="bar-title" data-i18n="exp.sharp.title">Website Development — WordPress / Divi</h3>
+            <p class="bar-desc" data-i18n="exp.sharp.desc">Co-founder van een kleinschalige webdesignstudio, opgezet samen met een vriend, gericht op het bouwen van websites voor kleine ondernemingen en zelfstandigen.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Nijmegen</span>
+            <span class="yr">2018 — 2019</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">07</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.blixem.tag">BliXem Internet · Part-time</span>
+            <h3 class="bar-title" data-i18n="exp.blixem.title">Website Development & SEO</h3>
+            <p class="bar-desc" data-i18n="exp.blixem.desc">Werkte aan de doorontwikkeling van sterke generieke domeinnamen tot informatieve en commercieel rendabele websites met affiliate-integraties.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Nijmegen</span>
+            <span class="yr">2017 — 2019</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- OPLEIDING -->
+<section class="section" id="opleiding">
+  <div class="section-grid">
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="sec.opleiding">Opleiding</h2>
+    </div>
+    <div class="bars">
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">01</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="edu.ma.tag">Academische Master — KdG Sint Lucas</span>
+            <h3 class="bar-title" data-i18n="edu.ma.title">Digitale Context</h3>
+            <p class="bar-desc" data-i18n="edu.ma.desc">Focus op digitale systemen, interactie en de relatie tussen ontwerp en technologie.</p>
+            <span class="bar-honor" data-i18n="edu.ma.honor">★ Met onderscheiding</span>
+          </div>
+          <div class="bar-meta">
+            <span>Antwerpen</span>
+            <span class="yr">2023 — 2024</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">02</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="edu.ba.tag">Academische Bachelor — KdG Sint Lucas</span>
+            <h3 class="bar-title" data-i18n="edu.ba.title">Grafisch Ontwerp</h3>
+            <p class="bar-desc" data-i18n="edu.ba.desc">Sterke nadruk op digitale vormgeving, conceptontwikkeling en webprojecten.</p>
+            <span class="bar-honor" data-i18n="edu.ba.honor">★ Met onderscheiding</span>
+          </div>
+          <div class="bar-meta">
+            <span>Antwerpen</span>
+            <span class="yr">2020 — 2023</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">03</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="edu.cmd.tag">HBO — Avans Hogeschool</span>
+            <h3 class="bar-title" data-i18n="edu.cmd.title">Communicatie & Multimedia Design</h3>
+            <p class="bar-desc" data-i18n="edu.cmd.desc">Propedeuse behaald.</p>
+          </div>
+          <div class="bar-meta">
+            <span>'s-Hertogenbosch</span>
+            <span class="yr">2019 — 2020</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- CURSUSSEN -->
+<section class="section">
+  <div class="section-grid">
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="sec.cursussen">Cursussen</h2>
+    </div>
+    <div class="bars">
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">01</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow">Bruno Simon</span>
+            <h3 class="bar-title">Three.js Journey</h3>
+            <p class="bar-desc" data-i18n="cur.threejs.desc">Praktische verdieping in interactieve 3D-ervaringen op het web.</p>
+          </div>
+          <div class="bar-meta"><span class="yr">2023 — <span data-i18n="now">heden</span></span></div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">02</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow">Marc Lou</span>
+            <h3 class="bar-title">CodeFast</h3>
+            <p class="bar-desc" data-i18n="cur.codefast.desc">Bouwen van echte webapplicaties met moderne stacks.</p>
+          </div>
+          <div class="bar-meta"><span class="yr">2025 — <span data-i18n="now">heden</span></span></div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">03</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow">MIMO.org</span>
+            <h3 class="bar-title">MIMO</h3>
+            <p class="bar-desc" data-i18n="cur.mimo.desc">Introductie tot full-stack development en webapplicatie-fundamentals.</p>
+          </div>
+          <div class="bar-meta"><span class="yr">2025 — <span data-i18n="now">heden</span></span></div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">04</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow">Louis Paquet</span>
+            <h3 class="bar-title">Awwwards Course</h3>
+            <p class="bar-desc" data-i18n="cur.awwwards.desc">Innovatief webdesign in Figma met focus op concept en high-end webinterfaces.</p>
+          </div>
+          <div class="bar-meta"><span class="yr">2026 — <span data-i18n="now">heden</span></span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="section" id="stack">
+  <div class="section-grid">
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="sec.stack">Tech Stack</h2>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-cell">
+        <h4>Frontend</h4>
+        <ul><li>HTML</li><li>CSS</li><li>JavaScript</li><li>TypeScript</li></ul>
+      </div>
+      <div class="stack-cell">
+        <h4>React Ecosystem</h4>
+        <ul><li>React</li><li>Next.js</li></ul>
+      </div>
+      <div class="stack-cell">
+        <h4>APIs &amp; Backend</h4>
+        <ul><li>REST APIs</li><li>Firebase</li><li>MongoDB</li><li>AWS</li></ul>
+      </div>
+      <div class="stack-cell">
+        <h4>Animation &amp; 3D</h4>
+        <ul><li>GSAP</li><li>Three.js</li><li>R3F</li><li>Lottie</li></ul>
+      </div>
+      <div class="stack-cell">
+        <h4>CMS</h4>
+        <ul><li>Craft CMS</li><li>WordPress</li><li>Drupal</li><li>Prismic</li></ul>
+      </div>
+      <div class="stack-cell">
+        <h4>Payments &amp; Auth</h4>
+        <ul><li>Stripe</li><li>Magic Links</li></ul>
+      </div>
+      <div class="stack-cell">
+        <h4>Tools</h4>
+        <ul><li>Git</li><li>Docker</li><li>Figma</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VAARDIGHEDEN -->
+<section class="section" id="skills">
+  <div class="section-grid">
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="sec.skills">Vaardigheden</h2>
+    </div>
+    <div>
+      <div class="skills-list" style="margin-bottom:18px">
+        <span class="skill">VS Code</span>
+        <span class="skill">Adobe Illustrator</span>
+        <span class="skill">Adobe Photoshop</span>
+        <span class="skill">Adobe Premiere Pro</span>
+        <span class="skill">Adobe After Effects</span>
+        <span class="skill">Figma</span>
+        <span class="skill">Blender</span>
+      </div>
+      <h4 style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px" data-i18n="skills.extra">Extra vaardigheden</h4>
+      <div class="skills-list">
+        <span class="skill skill-extra">Arduino &amp; ESP32</span>
+        <span class="skill skill-extra">3D Printen</span>
+        <span class="skill skill-extra">KiCad</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TALEN -->
+<section class="section">
+  <div class="section-grid">
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="sec.talen">Talen</h2>
+    </div>
+    <div>
+      <div class="lang-row">
+        <span class="lang-name" data-i18n="lang.nl">Nederlands</span>
+        <span class="lang-level" data-i18n="lang.nl.lvl">Moedertaal</span>
+        <span class="lang-bars"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+      </div>
+      <div class="lang-row">
+        <span class="lang-name" data-i18n="lang.en">Engels</span>
+        <span class="lang-level" data-i18n="lang.en.lvl">Uitstekend</span>
+        <span class="lang-bars"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-name">Bob Harterink · CV 2026</span>
+  <nav class="socials">
+    <a href="mailto:bobharterink@gmail.com">Mail</a>
+    <a href="https://github.com/bobharterink" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+  <button class="download" id="printBtn" data-i18n="btn.download">↓ Download PDF</button>
+</footer>
+
+<script>
+const themeBtn = document.getElementById('themeToggle');
+function setThemeBtn(){themeBtn.textContent=document.documentElement.classList.contains('light')?'☽':'☀';}
+setThemeBtn();
+themeBtn.addEventListener('click',()=>{
+  const light=document.documentElement.classList.toggle('light');
+  localStorage.setItem('theme',light?'light':'dark');
+  setThemeBtn();
+});
+
+document.getElementById('printBtn').addEventListener('click',()=>{
+  const w=window.open('/cv/print.html','_blank');
+  w.onload=()=>w.print();
+});
+
+const i18n={
+  nl:{
+    "hud.title":"Curriculum Vitae","hud.meta":"Front-End Developer","back":"Terug",
+    "hero.eyebrow":"Front-End Developer · Curriculum Vitae",
+    "meta.locatie":"Locatie","meta.email":"E-mail","meta.tel":"Telefoon","meta.web":"Web","meta.git":"GitHub",
+    "sec.profiel":"Profiel","sec.ervaring":"Ervaring","sec.opleiding":"Opleiding","sec.cursussen":"Cursussen","sec.stack":"Tech Stack","sec.skills":"Vaardigheden","sec.talen":"Talen",
+    "profiel.body":"Front-end developer met een achtergrond in grafisch ontwerp en interactieve media. Gespecialiseerd in het bouwen van performante en visueel sterke webinterfaces met <em>HTML, CSS, JavaScript en React/Next.js</em>. Ervaring met <em>APIs, Git</em>, CMS-systemen en motion libraries zoals GSAP en Three.js. Zelfstandig inzetbaar, sterk in conceptueel denken en gefocust op gebruikerservaring, interactie en detail.",
+    "now":"heden",
+    "exp.studio.tag":"Part-time · Founder & Developer","exp.studio.desc":"Eigen studio waarin ik digitale producten ontwerp en ontwikkel — van webshop tot interactieve front-ends in React/Next.js, gekoppeld aan APIs en CMS. Conceptie, design en code in één hand.",
+    "exp.bbf.tag":"Café Beestenbos · Full-time","exp.bbf.title":"Café Manager","exp.bbf.desc":"Verantwoordelijk voor de dagelijkse werking van het café, inclusief personeelsopleiding, voorraadbeheer en het zelfstandig runnen van de zaak.",
+    "exp.maalsen.tag":"Maalsen Optiek · Part-time","exp.maalsen.title":"Website Onderhoud","exp.maalsen.desc":"Verantwoordelijk voor het onderhoud en de doorontwikkeling van de website, met focus op actualiteit, SEO-vindbaarheid en gebruiksvriendelijkheid.",
+    "exp.ensie.tag":"Ensie · Part-time","exp.ensie.title":"Parsen van Encyclopedie","exp.ensie.desc":"Betrokken bij het digitaliseren van gedrukte encyclopedieën en het verwerken van gescande content naar gestructureerde online data via parsing- en correctieprocessen.",
+    "exp.clipit.tag":"Clipit · Full-time","exp.clipit.title":"XML Developer","exp.clipit.desc":"Werkte mee aan de ontwikkeling van een platform dat online media-exposure en campagneresultaten meet via analyse van bedrijfsvermeldingen in nieuws- en online media.",
+    "exp.sharp.tag":"Sharp Digital Design · Part-time · Co-founder","exp.sharp.title":"Website Development — WordPress / Divi","exp.sharp.desc":"Co-founder van een kleinschalige webdesignstudio, opgezet samen met een vriend, gericht op het bouwen van websites voor kleine ondernemingen en zelfstandigen.",
+    "exp.blixem.tag":"BliXem Internet · Part-time","exp.blixem.title":"Website Development & SEO","exp.blixem.desc":"Werkte aan de doorontwikkeling van sterke generieke domeinnamen tot informatieve en commercieel rendabele websites met affiliate-integraties.",
+    "edu.ma.tag":"Academische Master — KdG Sint Lucas","edu.ma.title":"Digitale Context","edu.ma.desc":"Focus op digitale systemen, interactie en de relatie tussen ontwerp en technologie.","edu.ma.honor":"★ Met onderscheiding",
+    "edu.ba.tag":"Academische Bachelor — KdG Sint Lucas","edu.ba.title":"Grafisch Ontwerp","edu.ba.desc":"Sterke nadruk op digitale vormgeving, conceptontwikkeling en webprojecten.","edu.ba.honor":"★ Met onderscheiding",
+    "edu.cmd.tag":"HBO — Avans Hogeschool","edu.cmd.title":"Communicatie & Multimedia Design","edu.cmd.desc":"Propedeuse behaald.",
+    "cur.threejs.desc":"Praktische verdieping in interactieve 3D-ervaringen op het web.",
+    "cur.codefast.desc":"Bouwen van echte webapplicaties met moderne stacks.",
+    "cur.mimo.desc":"Introductie tot full-stack development en webapplicatie-fundamentals.",
+    "cur.awwwards.desc":"Innovatief webdesign in Figma met focus op concept en high-end webinterfaces.",
+    "stack.frontend":"Frontend","stack.frameworks":"Frameworks","stack.3d":"3D & Animatie","stack.cms":"CMS","stack.db":"Database","stack.pay":"Betaling & auth","stack.dev":"Dev tools",
+    "skills.extra":"Extra vaardigheden",
+    "lang.nl":"Nederlands","lang.nl.lvl":"Moedertaal","lang.en":"Engels","lang.en.lvl":"Uitstekend",
+    "btn.download":"↓ Download PDF"
+  },
+  en:{
+    "hud.title":"Curriculum Vitae","hud.meta":"Front-End Developer","back":"Back",
+    "hero.eyebrow":"Front-End Developer · Curriculum Vitae",
+    "meta.locatie":"Location","meta.email":"E-mail","meta.tel":"Phone","meta.web":"Web","meta.git":"GitHub",
+    "sec.profiel":"Profile","sec.ervaring":"Experience","sec.opleiding":"Education","sec.cursussen":"Courses","sec.stack":"Tech Stack","sec.skills":"Skills","sec.talen":"Languages",
+    "profiel.body":"Front-end developer with a background in graphic design and interactive media. Specialised in building performant and visually strong web interfaces with <em>HTML, CSS, JavaScript and React/Next.js</em>. Experience with <em>APIs, Git</em>, CMS systems and motion libraries such as GSAP and Three.js. Self-sufficient, strong in conceptual thinking and focused on user experience, interaction and detail.",
+    "now":"present",
+    "exp.studio.tag":"Part-time · Founder & Developer","exp.studio.desc":"My own studio designing and developing digital products — from webshop to interactive React/Next.js front-ends connected to APIs and CMSs. Concept, design and code in one pair of hands.",
+    "exp.bbf.tag":"Café Beestenbos · Full-time","exp.bbf.title":"Café Manager","exp.bbf.desc":"Responsible for daily café operations, including staff training, stock management and running the venue independently.",
+    "exp.maalsen.tag":"Maalsen Optiek · Part-time","exp.maalsen.title":"Website Maintenance","exp.maalsen.desc":"Responsible for maintaining and evolving the website, with focus on freshness, SEO and usability.",
+    "exp.ensie.tag":"Ensie · Part-time","exp.ensie.title":"Encyclopedia Parsing","exp.ensie.desc":"Involved in digitising printed encyclopedias and converting scanned content into structured online data via parsing and correction workflows.",
+    "exp.clipit.tag":"Clipit · Full-time","exp.clipit.title":"XML Developer","exp.clipit.desc":"Worked on a platform that measures online media exposure and campaign results by analysing brand mentions across news and online media.",
+    "exp.sharp.tag":"Sharp Digital Design · Part-time · Co-founder","exp.sharp.title":"Website Development — WordPress / Divi","exp.sharp.desc":"Co-founder of a small web design studio, set up with a friend, building websites for small businesses and freelancers.",
+    "exp.blixem.tag":"BliXem Internet · Part-time","exp.blixem.title":"Website Development & SEO","exp.blixem.desc":"Worked on growing strong generic domain names into informative, commercially viable websites with affiliate integrations.",
+    "edu.ma.tag":"Academic Master — KdG Sint Lucas","edu.ma.title":"Digital Context","edu.ma.desc":"Focus on digital systems, interaction and the relationship between design and technology.","edu.ma.honor":"★ With distinction",
+    "edu.ba.tag":"Academic Bachelor — KdG Sint Lucas","edu.ba.title":"Graphic Design","edu.ba.desc":"Strong emphasis on digital design, concept development and web projects.","edu.ba.honor":"★ With distinction",
+    "edu.cmd.tag":"BSc — Avans Hogeschool","edu.cmd.title":"Communication & Multimedia Design","edu.cmd.desc":"First-year diploma (propedeuse) obtained.",
+    "cur.threejs.desc":"Hands-on deep-dive into interactive 3D experiences on the web.",
+    "cur.codefast.desc":"Building real-world web applications with modern stacks.",
+    "cur.mimo.desc":"Introduction to full-stack development and web application fundamentals.",
+    "cur.awwwards.desc":"Innovative web design in Figma — concept and high-end web interfaces.",
+    "stack.frontend":"Frontend","stack.frameworks":"Frameworks","stack.3d":"3D & Animation","stack.cms":"CMS","stack.db":"Database","stack.pay":"Payments & auth","stack.dev":"Dev tools",
+    "skills.extra":"Additional skills",
+    "lang.nl":"Dutch","lang.nl.lvl":"Native","lang.en":"English","lang.en.lvl":"Fluent",
+    "btn.download":"↓ Download PDF"
+  }
+};
+
+const langBtn=document.getElementById('langToggle');
+function applyLang(lang){
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(i18n[lang]&&i18n[lang][k]!=null)el.innerHTML=i18n[lang][k];
+  });
+  langBtn.textContent=lang==='nl'?'NL':'EN';
+  localStorage.setItem('lang',lang);
+}
+const initLang=localStorage.getItem('lang')||'nl';
+applyLang(initLang);
+langBtn.addEventListener('click',()=>applyLang(document.documentElement.lang==='nl'?'en':'nl'));
+
+document.querySelectorAll('.title').forEach((t,i)=>{
+  t.style.transform='translateY(110%)';
+  setTimeout(()=>{t.style.transition='transform .9s cubic-bezier(.16,1,.3,1)';t.style.transform='translateY(0)';},60+i*120);
+});
+
+// Scroll-spy chips + hud-meta
+const chipLinks = document.querySelectorAll('#cvChips .chip');
+const hudSection = document.querySelector('.hud-meta b');
+const sectionIds = ['profiel','ervaring','opleiding','stack','skills'];
+const sectionLabels = {
+  nl: { profiel:'Profiel', ervaring:'Ervaring', opleiding:'Opleiding', stack:'Tech Stack', skills:'Vaardigheden' },
+  en: { profiel:'Profile', ervaring:'Experience', opleiding:'Education', stack:'Tech Stack', skills:'Skills' }
+};
+const sections = sectionIds.map(id=>document.getElementById(id));
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const id = entry.target.id;
+      chipLinks.forEach(c=>c.classList.toggle('is-active', c.getAttribute('href')==='#'+id));
+      if(hudSection){
+        const lang = document.documentElement.lang || 'nl';
+        hudSection.textContent = sectionLabels[lang]?.[id] || id;
+      }
+    }
+  });
+},{rootMargin:'-30% 0px -60% 0px'});
+sections.forEach(s=>{ if(s) observer.observe(s); });
+
+// Smooth scroll
+document.querySelectorAll('#cvChips .chip').forEach(chip=>{
+  chip.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=document.querySelector(chip.getAttribute('href'));
+    if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+</script>
+
+<script>
+// Reveal profiel on scroll
+(function(){
+  const el = document.querySelector('.profiel');
+  if(!el) return;
+  const obs = new IntersectionObserver((entries)=>{
+    if(entries[0].isIntersecting){ el.classList.add('is-visible'); obs.unobserve(el); }
+  }, {threshold:0.08});
+  obs.observe(el);
+})();
+</script>
+
+<script>
+// Page transitions
+(function(){
+  // Fade out back-overlay when arriving from homepage
+  const backOverlay = document.getElementById('__back-overlay');
+  if(backOverlay){
+    history.replaceState(null,'','/cv/');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      backOverlay.style.transition='opacity 0.4s ease';
+      backOverlay.style.opacity='0';
+      setTimeout(()=>backOverlay.remove(), 450);
+    }));
+  }
+
+  // Back button → fade out → homepage with ?from=showreel
+  document.querySelector('.hud-btn').addEventListener('click', e=>{
+    e.preventDefault();
+    const overlay=document.createElement('div');
+    overlay.style.cssText='position:fixed;inset:0;background:'+(localStorage.getItem('theme')==='light'?'#f4f4f5':'#0e0e10')+';opacity:0;z-index:9999;transition:opacity 0.5s ease;pointer-events:all;';
+    document.body.appendChild(overlay);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ overlay.style.opacity='1'; }));
+    setTimeout(()=>{ window.location.href='/?from=showreel'; }, 600);
+  });
+})();
+</script>
+
 </body>
 </html>
