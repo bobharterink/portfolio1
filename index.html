@@ -20,20 +20,6 @@
 </head>
 <body>
 
-<div class="dirk-eye-bg" aria-hidden="true">
-  <div class="dirk-eye-bg__middle">
-    <div class="dirk-eye-bg__pupil"></div>
-  </div>
-</div>
-<div class="dirk-eye-bg dirk-eye-bg--blend" aria-hidden="true">
-  <div class="dirk-eye-bg__middle">
-    <div class="dirk-eye-bg__pupil"></div>
-  </div>
-</div>
-
-<div class="oog-hover-bg" aria-hidden="true"></div>
-<div class="oog-hover-bg oog-hover-bg--blend" aria-hidden="true"></div>
-
 <div class="hud">
 <div class="hud-spacer"></div>
   <div class="plus-button" tabindex="0" role="button" aria-label="CV">
@@ -205,7 +191,6 @@
   </nav>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script>
   const lenis = new Lenis({
@@ -219,178 +204,6 @@
   }
   requestAnimationFrame(raf);
 </script>
-<!-- BBF hover preview -->
-<style>
-  .bbf-hover-preview {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, calc(-50% + 18px));
-    z-index: 200;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    filter: drop-shadow(0 24px 64px rgba(0,0,0,0.45));
-  }
-  .bbf-hover-preview.is-visible {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-  @media (max-width: 900px) { .bbf-hover-preview { display: none; } }
-
-  .bhp-card {
-    background: white; border-radius: 14px; padding: 20px; width: 380px;
-    font-family: ui-sans-serif, system-ui, sans-serif; color: #111827;
-    display: flex; flex-direction: column; gap: 10px;
-    position: relative; overflow: hidden;
-  }
-  .bhp-worker-name { font-size: 1.05rem; font-weight: 700; color: #111827; }
-  .bhp-total-card {
-    background: #111827; border-radius: 8px; padding: 10px 14px;
-    display: flex; justify-content: space-between; align-items: center; gap: 10px;
-  }
-  .bhp-total-lbl { font-size: 0.6rem; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
-  .bhp-total-amt { font-size: 1.2rem; font-weight: 700; color: #fff; }
-  .bhp-receive-btn {
-    background: #fff; color: #111827; border-radius: 6px; padding: 6px 12px;
-    font-size: 0.7rem; font-weight: 600; white-space: nowrap; cursor: pointer;
-    transition: opacity 0.15s, transform 0.15s;
-  }
-  .bhp-receive-btn.is-pressing { opacity: 0.7; transform: scale(0.96); }
-  .bhp-section-title { font-size: 0.7rem; font-weight: 600; color: #374151; }
-  .bhp-rows { display: flex; flex-direction: column; }
-  .bhp-row {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    padding: 5px 0; border-bottom: 1px solid #f3f4f6; gap: 8px;
-  }
-  .bhp-row-main { flex: 1; min-width: 0; }
-  .bhp-row-date { font-size: 0.7rem; font-weight: 500; color: #111827; }
-  .bhp-row-workers { font-size: 0.58rem; color: #9ca3af; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
-  .bhp-row-aside { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-  .bhp-row-amt { font-size: 0.7rem; font-weight: 600; color: #111827; transition: color 0.3s; }
-  .bhp-recv-check { display: none; font-size: 0.7rem; font-weight: 700; color: #16a34a; }
-  .bhp-row.is-received .bhp-row-amt { color: #16a34a; }
-  .bhp-row.is-received .bhp-recv-check { display: block; }
-  /* modal */
-  .bhp-modal {
-    position: absolute; inset: 0; background: rgba(0,0,0,0.45); border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
-  }
-  .bhp-modal.is-open { opacity: 1; }
-  .bhp-modal-inner {
-    background: white; border-radius: 10px; padding: 14px; width: 88%;
-    display: flex; flex-direction: column; gap: 8px;
-    transform: translateY(10px); transition: transform 0.25s ease;
-  }
-  .bhp-modal.is-open .bhp-modal-inner { transform: translateY(0); }
-  .bhp-modal-title { font-weight: 700; font-size: 0.85rem; color: #111827; }
-  .bhp-modal-desc { font-size: 0.62rem; color: #6b7280; }
-  .bhp-modal-option {
-    display: flex; align-items: center; gap: 8px;
-    border: 1px solid #e5e7eb; border-radius: 7px;
-    padding: 7px 11px; font-size: 0.7rem; color: #374151;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .bhp-modal-option.is-checked { border-color: #111827; background: #f3f4f6; }
-  .bhp-radio {
-    width: 13px; height: 13px; border-radius: 50%;
-    border: 1.5px solid #d1d5db; flex-shrink: 0;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .bhp-modal-option.is-checked .bhp-radio { border-color: #111827; background: #111827; box-shadow: inset 0 0 0 3px white; }
-  .bhp-rest { color: #111827; margin-left: auto; font-size: 0.85em; }
-  .bhp-modal-footer { display: flex; gap: 8px; justify-content: flex-end; }
-  .bhp-modal-cancel { border: 1px solid #e5e7eb; border-radius: 6px; padding: 5px 12px; font-size: 0.68rem; color: #374151; }
-  .bhp-modal-confirm { background: #111827; color: white; border-radius: 6px; padding: 5px 12px; font-size: 0.68rem; font-weight: 500; transition: opacity 0.15s; }
-  .bhp-modal-confirm.is-pressing { opacity: 0.7; }
-</style>
-
-<div class="bbf-hover-preview" id="bbfHoverPreview">
-  <div class="bhp-card" id="bhpCard">
-    <div class="bhp-worker-name">Luna</div>
-    <div class="bhp-total-card">
-      <div>
-        <div class="bhp-total-lbl">Totaal Openstaande Fooien</div>
-        <div class="bhp-total-amt" id="bhpTotalAmt">€ 8,50</div>
-      </div>
-      <div class="bhp-receive-btn" id="bhpReceiveBtn">Ontvangen</div>
-    </div>
-    <div class="bhp-section-title">Fooi Geschiedenis</div>
-    <div class="bhp-rows">
-      <div class="bhp-row" data-open>
-        <div class="bhp-row-main">
-          <div class="bhp-row-date">3 mei 2024</div>
-          <div class="bhp-row-workers">Gedeeld met: Michiel, Manou, Luna, Camerone</div>
-        </div>
-        <div class="bhp-row-aside">
-          <div class="bhp-row-amt">€ 2,01</div>
-          <div class="bhp-recv-check">✓</div>
-        </div>
-      </div>
-      <div class="bhp-row" data-open>
-        <div class="bhp-row-main">
-          <div class="bhp-row-date">2 mei 2024</div>
-          <div class="bhp-row-workers">Gedeeld met: Nina, Bob, Luna, Camerone</div>
-        </div>
-        <div class="bhp-row-aside">
-          <div class="bhp-row-amt">€ 1,92</div>
-          <div class="bhp-recv-check">✓</div>
-        </div>
-      </div>
-      <div class="bhp-row" data-open>
-        <div class="bhp-row-main">
-          <div class="bhp-row-date">1 mei 2024</div>
-          <div class="bhp-row-workers">Gedeeld met: Michiel, Carlos, Luna, Camerone</div>
-        </div>
-        <div class="bhp-row-aside">
-          <div class="bhp-row-amt">€ 2,20</div>
-          <div class="bhp-recv-check">✓</div>
-        </div>
-      </div>
-      <div class="bhp-row" data-open>
-        <div class="bhp-row-main">
-          <div class="bhp-row-date">30 apr 2024</div>
-          <div class="bhp-row-workers">Gedeeld met: Nina, Luna</div>
-        </div>
-        <div class="bhp-row-aside">
-          <div class="bhp-row-amt">€ 2,37</div>
-          <div class="bhp-recv-check">✓</div>
-        </div>
-      </div>
-      <div class="bhp-row is-received">
-        <div class="bhp-row-main">
-          <div class="bhp-row-date">27 mrt 2024</div>
-          <div class="bhp-row-workers">Gedeeld met: Luna, Camerone</div>
-        </div>
-        <div class="bhp-row-aside">
-          <div class="bhp-row-amt">€ 1,98</div>
-          <div class="bhp-recv-check">✓</div>
-        </div>
-      </div>
-    </div>
-    <div class="bhp-modal" id="bhpModal">
-      <div class="bhp-modal-inner">
-        <div class="bhp-modal-title">Fooi Ontvangen</div>
-        <div class="bhp-modal-desc">Kies het bedrag dat je wilt ontvangen.</div>
-        <div class="bhp-modal-option is-checked" id="bhpOptExact">
-          <div class="bhp-radio"></div>
-          <span>Exact bedrag: € 8,50</span>
-        </div>
-        <div class="bhp-modal-option" id="bhpOpt5">
-          <div class="bhp-radio"></div>
-          <span>€ 5,00</span>
-          <span class="bhp-rest">(Rest: +€ 3,50)</span>
-        </div>
-        <div class="bhp-modal-footer">
-          <div class="bhp-modal-cancel">Annuleren</div>
-          <div class="bhp-modal-confirm" id="bhpConfirm">Bevestigen</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Cursor browser previews -->
 <style>
 #cursorPreviewFizzi { width: 480px; }
@@ -890,8 +703,6 @@
 })();
 </script>
 <script type="module" src="/script.js"></script>
-<script type="module" src="three-bg.js"></script>
-<script type="module" src="translate.js"></script>
 
 </body>
 </html>

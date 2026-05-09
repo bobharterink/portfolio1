@@ -1818,15 +1818,18 @@
     .scene-carousel-waves { top: 31%; }
     .carousel-shell { min-height: 280px; }
     .carousel-can-button { height: 260px; }
-    /* CMS — single column sticky scroll (text top, mockup bottom) */
-    /* .cms-section { padding: 0 16px; } */
-    .fizzi-mockup { height: 65%; margin: 20px;}
-    .cms-sticky { grid-template-columns: 1fr; grid-template-rows: 1fr auto; border-radius: 14px; overflow: hidden; }
+    /* CMS — static on mobile/tablet to avoid viewport-height transform jitter */
+    .cms-section { height: auto; }
+    .fizzi-mockup { height: 65%; margin: 20px; opacity: 1; transition: none; }
+    .cms-sticky { height: auto; min-height: 100svh; transform: none !important; grid-template-columns: 1fr; grid-template-rows: 1fr auto; border-radius: 14px; overflow: hidden; }
+    .cms-cat.is-active { position: relative; min-height: 56svh; }
     .cms-right { order: 2; align-items: flex-start; justify-content: flex-start; padding: 24px 6vw 40px; border-top: 1px solid rgba(var(--ink-rgb), 0.06); border-bottom: none; }
     .cms-right-inner { max-width: 100%; text-align: left; }
+    .cms-eyebrow, .cms-body { opacity: 1; }
+    .cms-title .r-line > span { transform: none; }
     .cms-body { max-width: 100%; font-size: 15px; }
     .cms-title { font-size: clamp(2.2rem, 7vw, 3.2rem); }
-    .cms-left { order: 1; max-height: 60vh; }
+    .cms-left { order: 1; max-height: none; }
   }
 
   /* ── Fizzi homepage mockup ── */
@@ -2115,7 +2118,7 @@ GUTSY</span><span class="fizzi-mock-cursor"></span></h2>
         <div class="browser-stage" style="height:716px;overflow:hidden;">
           <iframe src="https://bbfooi.vercel.app/demo" style="width:100%;height:100%;border:none;display:block;" title="bbfooi.vercel.app"></iframe>
           <div class="browser-overlay">
-            <a class="browser-overlay-btn" href="/beestenbos-cashup/" data-i18n="end.btn">project bekijken</a>
+            <a class="browser-overlay-btn" href="/cafe-beestenbos-cashup/" data-i18n="end.btn">project bekijken</a>
           </div>
         </div>
       </div>
@@ -2352,6 +2355,7 @@ GUTSY</span><span class="fizzi-mock-cursor"></span></h2>
   const cmsSectionEl = document.getElementById('cms-section');
   const cmsStickyEl = cmsSectionEl?.querySelector('.cms-sticky');
   const cmsCats = cmsSectionEl ? [...cmsSectionEl.querySelectorAll('.cms-cat')] : [];
+  const mobileCmsQuery = window.matchMedia('(max-width: 800px)');
 
   const fizziMockTransitions = [
     { elIdx: 0, from: 'LIVE\nGUTSY',    to: 'NEW\nFLAVOURS' },
@@ -2391,6 +2395,14 @@ GUTSY</span><span class="fizzi-mock-cursor"></span></h2>
 
   function updateCmsSection() {
     if (!cmsSectionEl || !cmsCats.length || !cmsStickyEl) return;
+    if (mobileCmsQuery.matches) {
+      cmsStickyEl.style.transform = '';
+      cmsStickyEl.classList.add('cms-visible');
+      cmsStickyEl.classList.remove('cms-hiding');
+      cmsCats.forEach((cat, i) => cat.classList.toggle('is-active', i === 0));
+      updateFizziTypewriter(0);
+      return;
+    }
     const { top, height } = cmsSectionEl.getBoundingClientRect();
     const vh = window.innerHeight;
     const scrollable = height - vh;
@@ -2418,11 +2430,171 @@ GUTSY</span><span class="fizzi-mock-cursor"></span></h2>
     smoothWheel: true,
   });
 
+  const iframeScrollState = new WeakMap();
+  const iframeStages = [...document.querySelectorAll('.browser-stage iframe')]
+    .map(iframe => iframe.closest('.browser-stage'))
+    .filter(Boolean);
+  let snappedIframeStage = null;
+  let snappingIframeStage = null;
+  let iframeSnapCooldownUntil = 0;
+
+  function getIframeOrigin(iframe) {
+    try {
+      return new URL(iframe.src).origin;
+    } catch {
+      return '*';
+    }
+  }
+
+  function isIframeStageActive(stage) {
+    const rect = stage.getBoundingClientRect();
+    const visible = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+    const visibleRatio = visible / rect.height;
+    const viewportCenter = window.innerHeight * 0.5;
+    return visibleRatio >= 0.92 && rect.top <= viewportCenter && rect.bottom >= viewportCenter;
+  }
+
+  function getActiveIframeStage() {
+    return iframeStages
+      .filter(isIframeStageActive)
+      .sort((a, b) => {
+        const aRect = a.getBoundingClientRect();
+        const bRect = b.getBoundingClientRect();
+        const aDist = Math.abs((aRect.top + aRect.height * 0.5) - window.innerHeight * 0.5);
+        const bDist = Math.abs((bRect.top + bRect.height * 0.5) - window.innerHeight * 0.5);
+        return aDist - bDist;
+      })[0] || null;
+  }
+
+  function getIframeSnapTop(stage) {
+    const rect = stage.getBoundingClientRect();
+    const viewportSpace = Math.max(70, (window.innerHeight - rect.height) / 2);
+    return rect.top + window.scrollY - viewportSpace;
+  }
+
+  function snapIframeStageIntoView(stage) {
+    if (!stage || snappedIframeStage === stage || snappingIframeStage === stage) return false;
+    if (!window.matchMedia('(min-width: 1025px)').matches) return false;
+    if (Date.now() < iframeSnapCooldownUntil) return false;
+    const iframe = stage.querySelector('iframe');
+    const state = iframeScrollState.get(iframe);
+    if (!state || state.canScroll !== true) return false;
+
+    const targetTop = getIframeSnapTop(stage);
+    const snapDistance = Math.abs(window.scrollY - targetTop);
+    if (snapDistance < 8) {
+      snappedIframeStage = stage;
+      return false;
+    }
+    if (snapDistance > 260) return false;
+
+    snappingIframeStage = stage;
+    lenis.scrollTo(targetTop, {
+      duration: 1,
+      onComplete: () => {
+        snappedIframeStage = stage;
+        snappingIframeStage = null;
+        refreshActiveIframeState();
+      },
+    });
+    return true;
+  }
+
+  iframeStages.forEach(stage => {
+    const iframe = stage.querySelector('iframe');
+    if (!iframe?.contentWindow) return;
+    iframe.addEventListener('load', () => {
+      iframe.contentWindow.postMessage({
+        type: 'portfolio-scroll:activate',
+      }, getIframeOrigin(iframe));
+    });
+  });
+
+  function refreshActiveIframeState() {
+    const stage = getActiveIframeStage();
+    const iframe = stage?.querySelector('iframe');
+    if (!iframe?.contentWindow) return;
+    iframe.contentWindow.postMessage({
+      type: 'portfolio-scroll:activate',
+    }, getIframeOrigin(iframe));
+  }
+
+  function routeWheelToIframe(event, stage) {
+    const iframe = stage.querySelector('iframe');
+    if (!iframe?.contentWindow) return false;
+
+    const state = iframeScrollState.get(iframe);
+    if (!state || state.canScroll !== true) return false;
+
+    const shouldContinuePage =
+      (event.deltaY < 0 && state.atTop) ||
+      (event.deltaY > 0 && state.atBottom);
+
+    if (shouldContinuePage) return false;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    iframe.contentWindow.postMessage({
+      type: 'portfolio-scroll:wheel',
+      deltaX: event.deltaX,
+      deltaY: event.deltaY,
+    }, getIframeOrigin(iframe));
+    return true;
+  }
+
+  window.addEventListener('wheel', event => {
+    const stage = getActiveIframeStage();
+    if (!stage) return;
+    if (snapIframeStageIntoView(stage) || snappingIframeStage === stage) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+    routeWheelToIframe(event, stage);
+  }, { capture: true, passive: false });
+
+  window.addEventListener('message', event => {
+    if (!event.data) return;
+    const iframe = iframeStages
+      .map(stage => stage.querySelector('iframe'))
+      .find(item => item?.contentWindow === event.source);
+    if (!iframe) return;
+
+    if (event.data.type === 'portfolio-scroll:state') {
+      iframeScrollState.set(iframe, {
+        atTop: Boolean(event.data.atTop),
+        atBottom: Boolean(event.data.atBottom),
+        canScroll: event.data.canScroll !== false,
+      });
+    }
+
+    if (event.data.type === 'portfolio-scroll:release') {
+      const deltaY = Number(event.data.deltaY) || 0;
+      snappedIframeStage = null;
+      snappingIframeStage = null;
+      iframeSnapCooldownUntil = Date.now() + 1000;
+      iframeScrollState.set(iframe, {
+        atTop: deltaY < 0,
+        atBottom: deltaY > 0,
+        canScroll: true,
+      });
+      if (deltaY) lenis.scrollTo(window.scrollY + deltaY, { duration: 0.45 });
+    }
+  });
+
   let homeWasOffscreen = false;
   lenis.on('scroll', () => {
     updateUi();
     updateDuoBg();
     updateCmsSection();
+    refreshActiveIframeState();
+    const activeIframeStage = getActiveIframeStage();
+    if (!activeIframeStage) {
+      snappedIframeStage = null;
+      snappingIframeStage = null;
+    } else {
+      snapIframeStageIntoView(activeIframeStage);
+    }
     if (duoEl && !duoEl.classList.contains('duo-hiding')) {
       const r = duoEl.getBoundingClientRect();
       const vh = window.innerHeight;
@@ -2441,7 +2613,7 @@ GUTSY</span><span class="fizzi-mock-cursor"></span></h2>
         }
       }
     }
-    if (cmsStickyEl && !cmsStickyEl.classList.contains('cms-hiding')) {
+    if (!mobileCmsQuery.matches && cmsStickyEl && !cmsStickyEl.classList.contains('cms-hiding')) {
       const r = cmsSectionEl.getBoundingClientRect();
       const vh = window.innerHeight;
       const visiblePx = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
@@ -2607,7 +2779,7 @@ GUTSY</span><span class="fizzi-mock-cursor"></span></h2>
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
-import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+import { HDRLoader } from 'three/addons/loaders/HDRLoader.js';
 
 window.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('fizziBubbles');
@@ -2644,7 +2816,7 @@ window.addEventListener('DOMContentLoaded', () => {
   resize();
   new ResizeObserver(resize).observe(root);
 
-  new RGBELoader().load('assets/hdr/lobby.hdr', tex => {
+  new HDRLoader().load('assets/hdr/lobby.hdr', tex => {
     tex.mapping = THREE.EquirectangularReflectionMapping;
     scene.environment = tex;
     ambient.intensity = 0;
@@ -2840,7 +3012,7 @@ window.addEventListener('DOMContentLoaded', () => {
     resize();
     new ResizeObserver(resize).observe(targetStage);
 
-    new RGBELoader().load('assets/hdr/lobby.hdr', tex => {
+    new HDRLoader().load('assets/hdr/lobby.hdr', tex => {
       tex.mapping = THREE.EquirectangularReflectionMapping;
       scene.environment = tex;
       ambient.intensity = 0.15;

@@ -2082,13 +2082,17 @@
     .hud-meta { display: none; }
     .hud-btn, .sr-lang-btn, .sr-theme-btn { font-size: 9px; padding: 5px 10px; }
     .hud-pill, .sr-pill { padding: 3px; }
-    /* CMS — mobile: single column sticky, one block per cat */
-    .cms-section { height: 200vh; }
+    /* CMS — static on mobile to avoid viewport-height transform jitter */
+    .cms-section { height: auto; }
     .cms-sticky {
+      height: auto;
+      min-height: 100svh;
+      transform: none !important;
       grid-template-columns: 1fr;
       grid-template-rows: 1fr auto;
     }
     .cms-left { min-height: 0; }
+    .cms-cat.is-active { position: relative; min-height: 56svh; }
     .cms-right {
       border-left: none;
       border-top: 1px solid rgba(var(--ink-rgb), 0.06);
@@ -2097,6 +2101,8 @@
       justify-content: flex-start;
     }
     .cms-right-inner { max-width: 100%; text-align: left; }
+    .cms-eyebrow, .cms-body, .cms-left .site-main { opacity: 1; }
+    .cms-title .r-line > span { transform: none; }
     .cms-body { max-width: 100%; margin-left: 0; font-size: 15px; }
     .cms-title { font-size: clamp(2.2rem, 7vw, 3.2rem); }
     /* Show only the matching block per cat */
@@ -2816,8 +2822,16 @@
   const cmsSectionEl = document.getElementById('cms-section');
   const cmsStickyEl = cmsSectionEl?.querySelector('.cms-sticky');
   const cmsCats = cmsSectionEl ? [...cmsSectionEl.querySelectorAll('.cms-cat')] : [];
+  const mobileCmsQuery = window.matchMedia('(max-width: 600px)');
   function updateCmsSection() {
     if (!cmsSectionEl || !cmsCats.length || !cmsStickyEl) return;
+    if (mobileCmsQuery.matches) {
+      cmsStickyEl.style.transform = '';
+      cmsStickyEl.classList.add('cms-visible');
+      cmsStickyEl.classList.remove('cms-hiding');
+      cmsCats.forEach((cat, i) => cat.classList.toggle('is-active', i === 0));
+      return;
+    }
     const { top, height } = cmsSectionEl.getBoundingClientRect();
     const vh = window.innerHeight;
     const scrollable = height - vh;
@@ -2868,7 +2882,7 @@
         }
       }
     }
-    if (cmsStickyEl && !cmsStickyEl.classList.contains('cms-hiding')) {
+    if (!mobileCmsQuery.matches && cmsStickyEl && !cmsStickyEl.classList.contains('cms-hiding')) {
       const r = cmsSectionEl.getBoundingClientRect();
       const vh = window.innerHeight;
       const visiblePx = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));

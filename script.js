@@ -103,178 +103,6 @@ function hideCursorPreview(key) {
 // ============================================
 
 const pills = document.querySelectorAll(".bar-inner");
-const dirkEyeBgs = document.querySelectorAll(".dirk-eye-bg");
-const oogHoverBgs = document.querySelectorAll(".oog-hover-bg");
-let oogHoverAnimationStarted = false;
-let oogHoverStartTime = 0;
-let dirkBlinkTimer = null;
-let dirkEyeColorIndex = 0;
-
-const dirkEyeColors = [
-  "#ed1c40",
-  "#1c88ed",
-  "#1ced6b",
-  "#ed1cae",
-  "#edb71c",
-];
-
-function showDirkEye() {
-  if (!dirkEyeBgs.length) return;
-
-  document.documentElement.style.setProperty("--logo-eye-color", dirkEyeColors[dirkEyeColorIndex]);
-  dirkEyeColorIndex = (dirkEyeColorIndex + 1) % dirkEyeColors.length;
-  dirkEyeBgs.forEach((eye) => eye.classList.add("is-visible", "is-blinking"));
-  clearTimeout(dirkBlinkTimer);
-  dirkBlinkTimer = setTimeout(() => {
-    dirkEyeBgs.forEach((eye) => eye.classList.remove("is-blinking"));
-  }, 520);
-}
-
-function hideDirkEye() {
-  if (!dirkEyeBgs.length) return;
-
-  dirkEyeBgs.forEach((eye) => eye.classList.remove("is-visible", "is-blinking"));
-  clearTimeout(dirkBlinkTimer);
-}
-
-function setupOogPathAnimation(container) {
-  return Array.from(container.querySelectorAll("path")).map((path) => {
-    const length = path.getTotalLength();
-    path.style.strokeDasharray = length;
-    path.style.strokeDashoffset = length;
-    return { path, length };
-  });
-}
-
-function startOogHoverAnimation() {
-  if (oogHoverAnimationStarted || !oogHoverBgs.length) return;
-  oogHoverAnimationStarted = true;
-
-  fetch("/oog-hover/index.html")
-    .then((response) => response.text())
-    .then((html) => {
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const svgs = Array.from(doc.querySelectorAll(".svg-item1 svg, .svg-item2 svg, .svg-item3 svg"));
-
-      oogHoverBgs.forEach((container) => {
-        svgs.forEach((svg, index) => {
-          const item = document.createElement("div");
-          item.className = "oog-hover-bg__item";
-          item.appendChild(svg.cloneNode(true));
-          container.appendChild(item);
-        });
-      });
-
-      const layers = [1, 2, 3].map((index) => (
-        Array.from(oogHoverBgs).map((container) => (
-          setupOogPathAnimation(container.querySelector(`.oog-hover-bg__item:nth-child(${index})`))
-        ))
-      ));
-
-      const src = doc.querySelector('script')?.textContent ?? '';
-      const parseVar = (name, fallback) => parseInt(src.match(new RegExp(`const ${name}\\s*=\\s*(\\d+)`))?.[1]) || fallback;
-      const layerDuration = parseVar('layerDuration', 4200);
-      const layerOverlap  = parseVar('layerOverlap',  1900);
-      const loopPause     = parseVar('loopPause',     300);
-      const layerStep = layerDuration - layerOverlap;
-      const totalDuration = layerStep * (layers.length - 1) + layerDuration + loopPause;
-      const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-
-      function animate(timestamp) {
-        const time = (timestamp - oogHoverStartTime) % totalDuration;
-
-        layers.forEach((containerLayers, layerIndex) => {
-          const layerStart = layerIndex * layerStep;
-          const layerProgress = clamp((time - layerStart) / layerDuration, 0, 1);
-          const visibleProgress = easeOutCubic(layerProgress);
-
-          containerLayers.forEach((items) => {
-            items.forEach(({ path, length }, index) => {
-              const stagger = index / Math.max(items.length - 1, 1) * 0.42;
-              const progress = clamp((visibleProgress - stagger) / 0.58, 0, 1);
-              path.style.strokeDashoffset = length * (1 - progress);
-            });
-          });
-        });
-
-        requestAnimationFrame(animate);
-      }
-
-      requestAnimationFrame(animate);
-    });
-}
-
-function showOogHover() {
-  oogHoverStartTime = performance.now();
-  startOogHoverAnimation();
-  oogHoverBgs.forEach((preview) => preview.classList.add("is-visible"));
-}
-
-function hideOogHover() {
-  oogHoverBgs.forEach((preview) => preview.classList.remove("is-visible"));
-}
-
-// ── BBF hover preview ──
-const bbfPreviewEl = document.getElementById('bbfHoverPreview');
-let bbfDemoRunning = false;
-let bbfDemoTimers = [];
-
-function bbfClearTimers() {
-  bbfDemoTimers.forEach(t => clearTimeout(t));
-  bbfDemoTimers = [];
-}
-
-function bbfReset() {
-  const card = document.getElementById('bhpCard');
-  if (!card) return;
-  document.getElementById('bhpModal').classList.remove('is-open');
-  document.getElementById('bhpReceiveBtn').classList.remove('is-pressing');
-  document.getElementById('bhpConfirm').classList.remove('is-pressing');
-  document.getElementById('bhpOptExact').classList.add('is-checked');
-  document.getElementById('bhpOpt5').classList.remove('is-checked');
-  card.querySelectorAll('[data-open]').forEach(r => r.classList.remove('is-received'));
-  document.getElementById('bhpTotalAmt').textContent = '€ 8,50';
-}
-
-function bbfRunDemo() {
-  if (!bbfDemoRunning) return;
-  bbfReset();
-  const t = (ms, fn) => { bbfDemoTimers.push(setTimeout(fn, ms)); };
-  const btn = document.getElementById('bhpReceiveBtn');
-  const modal = document.getElementById('bhpModal');
-  const optExact = document.getElementById('bhpOptExact');
-  const opt5 = document.getElementById('bhpOpt5');
-  const confirm = document.getElementById('bhpConfirm');
-  const totalAmt = document.getElementById('bhpTotalAmt');
-  const card = document.getElementById('bhpCard');
-
-  t(1800, () => btn.classList.add('is-pressing'));
-  t(2200, () => { btn.classList.remove('is-pressing'); modal.classList.add('is-open'); });
-  t(3600, () => { optExact.classList.remove('is-checked'); opt5.classList.add('is-checked'); });
-  t(4800, () => confirm.classList.add('is-pressing'));
-  t(5200, () => { modal.classList.remove('is-open'); confirm.classList.remove('is-pressing'); });
-  t(5600, () => {
-    card.querySelectorAll('[data-open]').forEach(r => r.classList.add('is-received'));
-    totalAmt.textContent = '€ 3,50';
-  });
-  t(8500, () => { if (bbfDemoRunning) bbfRunDemo(); });
-}
-
-function showBbfPreview() {
-  if (!bbfPreviewEl) return;
-  bbfDemoRunning = true;
-  bbfPreviewEl.classList.add('is-visible');
-  bbfClearTimers();
-  bbfRunDemo();
-}
-
-function hideBbfPreview() {
-  if (!bbfPreviewEl) return;
-  bbfDemoRunning = false;
-  bbfPreviewEl.classList.remove('is-visible');
-  bbfClearTimers();
-}
 
 pills.forEach(pill => {
   pill.addEventListener("click", (e) => {
@@ -283,7 +111,6 @@ pills.forEach(pill => {
     if (e.target.closest('.site-btn') || e.target.closest('.video-play-btn')) return;
 
     activePill = pill;
-    hideOogHover();
     openProject(pill);
   });
 
@@ -305,23 +132,6 @@ pills.forEach(pill => {
     });
   }
 
-  // pill.addEventListener("mouseenter", () => {
-  //   if (isDetailsOpen || isAnimating) return;
-  //   if (pill.dataset.project === 'dirk') showDirkEye();
-  //   if (pill.dataset.project === 'oog') showOogHover();
-  //   if (pill.dataset.project === 'beestenbos') showBbfPreview();
-  //   pills.forEach(p => {
-  //     if (p !== pill) gsap.to(p.querySelector('.card-face'), { opacity: 0.4, duration: 0.3, ease: "power2.out" });
-  //   });
-  // });
-
-  // pill.addEventListener("mouseleave", () => {
-  //   if (isDetailsOpen || isAnimating) return;
-  //   if (pill.dataset.project === 'dirk') hideDirkEye();
-  //   if (pill.dataset.project === 'oog') hideOogHover();
-  //   if (pill.dataset.project === 'beestenbos') hideBbfPreview();
-  //   pills.forEach(p => gsap.to(p.querySelector('.card-face'), { opacity: 1, duration: 0.3, ease: "power2.out" }));
-  // });
 });
 
 
@@ -342,8 +152,6 @@ function openProject(pill) {
   if (!url) return;
   isAnimating = true;
   window.updateActiveChip?.(pill.dataset.project);
-  hideDirkEye();
-  hideOogHover();
 
   gsap.to(heroInner, { opacity: 0, y: -20, duration: 0.4, ease: 'power2.out' });
   gsap.to(".card-face", { opacity: 0, duration: 0.3, ease: 'power2.out' });
@@ -502,7 +310,6 @@ isAnimating = true;
 // Set initial states
 gsap.set(".hero-eyebrow", { opacity: 0, y: 12 });
 gsap.set(".title", { y: "115%" });        // clip reveal — starts below
-gsap.set(".subtitle", { opacity: 0, y: 10 });
 gsap.set(".card-face", { opacity: 0, y: 20 });
 gsap.set(".footer-socials", { opacity: 0 });
 gsap.set(".hud > *", { opacity: 0, y: -14 });
@@ -517,7 +324,7 @@ if (fromShowreel) {
   }
   gsap.to(".hero-inner", { opacity: 1, duration: 0.5, delay: 0.1 });
   gsap.to(".title", { y: "0%", duration: 0.6, ease: "power3.out", stagger: 0, delay: 0.1 });
-  gsap.to([".hero-eyebrow", ".subtitle"], { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", delay: 0.15 });
+  gsap.to(".hero-eyebrow", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", delay: 0.15 });
   gsap.to(".card-face", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", delay: 0.1 });
   gsap.to(".footer-socials", { opacity: 1, duration: 0.5, delay: 0.1 });
   gsap.to(".hud > *", { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.07, delay: 0.1, onComplete: () => {
@@ -533,8 +340,6 @@ if (fromShowreel) {
   introTl.to(".hero-eyebrow", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0);
   // Clip-reveal: titles slide up from behind overflow:hidden wrappers
   introTl.to(".title", { y: "0%", duration: 1.0, ease: "power4.out", stagger: 0.08 }, 0.1);
-  // Subtitle fades in
-  introTl.to(".subtitle", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.5);
   // Project rows stagger in
   introTl.to(".card-face", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", stagger: 0.07 }, 0.55);
   introTl.to(".hud > *", { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.07 }, 0.7);
