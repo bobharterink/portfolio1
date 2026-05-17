@@ -3,7 +3,21 @@
 
 
 <meta charset="UTF-8">
-<title>Showreel — Dirk Nielandt website</title>
+<title>Dirk Nielandt — Webdesign & CMS | Bob Harterink</title>
+<meta name="description" content="Webdesign, visuele identiteit en Craft CMS voor kinderboekenschrijver Dirk Nielandt. Inclusief hover-animaties, sticker-effect en een zelfbeheersbare boekencatalogus.">
+<link rel="canonical" href="https://bobharterink.com/dirk-nielandt/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bob Harterink">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:title" content="Dirk Nielandt — Webdesign & CMS | Bob Harterink">
+<meta property="og:description" content="Webdesign, huisstijl en Craft CMS voor kinderboekenschrijver Dirk Nielandt, met hover-animaties en zelfbeheersbare boekencatalogus.">
+<meta property="og:url" content="https://bobharterink.com/dirk-nielandt/">
+<meta property="og:image" content="https://bobharterink.com/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dirk Nielandt — Webdesign & CMS | Bob Harterink">
+<meta name="twitter:description" content="Webdesign, huisstijl en Craft CMS voor kinderboekenschrijver Dirk Nielandt, met hover-animaties en zelfbeheersbare boekencatalogus.">
+<meta name="twitter:image" content="https://bobharterink.com/og-image.jpg">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -2034,11 +2048,11 @@
         <div class="cms-right-inner">
           <div class="cms-eyebrow">CMS</div>
           <h2 class="cms-title">
-            <span class="r-line"><span>Eenvoudig de</span></span>
-            <span class="r-line"><span>juiste content</span></span>
-            <span class="r-line"><span>op de juiste plek</span></span>
+            <span class="r-line"><span data-i18n="cms.title.line1">Eenvoudig de</span></span>
+            <span class="r-line"><span data-i18n="cms.title.line2">juiste content</span></span>
+            <span class="r-line"><span data-i18n="cms.title.line3">op de juiste plek</span></span>
           </h2>
-          <p class="cms-body">Dirk beheert zijn volledige bibliotheek zelf via Craft CMS: nieuwe titels toevoegen, stickers aanpassen, categorieën bijwerken. Alles zonder technische kennis.</p>
+          <p class="cms-body" data-i18n="cms.body">Dirk beheert zijn volledige bibliotheek zelf via Craft CMS: nieuwe titels toevoegen, stickers aanpassen, categorieën bijwerken. Alles zonder technische kennis.</p>
         </div>
       </div>
     </div>
@@ -2177,7 +2191,7 @@
   cmsChipBtn.addEventListener('click', () => {
     const el = document.getElementById('cms-section');
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    const top = el.getBoundingClientRect().top + window.scrollY + 10;
     window.scrollTo({ top, behavior: 'smooth' });
   });
 
@@ -2406,6 +2420,10 @@
       'logo.title':          'Een oog dat met je mee­kijkt.',
       'logo.body':           'Het logo is letterlijk een oog, de pupil draait rustig rond als je de pagina laat liggen, en knipoogt terug zodra je er met de muis langs gaat. Een klein gebaar, maar het maakt de site direct levendig.',
       'meta.curve':          'Curve',
+      'cms.title.line1':     'Eenvoudig de',
+      'cms.title.line2':     'juiste content',
+      'cms.title.line3':     'op de juiste plek',
+      'cms.body':            'Dirk beheert zijn volledige bibliotheek zelf via Craft CMS: nieuwe titels toevoegen, stickers aanpassen, categorieën bijwerken. Alles zonder technische kennis.',
     },
     en: {
       'back':                'Back',
@@ -2428,6 +2446,10 @@
       'logo.title':          'An eye that looks back at you.',
       'logo.body':           'The logo is literally an eye — the pupil slowly wanders when the page is idle, and winks back as soon as you mouse over it. A small touch, but it makes the site feel instantly alive.',
       'meta.curve':          'Curve',
+      'cms.title.line1':     'Easily the',
+      'cms.title.line2':     'right content',
+      'cms.title.line3':     'in the right place',
+      'cms.body':            'Dirk manages his entire library himself via Craft CMS: adding new titles, updating stickers, editing categories. All without technical knowledge.',
     },
   };
 
@@ -2472,12 +2494,16 @@
   document.querySelector('.back-btn').addEventListener('click', e => {
     e.preventDefault();
     const overlay = document.createElement('div');
+    overlay.className = 'page-transition-overlay';
     overlay.style.cssText = 'position:fixed;inset:0;background:'+(localStorage.getItem('theme')==='light'?'#f4f4f5':'#0e0e10')+';opacity:0;z-index:9999;transition:opacity 0.5s ease;pointer-events:all;';
     document.body.appendChild(overlay);
     requestAnimationFrame(() => {
       requestAnimationFrame(() => { overlay.style.opacity = '1'; });
     });
     setTimeout(() => { window.location.href = '/?from=showreel'; }, 600);
+  });
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) document.querySelectorAll('.page-transition-overlay').forEach(el => el.remove());
   });
 })();
 </script>

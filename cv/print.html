@@ -8,10 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Light.woff2") format("woff2");font-weight:300}
-@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Regular.woff2") format("woff2");font-weight:400}
-@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Medium.woff2") format("woff2");font-weight:500}
-@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Bold.woff2") format("woff2");font-weight:700}
 
 :root{
   --ink:#0e0e10;--ink-2:#52525b;--ink-3:#9a9aa3;--accent:#ed1c40;
@@ -19,7 +15,7 @@
   --paper:#ffffff;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html,body{background:#e4e4e7;color:var(--ink);font-family:'Outfit','AkzidenzGrotesk',sans-serif;-webkit-font-smoothing:antialiased}
+html,body{background:#e4e4e7;color:var(--ink);font-family:'Outfit',sans-serif;-webkit-font-smoothing:antialiased}
 body{padding:28px 0;display:flex;flex-direction:column;align-items:center;gap:24px}
 
 /* A4 sheet */
@@ -62,7 +58,7 @@ section h2{font-family:'Outfit',sans-serif;font-weight:400;font-size:10pt;letter
 section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(--ink-3);letter-spacing:.1em}
 
 /* PROFIEL */
-.profiel-text{font-family:'AkzidenzGrotesk',sans-serif;font-weight:400;font-size:9pt;line-height:1.4;color:var(--ink);text-wrap:pretty}
+.profiel-text{font-family:'Outfit',sans-serif;font-weight:400;font-size:9pt;line-height:1.4;color:var(--ink);text-wrap:pretty}
 .profiel-text em{font-style:normal;color:var(--accent);font-weight:500}
 
 /* EXP/EDU bars */
@@ -70,26 +66,26 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
 .bar:last-child{border-bottom:0}
 .bar .b-eyebrow{font-family:'JetBrains Mono',monospace;font-size:6.5pt;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
 .bar .b-title{font-family:'Outfit',sans-serif;font-weight:500;font-size:9.8pt;color:var(--ink);letter-spacing:-.005em;line-height:1.2}
-.bar .b-desc{font-family:'AkzidenzGrotesk',sans-serif;font-weight:400;font-size:8pt;line-height:1.35;color:var(--ink-2);grid-column:1/-1;margin-top:.4mm;text-wrap:pretty}
+.bar .b-desc{font-family:'Outfit',sans-serif;font-weight:400;font-size:8pt;line-height:1.35;color:var(--ink-2);grid-column:1/-1;margin-top:.4mm;text-wrap:pretty}
 .bar .b-meta{font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);text-align:right;display:flex;flex-direction:column;gap:.5mm;align-items:flex-end;white-space:nowrap}
 .bar .b-meta .yr{color:var(--ink-2)}
 .bar .b-honor{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:6.5pt;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--accent);padding:1px 6px;border-radius:999px;margin-top:1mm;width:fit-content}
 
 /* SKILLS pills */
 .pills{display:flex;flex-wrap:wrap;gap:1.5mm}
-.pill{font-family:'AkzidenzGrotesk',sans-serif;font-size:7.8pt;color:var(--ink);border:1px solid var(--rule);padding:.9mm 2.2mm;border-radius:999px}
+.pill{font-family:'Outfit',sans-serif;font-size:7.8pt;color:var(--ink);border:1px solid var(--rule);padding:.9mm 2.2mm;border-radius:999px}
 .pill.dashed{border-style:dashed;color:var(--ink-2)}
 
 /* TECH STACK */
 .stack-line{display:grid;grid-template-columns:22mm 1fr;gap:2.5mm;align-items:baseline;padding:1mm 0;border-bottom:1px solid var(--rule-soft)}
 .stack-line:last-child{border-bottom:0}
-.stack-line .cat{font-family:'AkzidenzGrotesk',sans-serif;font-weight:500;font-size:8.6pt;color:var(--ink);letter-spacing:-.005em;display:flex;align-items:baseline;gap:1.5mm}
+.stack-line .cat{font-family:'Outfit',sans-serif;font-weight:500;font-size:8.6pt;color:var(--ink);letter-spacing:-.005em;display:flex;align-items:baseline;gap:1.5mm}
 .stack-line .cat::before{content:attr(data-n);font-family:'JetBrains Mono',monospace;font-size:6pt;color:var(--ink-3);letter-spacing:.06em;font-weight:400}
 .stack-line .items{font-family:'JetBrains Mono',monospace;font-size:7.2pt;color:var(--ink-2);line-height:1.45;text-transform:lowercase}
 .stack-line .items .sep{color:var(--accent);margin:0 4px;opacity:.7}
 
 /* LANG */
-.lang-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:3mm;padding:1mm 0;border-bottom:1px solid var(--rule-soft);font-family:'AkzidenzGrotesk',sans-serif}
+.lang-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:3mm;padding:1mm 0;border-bottom:1px solid var(--rule-soft);font-family:'Outfit',sans-serif}
 .lang-row:last-child{border-bottom:0}
 .lang-row .name{font-size:9pt;color:var(--ink)}
 .lang-row .lvl{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase}
@@ -146,7 +142,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
 
       <section>
         <h2>Profiel</h2>
-        <p class="profiel-text">Frontend developer met een achtergrond in grafisch ontwerp en interactieve media. Gespecialiseerd in het bouwen van performante en visueel sterke webinterfaces met <em>HTML, CSS, JavaScript en React/Next.js</em>. Ervaring met <em>APIs, Git</em>, CMS systemen en motion libraries zoals GSAP en Three.js. Zelfstandig inzetbaar, sterk in conceptueel denken en gefocust op gebruikerservaring, interactie en detail.</p>
+        <p class="profiel-text">Frontend developer met een achtergrond in grafisch ontwerp en interactieve media. Bouwt interfaces en webervaringen met <em>HTML, CSS, JavaScript en React/Next.js</em>, aangevuld met animatie en 3D via <em>GSAP en Three.js</em>. Zelfstandig inzetbaar, met oog voor concept, interactie en detail.</p>
       </section>
 
       <section>
@@ -193,27 +189,45 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
 
         <article class="bar">
           <div>
-            <p class="b-eyebrow">Part time · Founder &amp; Developer</p>
-            <h3 class="b-title">Studio Harterink</h3>
-            <p class="b-desc">Studio voor fysieke producten en interactieve webervaringen. Van webshop tot custom frontend in React/Next.js, waarbij het maakproces onderdeel wordt van de ervaring. Concept, design en code in één hand.</p>
-          </div>
-          <div class="b-meta"><span>Antwerpen</span><span class="yr">2021 tot heden</span></div>
-        </article>
-
-        <article class="bar">
-          <div>
             <p class="b-eyebrow">Café Beestenbos · Full time</p>
             <h3 class="b-title">Café Manager</h3>
-            <p class="b-desc">Verantwoordelijk voor de dagelijkse werking van het café, inclusief personeelsopleiding, voorraadbeheer en het zelfstandig runnen van de zaak.</p>
+            <p class="b-desc">Dagelijkse leiding over het café: personeelsplanning en opleiding, voorraadbeheer en het zelfstandig runnen van de zaak.</p>
           </div>
           <div class="b-meta"><span>Antwerpen</span><span class="yr">2020 tot heden</span></div>
         </article>
 
         <article class="bar">
           <div>
+            <p class="b-eyebrow">Freelance · Full Stack</p>
+            <h3 class="b-title">PWA Café Beestenbos CashUp</h3>
+            <p class="b-desc">Progressive Web App voor de dagelijkse kassamutaties van ons café. Gebouwd met Next.js, MongoDB en Tailwind CSS, inclusief offline ondersteuning.</p>
+          </div>
+          <div class="b-meta"><span>Antwerpen</span><span class="yr">2025</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Freelance · Frontend &amp; CMS</p>
+            <h3 class="b-title">Website Dirk Nielandt</h3>
+            <p class="b-desc">Website, visuele identiteit en Craft CMS voor kinderboekenschrijver Dirk Nielandt. Inclusief hover-animaties, een sticker-effect en een zelfbeheersbare boekencatalogus.</p>
+          </div>
+          <div class="b-meta"><span>Antwerpen</span><span class="yr">2025</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Part time · Founder &amp; Developer</p>
+            <h3 class="b-title">Studio Harterink</h3>
+            <p class="b-desc">Studio voor fysieke producten en interactieve webervaringen. Frontend gebouwd met Vite, Three.js en vanilla JS, aangevuld met Stripe en Lottie. Het maakproces is bewust onderdeel van de ervaring.</p>
+          </div>
+          <div class="b-meta"><span>Antwerpen</span><span class="yr">2021 tot 2025</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
             <p class="b-eyebrow">Maalsen Optiek · Part time</p>
             <h3 class="b-title">Website Onderhoud</h3>
-            <p class="b-desc">Onderhoud en doorontwikkeling van de website met focus op actualiteit, SEO vindbaarheid en gebruiksvriendelijkheid.</p>
+            <p class="b-desc">Onderhoud en doorontwikkeling van de website. Inhoud actueel houden, SEO verbeteren en de interface aanscherpen waar nodig.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2019 / 2020</span></div>
         </article>
@@ -222,7 +236,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Ensie · Part time</p>
             <h3 class="b-title">Parsen van Encyclopedie</h3>
-            <p class="b-desc">Digitalisering van gedrukte encyclopedieën, gescande content omzetten naar gestructureerde online data via parsing en correctieprocessen.</p>
+            <p class="b-desc">Digitalisering van gedrukte encyclopedieën: gescande content omzetten naar gestructureerde online data via parsing en handmatige correctie.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2019 / 2020</span></div>
         </article>
@@ -231,7 +245,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Clipit · Full time</p>
             <h3 class="b-title">XML Developer</h3>
-            <p class="b-desc">Ontwikkeling van een platform dat online media exposure en campagneresultaten meet via analyse van bedrijfsvermeldingen in nieuws en online media.</p>
+            <p class="b-desc">Ontwikkeling van een platform voor media monitoring: bedrijfsvermeldingen in nieuws en online media analyseren en vertalen naar inzichten over exposure en campagneresultaten.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2018 / 2019</span></div>
         </article>
@@ -240,7 +254,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Sharp Digital Design · Part time · Co founder</p>
             <h3 class="b-title">Website Development WordPress / Divi</h3>
-            <p class="b-desc">Co founder van een kleinschalige webdesignstudio, gericht op websites voor kleine ondernemingen en zelfstandigen.</p>
+            <p class="b-desc">Samen met een vriend een kleine webdesignstudio opgericht. Websites gebouwd voor lokale ondernemers en zelfstandigen via WordPress en Divi.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2018 / 2019</span></div>
         </article>
@@ -249,7 +263,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">BliXem Internet · Part time</p>
             <h3 class="b-title">Website Development &amp; SEO</h3>
-            <p class="b-desc">Doorontwikkeling van sterke generieke domeinnamen tot informatieve, commercieel rendabele websites met affiliate integraties.</p>
+            <p class="b-desc">Generieke domeinnamen uitgebouwd tot informatieve websites met affiliate integraties, gericht op organisch verkeer en conversie.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2017 / 2019</span></div>
         </article>
@@ -288,7 +302,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Academische Master KdG Sint Lucas</p>
             <h3 class="b-title">Digitale Context</h3>
-            <p class="b-desc">Focus op digitale systemen, interactie en de relatie tussen ontwerp en technologie.</p>
+            <p class="b-desc">Gericht op digitale systemen, interactie en de relatie tussen ontwerp en technologie.</p>
             <span class="b-honor">★ Met onderscheiding</span>
           </div>
           <div class="b-meta"><span>Antwerpen</span><span class="yr">2023 / 2024</span></div>
@@ -298,7 +312,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Academische Bachelor KdG Sint Lucas</p>
             <h3 class="b-title">Grafisch Ontwerp</h3>
-            <p class="b-desc">Sterke nadruk op digitale vormgeving, conceptontwikkeling en webprojecten.</p>
+            <p class="b-desc">Nadruk op digitale vormgeving, conceptontwikkeling en webprojecten.</p>
             <span class="b-honor">★ Met onderscheiding</span>
           </div>
           <div class="b-meta"><span>Antwerpen</span><span class="yr">2020 / 2023</span></div>
@@ -336,7 +350,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Bruno Simon</p>
             <h3 class="b-title">Three.js Journey</h3>
-            <p class="b-desc">Praktische verdieping in interactieve 3D ervaringen op het web.</p>
+            <p class="b-desc">Diepgaande cursus in interactieve 3D ervaringen op het web.</p>
           </div>
           <div class="b-meta"><span class="yr">2023 tot heden</span></div>
         </article>
@@ -345,7 +359,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Marc Lou</p>
             <h3 class="b-title">CodeFast</h3>
-            <p class="b-desc">Bouwen van echte webapplicaties met moderne stacks.</p>
+            <p class="b-desc">Webapplicaties bouwen met moderne stacks, gericht op snelheid en kwaliteit.</p>
           </div>
           <div class="b-meta"><span class="yr">2025 tot heden</span></div>
         </article>
@@ -354,7 +368,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">MIMO.org</p>
             <h3 class="b-title">MIMO</h3>
-            <p class="b-desc">Introductie tot full stack development en webapplicatie fundamentals.</p>
+            <p class="b-desc">Introductie in full stack development en webapplicatie fundamentals.</p>
           </div>
           <div class="b-meta"><span class="yr">2025 tot heden</span></div>
         </article>
@@ -363,7 +377,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Louis Paquet</p>
             <h3 class="b-title">Awwwards Course</h3>
-            <p class="b-desc">Innovatief webdesign in Figma met focus op concept en high end webinterfaces.</p>
+            <p class="b-desc">Webdesign in Figma met nadruk op concept en high end interfaces.</p>
           </div>
           <div class="b-meta"><span class="yr">2026 tot heden</span></div>
         </article>
@@ -405,7 +419,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
 
       <section>
         <h2>Profile</h2>
-        <p class="profiel-text">Frontend developer with a background in graphic design and interactive media. Specialised in building performant and visually strong web interfaces with <em>HTML, CSS, JavaScript and React/Next.js</em>. Experience with <em>APIs, Git</em>, CMS systems and motion libraries such as GSAP and Three.js. Self sufficient, strong in conceptual thinking and focused on user experience, interaction and detail.</p>
+        <p class="profiel-text">Frontend developer with a background in graphic design and interactive media. Builds interfaces and web experiences with <em>HTML, CSS, JavaScript and React/Next.js</em>, complemented by animation and 3D through <em>GSAP and Three.js</em>. Self-sufficient, with an eye for concept, interaction and detail.</p>
       </section>
 
       <section>
@@ -452,27 +466,45 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
 
         <article class="bar">
           <div>
-            <p class="b-eyebrow">Part time · Founder &amp; Developer</p>
-            <h3 class="b-title">Studio Harterink</h3>
-            <p class="b-desc">Studio for physical products and interactive web experiences. From webshop to custom frontend in React/Next.js, where the making process becomes part of the experience. Concept, design and code in one hand.</p>
-          </div>
-          <div class="b-meta"><span>Antwerp</span><span class="yr">2021 to present</span></div>
-        </article>
-
-        <article class="bar">
-          <div>
             <p class="b-eyebrow">Café Beestenbos · Full time</p>
             <h3 class="b-title">Café Manager</h3>
-            <p class="b-desc">Responsible for the daily operations of the café, including staff training, inventory management and independently running the business.</p>
+            <p class="b-desc">Day-to-day management of the café: staff planning and training, stock management and independently running the business.</p>
           </div>
           <div class="b-meta"><span>Antwerp</span><span class="yr">2020 to present</span></div>
         </article>
 
         <article class="bar">
           <div>
+            <p class="b-eyebrow">Freelance · Full Stack</p>
+            <h3 class="b-title">PWA Café Beestenbos CashUp</h3>
+            <p class="b-desc">Progressive Web App for daily cash-up transactions at our café. Built with Next.js, MongoDB and Tailwind CSS, including offline support.</p>
+          </div>
+          <div class="b-meta"><span>Antwerp</span><span class="yr">2025</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Freelance · Frontend &amp; CMS</p>
+            <h3 class="b-title">Website Dirk Nielandt</h3>
+            <p class="b-desc">Website, visual identity and Craft CMS for children's book author Dirk Nielandt. Including hover animations, a sticker effect and a self-manageable book catalogue.</p>
+          </div>
+          <div class="b-meta"><span>Antwerp</span><span class="yr">2025</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
+            <p class="b-eyebrow">Part time · Founder &amp; Developer</p>
+            <h3 class="b-title">Studio Harterink</h3>
+            <p class="b-desc">Studio for physical products and interactive web experiences. Frontend built with Vite, Three.js and vanilla JS, complemented by Stripe and Lottie. The making process is deliberately part of the experience.</p>
+          </div>
+          <div class="b-meta"><span>Antwerp</span><span class="yr">2021 to 2025</span></div>
+        </article>
+
+        <article class="bar">
+          <div>
             <p class="b-eyebrow">Maalsen Optiek · Part time</p>
             <h3 class="b-title">Website Maintenance</h3>
-            <p class="b-desc">Maintenance and further development of the website with a focus on current content, SEO visibility and user friendliness.</p>
+            <p class="b-desc">Maintenance and further development of the website. Keeping content current, improving SEO and sharpening the interface where needed.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2019 / 2020</span></div>
         </article>
@@ -481,7 +513,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Ensie · Part time</p>
             <h3 class="b-title">Encyclopaedia Parsing</h3>
-            <p class="b-desc">Digitisation of printed encyclopaedias, converting scanned content into structured online data through parsing and correction processes.</p>
+            <p class="b-desc">Digitisation of printed encyclopedias: converting scanned content into structured online data through parsing and manual correction.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2019 / 2020</span></div>
         </article>
@@ -490,7 +522,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Clipit · Full time</p>
             <h3 class="b-title">XML Developer</h3>
-            <p class="b-desc">Development of a platform measuring online media exposure and campaign results by analysing company mentions in news and online media.</p>
+            <p class="b-desc">Development of a media monitoring platform: analysing brand mentions in news and online media and translating them into insights on exposure and campaign results.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2018 / 2019</span></div>
         </article>
@@ -499,7 +531,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Sharp Digital Design · Part time · Co founder</p>
             <h3 class="b-title">Website Development WordPress / Divi</h3>
-            <p class="b-desc">Co founder of a small web design studio focused on websites for small businesses and freelancers.</p>
+            <p class="b-desc">Co-founded a small web design studio with a friend, building websites for local businesses and freelancers using WordPress and Divi.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2018 / 2019</span></div>
         </article>
@@ -508,7 +540,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">BliXem Internet · Part time</p>
             <h3 class="b-title">Website Development &amp; SEO</h3>
-            <p class="b-desc">Further development of strong generic domain names into informative, commercially viable websites with affiliate integrations.</p>
+            <p class="b-desc">Developed generic domain names into informative websites with affiliate integrations, focused on organic traffic and conversions.</p>
           </div>
           <div class="b-meta"><span>Nijmegen</span><span class="yr">2017 / 2019</span></div>
         </article>
@@ -557,7 +589,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Academic Bachelor KdG Sint Lucas</p>
             <h3 class="b-title">Graphic Design</h3>
-            <p class="b-desc">Strong emphasis on digital design, concept development and web projects.</p>
+            <p class="b-desc">Emphasis on digital design, concept development and web projects.</p>
             <span class="b-honor">★ With distinction</span>
           </div>
           <div class="b-meta"><span>Antwerp</span><span class="yr">2020 / 2023</span></div>
@@ -595,7 +627,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Bruno Simon</p>
             <h3 class="b-title">Three.js Journey</h3>
-            <p class="b-desc">Hands on deep dive into interactive 3D experiences on the web.</p>
+            <p class="b-desc">In-depth course on interactive 3D experiences on the web.</p>
           </div>
           <div class="b-meta"><span class="yr">2023 to present</span></div>
         </article>
@@ -604,7 +636,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Marc Lou</p>
             <h3 class="b-title">CodeFast</h3>
-            <p class="b-desc">Building real web applications with modern stacks.</p>
+            <p class="b-desc">Building web applications with modern stacks, focused on speed and quality.</p>
           </div>
           <div class="b-meta"><span class="yr">2025 to present</span></div>
         </article>
@@ -622,7 +654,7 @@ section h2 .meta{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(
           <div>
             <p class="b-eyebrow">Louis Paquet</p>
             <h3 class="b-title">Awwwards Course</h3>
-            <p class="b-desc">Innovative web design in Figma with a focus on concept and high end web interfaces.</p>
+            <p class="b-desc">Web design in Figma with emphasis on concept and high end interfaces.</p>
           </div>
           <div class="b-meta"><span class="yr">2026 to present</span></div>
         </article>

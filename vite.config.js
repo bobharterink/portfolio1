@@ -13,6 +13,12 @@ export default defineConfig({
         beestenbos: resolve(__dirname, 'cafe-beestenbos-cashup/index.html'),
         doorHetOog: resolve(__dirname, 'door-het-oog-van-de-maker/index.html'),
       },
+      output: {
+        manualChunks: {
+          three: ['three'],
+          gsap: ['gsap'],
+        },
+      },
     },
   },
 })

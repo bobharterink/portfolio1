@@ -58,7 +58,7 @@ const translations = {
     "fridge.why.h3": "Waarom dit project?",
     "fridge.why.p": "Fridgepick was mijn eerste project waarin ik bewust full-stack features combineerde met een sterke frontend focus. Het project markeert mijn overgang van puur frontend werk naar het begrijpen en bouwen van complete webapplicaties, zonder de gebruikservaring uit het oog te verliezen.",
     // ── DIRK NIELANDT ──
-    "dirk.context.h3": "Betaalde opdracht",
+    "dirk.context.h3": "Webdesign & CMS",
     "dirk.context.p": "Dirk Nielandt is een kinderboekenschrijver die zijn werk online beter zichtbaar wilde maken. De website biedt een overzicht van zijn boeken, duidelijke informatie per titel en een laagdrempelig contactpunt, binnen een eenvoudig en zelfstandig te beheren platform.",
     "dirk.concept.h3": "Concept & interactie",
     "dirk.concept.p": "De website van Dirk Nielandt is vormgegeven in een stijl die aansluit bij zijn werk als kinderboekenschrijver en de belevingswereld van zijn doelgroep. Via Craft CMS kan hij eenvoudig boeken beheren, uitlichten en taggen, bijvoorbeeld bij een nieuwe release of prijs. De website is bewust overzichtelijk gehouden, met subtiele speelse details zoals hover-animaties bij bekroonde boeken en een logo-oog dat periodiek tot leven komt.",
@@ -76,7 +76,7 @@ const translations = {
     "dirk.why.li2": "Design en techniek combineer in één geheel",
     "dirk.why.li3": "Verder denk dan een standaard \"productpagina\"",
     // ── BEESTENBOS TIP ──
-    "beestenbos.context.h3": "Betaalde opdracht",
+    "beestenbos.context.h3": "PWA Kassatoepassing",
     "beestenbos.concept.h3": "Concept & functionaliteit",
     "beestenbos.concept.p": "Beestenbos Tip is een intern fooibeheersysteem, gebouwd in opdracht van een horecazaak. Medewerkers kunnen fooien invoeren per datum; deze worden automatisch verdeeld onder de aanwezige werknemers. Een adminpaneel geeft inzicht in de verdeling en stelt beheerders in staat medewerkers te beheren.",
     "beestenbos.tech.h3": "Technische uitwerking",
@@ -166,7 +166,7 @@ const translations = {
     "fridge.why.h3": "Why this project?",
     "fridge.why.p": "FridgePick was my first project in which I consciously combined full-stack features with a strong frontend focus. The project marks my transition from purely frontend work to understanding and building complete web applications, without losing sight of the user experience.",
     // ── DIRK NIELANDT ──
-    "dirk.context.h3": "Paid assignment",
+    "dirk.context.h3": "Webdesign & CMS",
     "dirk.context.p": "Dirk Nielandt is a children's book author who wanted to make his work more visible online. The website provides an overview of his books, clear information per title, and an accessible point of contact, all within a simple, independently manageable platform.",
     "dirk.concept.h3": "Concept & interaction",
     "dirk.concept.p": "The website for Dirk Nielandt is designed in a style that reflects his work as a children's book author and the world of his audience. Using Craft CMS, he can easily manage, highlight, and tag books, for example for new releases or award winners. The site is intentionally kept simple, with subtle playful details such as hover animations on awarded books and an eye in the logo that comes to life periodically.",
@@ -184,7 +184,7 @@ const translations = {
     "dirk.why.li2": "combine design and technology into a single whole",
     "dirk.why.li3": "think beyond a standard \"product page\"",
     // ── BEESTENBOS TIP ──
-    "beestenbos.context.h3": "Paid assignment",
+    "beestenbos.context.h3": "PWA POS application",
     "beestenbos.concept.h3": "Concept & functionality",
     "beestenbos.concept.p": "Beestenbos Tip is an internal tip management system, built on commission for a hospitality venue. Staff can log tips per date; these are automatically distributed among the employees present. An admin panel provides insight into the distribution and allows managers to manage staff.",
     "beestenbos.tech.h3": "Technical implementation",

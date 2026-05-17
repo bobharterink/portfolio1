@@ -2,7 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bobharterink.com/</loc>
-    <lastmod>2026-03-18</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://bobharterink.com/fizzi/</loc>
+    <lastmod>2026-05-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bobharterink.com/cafe-beestenbos-cashup/</loc>
+    <lastmod>2026-05-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bobharterink.com/dirk-nielandt/</loc>
+    <lastmod>2026-05-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bobharterink.com/door-het-oog-van-de-maker/</loc>
+    <lastmod>2026-05-12</lastmod>
+    <priority>0.8</priority>
   </url>
 </urlset>

@@ -13,10 +13,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <script>if(localStorage.getItem('theme')!=='dark')document.documentElement.classList.add('light');</script>
 <style>
-@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Light.woff2") format("woff2");font-weight:300;font-style:normal}
-@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Regular.woff2") format("woff2");font-weight:400;font-style:normal}
-@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Medium.woff2") format("woff2");font-weight:500;font-style:normal}
-@font-face{font-family:"AkzidenzGrotesk";src:url("/fonts/AkzidenzGrotesk-Bold.woff2") format("woff2");font-weight:700;font-style:normal}
 
 :root{
   --bg:#0e0e10;--bg-2:#16161a;--ink:#f4f4f5;--ink-2:#a1a1aa;--ink-3:#52525b;
@@ -29,7 +25,7 @@ html.light{--bg:#f4f4f5;--bg-2:#e4e4e7;--ink:#0e0e10;--ink-2:#52525b;--ink-3:#a1
 html{scrollbar-width:thin;scrollbar-color:var(--ink) transparent}
 body{
   background:var(--bg);color:var(--ink);min-height:100dvh;
-  font-family:'Outfit','AkzidenzGrotesk',sans-serif;
+  font-family:'Outfit',sans-serif;
   overflow-x:hidden;cursor:crosshair;
 }
 ::-webkit-scrollbar{width:4px}
@@ -102,7 +98,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .portrait-tag .accent{color:var(--accent)}
 .section-head{display:flex;flex-direction:column;gap:8px}
 .section-title{font-size:clamp(1.4rem,2.5vw,2.4rem);font-weight:400;letter-spacing:-.01em;color:var(--ink);text-transform:uppercase}
-.profiel-text{font-family:'AkzidenzGrotesk',sans-serif;font-weight:300;font-size:clamp(1.2rem,1.8vw,1.6rem);line-height:1.4;color:var(--ink);max-width:60ch;text-wrap:pretty}
+.profiel-text{font-family:'Outfit',sans-serif;font-weight:300;font-size:clamp(1.2rem,1.8vw,1.6rem);line-height:1.4;color:var(--ink);max-width:60ch;text-wrap:pretty}
 .profiel-text em{font-style:normal;color:var(--accent)}
 
 /* SECTIE */
@@ -122,7 +118,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .bar-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
 .bar-title{font-size:clamp(1.4rem,2.6vw,2.2rem);font-weight:400;letter-spacing:-.01em;color:var(--ink);line-height:1.15;transition:transform .3s cubic-bezier(.16,1,.3,1)}
 .bar:hover .bar-title{transform:translateX(6px)}
-.bar-desc{font-family:'AkzidenzGrotesk',sans-serif;font-weight:300;color:var(--ink-2);font-size:clamp(.95rem,1.1vw,1.05rem);line-height:1.45;max-width:62ch;margin-top:6px}
+.bar-desc{font-family:'Outfit',sans-serif;font-weight:300;color:var(--ink-2);font-size:clamp(.95rem,1.1vw,1.05rem);line-height:1.45;max-width:62ch;margin-top:6px}
 .bar-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;text-align:right;padding-top:6px;display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex-shrink:0}
 .bar-meta .yr{color:var(--ink-2)}
 .bar-honor{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--accent);padding:3px 8px;border-radius:999px;margin-top:8px;width:fit-content}
@@ -144,12 +140,12 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
 /* SKILLS */
 .skills-list{display:flex;flex-wrap:wrap;gap:8px}
-.skill{font-family:'AkzidenzGrotesk',sans-serif;font-size:.95rem;color:var(--ink);border:1px solid rgba(var(--ink-rgb),.15);padding:8px 14px;border-radius:6px;transition:border-color .25s,background .25s}
+.skill{font-family:'Outfit',sans-serif;font-size:.95rem;color:var(--ink);border:1px solid rgba(var(--ink-rgb),.15);padding:8px 14px;border-radius:6px;transition:border-color .25s,background .25s}
 .skill:hover{border-color:var(--accent);background:rgba(237,28,64,.05)}
 .skill-extra{border-style:dashed;color:var(--ink-2)}
 
 /* TALEN */
-.lang-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:24px;padding:18px 0;border-bottom:1px solid rgba(var(--ink-rgb),.08);font-family:'AkzidenzGrotesk',sans-serif}
+.lang-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:24px;padding:18px 0;border-bottom:1px solid rgba(var(--ink-rgb),.08);font-family:'Outfit',sans-serif}
 .lang-row:last-child{border-bottom:0}
 .lang-name{font-size:1.1rem;color:var(--ink)}
 .lang-level{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-2);letter-spacing:.08em;text-transform:uppercase}
@@ -280,21 +276,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
         <div class="bar-face">
           <span class="bar-num">01</span>
           <div class="bar-info">
-            <span class="bar-eyebrow" data-i18n="exp.studio.tag">Part time · Founder & Developer</span>
-            <h3 class="bar-title">Studio Harterink</h3>
-            <p class="bar-desc" data-i18n="exp.studio.desc">Studio voor fysieke producten en interactieve webervaringen. Van webshop tot custom frontend in React/Next.js, waarbij het maakproces onderdeel wordt van de ervaring. Concept, design en code in één hand.</p>
-          </div>
-          <div class="bar-meta">
-            <span>Antwerpen</span>
-            <span class="yr">2021 <span data-i18n="range.to">tot</span> <span data-i18n="now">heden</span></span>
-          </div>
-        </div>
-      </article>
-
-      <article class="bar">
-        <div class="bar-face">
-          <span class="bar-num">02</span>
-          <div class="bar-info">
             <span class="bar-eyebrow" data-i18n="exp.bbf.tag">Café Beestenbos · Full time</span>
             <h3 class="bar-title" data-i18n="exp.bbf.title">Café Manager</h3>
             <p class="bar-desc" data-i18n="exp.bbf.desc">Verantwoordelijk voor de dagelijkse werking van het café, inclusief personeelsopleiding, voorraadbeheer en het zelfstandig runnen van de zaak.</p>
@@ -308,7 +289,52 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
       <article class="bar">
         <div class="bar-face">
+          <span class="bar-num">02</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.cashup.tag">Freelance · Full Stack</span>
+            <h3 class="bar-title" data-i18n="exp.cashup.title">PWA Café Beestenbos CashUp</h3>
+            <p class="bar-desc" data-i18n="exp.cashup.desc">Progressive Web App voor dagelijkse kassamutaties bij Café Beestenbos. Gebouwd met Next.js, MongoDB, TypeScript en Tailwind CSS.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Antwerpen</span>
+            <span class="yr">2025</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
           <span class="bar-num">03</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.dirk.tag">Freelance · Frontend & CMS</span>
+            <h3 class="bar-title" data-i18n="exp.dirk.title">Website Dirk Nielandt</h3>
+            <p class="bar-desc" data-i18n="exp.dirk.desc">Website, visuele identiteit en Craft CMS gebouwd voor kinderboekenschrijver Dirk Nielandt. Inclusief hover-animaties, sticker-effect en een zelfbeheersbare boekencatalogus.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Antwerpen</span>
+            <span class="yr">2025</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">04</span>
+          <div class="bar-info">
+            <span class="bar-eyebrow" data-i18n="exp.studio.tag">Part time · Founder & Developer</span>
+            <h3 class="bar-title">Studio Harterink</h3>
+            <p class="bar-desc" data-i18n="exp.studio.desc">Studio voor fysieke producten en interactieve webervaringen. Van webshop tot custom frontend in React/Next.js, waarbij het maakproces onderdeel wordt van de ervaring. Concept, design en code in één hand.</p>
+          </div>
+          <div class="bar-meta">
+            <span>Antwerpen</span>
+            <span class="yr">2021 <span data-i18n="range.to">tot</span> 2025</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bar">
+        <div class="bar-face">
+          <span class="bar-num">05</span>
           <div class="bar-info">
             <span class="bar-eyebrow" data-i18n="exp.maalsen.tag">Maalsen Optiek · Part time</span>
             <h3 class="bar-title" data-i18n="exp.maalsen.title">Website Onderhoud</h3>
@@ -323,7 +349,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
       <article class="bar">
         <div class="bar-face">
-          <span class="bar-num">04</span>
+          <span class="bar-num">06</span>
           <div class="bar-info">
             <span class="bar-eyebrow" data-i18n="exp.ensie.tag">Ensie · Part time</span>
             <h3 class="bar-title" data-i18n="exp.ensie.title">Parsen van Encyclopedie</h3>
@@ -338,7 +364,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
       <article class="bar">
         <div class="bar-face">
-          <span class="bar-num">05</span>
+          <span class="bar-num">07</span>
           <div class="bar-info">
             <span class="bar-eyebrow" data-i18n="exp.clipit.tag">Clipit · Full time</span>
             <h3 class="bar-title" data-i18n="exp.clipit.title">XML Developer</h3>
@@ -353,7 +379,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
       <article class="bar">
         <div class="bar-face">
-          <span class="bar-num">06</span>
+          <span class="bar-num">08</span>
           <div class="bar-info">
             <span class="bar-eyebrow" data-i18n="exp.sharp.tag">Sharp Digital Design · Part time · Co founder</span>
             <h3 class="bar-title" data-i18n="exp.sharp.title">Website Development WordPress / Divi</h3>
@@ -368,7 +394,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
       <article class="bar">
         <div class="bar-face">
-          <span class="bar-num">07</span>
+          <span class="bar-num">09</span>
           <div class="bar-info">
             <span class="bar-eyebrow" data-i18n="exp.blixem.tag">BliXem Internet · Part time</span>
             <h3 class="bar-title" data-i18n="exp.blixem.title">Website Development & SEO</h3>
@@ -621,22 +647,24 @@ const i18n={
     "hero.eyebrow":"Frontend Developer · Curriculum Vitae",
     "meta.locatie":"Locatie","meta.email":"Email","meta.tel":"Telefoon","meta.web":"Web","meta.git":"GitHub",
     "sec.profiel":"Profiel","sec.ervaring":"Ervaring","sec.opleiding":"Opleiding","sec.cursussen":"Cursussen","sec.stack":"Tech Stack","sec.skills":"Vaardigheden","sec.talen":"Talen",
-    "profiel.body":"Frontend developer met een achtergrond in grafisch ontwerp en interactieve media. Gespecialiseerd in het bouwen van performante en visueel sterke webinterfaces met <em>HTML, CSS, JavaScript en React/Next.js</em>. Ervaring met <em>APIs, Git</em>, CMS systemen en motion libraries zoals GSAP en Three.js. Zelfstandig inzetbaar, sterk in conceptueel denken en gefocust op gebruikerservaring, interactie en detail.",
+    "profiel.body":"Frontend developer met een achtergrond in grafisch ontwerp en interactieve media. Bouwt interfaces en webervaringen met <em>HTML, CSS, JavaScript en React/Next.js</em>, aangevuld met animatie en 3D via <em>GSAP en Three.js</em>. Zelfstandig inzetbaar, met oog voor concept, interactie en detail.",
     "now":"heden","range.to":"tot",
-    "exp.studio.tag":"Part time · Founder & Developer","exp.studio.desc":"Studio voor fysieke producten en interactieve webervaringen. Van webshop tot custom frontend in React/Next.js, waarbij het maakproces onderdeel wordt van de ervaring. Concept, design en code in één hand.",
-    "exp.bbf.tag":"Café Beestenbos · Full time","exp.bbf.title":"Café Manager","exp.bbf.desc":"Verantwoordelijk voor de dagelijkse werking van het café, inclusief personeelsopleiding, voorraadbeheer en het zelfstandig runnen van de zaak.",
-    "exp.maalsen.tag":"Maalsen Optiek · Part time","exp.maalsen.title":"Website Onderhoud","exp.maalsen.desc":"Verantwoordelijk voor het onderhoud en de doorontwikkeling van de website, met focus op actualiteit, SEO vindbaarheid en gebruiksvriendelijkheid.",
-    "exp.ensie.tag":"Ensie · Part time","exp.ensie.title":"Parsen van Encyclopedie","exp.ensie.desc":"Betrokken bij het digitaliseren van gedrukte encyclopedieën en het verwerken van gescande content naar gestructureerde online data via parsing en correctieprocessen.",
-    "exp.clipit.tag":"Clipit · Full time","exp.clipit.title":"XML Developer","exp.clipit.desc":"Werkte mee aan de ontwikkeling van een platform dat online media exposure en campagneresultaten meet via analyse van bedrijfsvermeldingen in nieuws en online media.",
-    "exp.sharp.tag":"Sharp Digital Design · Part time · Co founder","exp.sharp.title":"Website Development WordPress / Divi","exp.sharp.desc":"Co founder van een kleinschalige webdesignstudio, opgezet samen met een vriend, gericht op het bouwen van websites voor kleine ondernemingen en zelfstandigen.",
-    "exp.blixem.tag":"BliXem Internet · Part time","exp.blixem.title":"Website Development & SEO","exp.blixem.desc":"Werkte aan de doorontwikkeling van sterke generieke domeinnamen tot informatieve en commercieel rendabele websites met affiliate integraties.",
-    "edu.ma.tag":"Academische Master KdG Sint Lucas","edu.ma.title":"Digitale Context","edu.ma.desc":"Focus op digitale systemen, interactie en de relatie tussen ontwerp en technologie.","edu.ma.honor":"★ Met onderscheiding",
-    "edu.ba.tag":"Academische Bachelor KdG Sint Lucas","edu.ba.title":"Grafisch Ontwerp","edu.ba.desc":"Sterke nadruk op digitale vormgeving, conceptontwikkeling en webprojecten.","edu.ba.honor":"★ Met onderscheiding",
+    "exp.dirk.tag":"Freelance · Frontend & CMS","exp.dirk.title":"Website Dirk Nielandt","exp.dirk.desc":"Website, visuele identiteit en Craft CMS voor kinderboekenschrijver Dirk Nielandt. Inclusief hover-animaties, een sticker-effect en een zelfbeheersbare boekencatalogus.",
+    "exp.cashup.tag":"Freelance · Full Stack","exp.cashup.title":"PWA Café Beestenbos CashUp","exp.cashup.desc":"Progressive Web App voor de dagelijkse kassamutaties van ons café. Gebouwd met Next.js, MongoDB en Tailwind CSS, inclusief offline ondersteuning.",
+    "exp.studio.tag":"Part time · Founder & Developer","exp.studio.desc":"Studio voor fysieke producten en interactieve webervaringen. Frontend gebouwd met Vite, Three.js en vanilla JS, aangevuld met Stripe en Lottie. Het maakproces is bewust onderdeel van de ervaring.",
+    "exp.bbf.tag":"Café Beestenbos · Full time","exp.bbf.title":"Café Manager","exp.bbf.desc":"Dagelijkse leiding over het café: personeelsplanning en opleiding, voorraadbeheer en het zelfstandig runnen van de zaak.",
+    "exp.maalsen.tag":"Maalsen Optiek · Part time","exp.maalsen.title":"Website Onderhoud","exp.maalsen.desc":"Onderhoud en doorontwikkeling van de website. Inhoud actueel houden, SEO verbeteren en de interface aanscherpen waar nodig.",
+    "exp.ensie.tag":"Ensie · Part time","exp.ensie.title":"Parsen van Encyclopedie","exp.ensie.desc":"Digitalisering van gedrukte encyclopedieën: gescande content omzetten naar gestructureerde online data via parsing en handmatige correctie.",
+    "exp.clipit.tag":"Clipit · Full time","exp.clipit.title":"XML Developer","exp.clipit.desc":"Ontwikkeling van een platform voor media monitoring: bedrijfsvermeldingen in nieuws en online media analyseren en vertalen naar inzichten over exposure en campagneresultaten.",
+    "exp.sharp.tag":"Sharp Digital Design · Part time · Co founder","exp.sharp.title":"Website Development WordPress / Divi","exp.sharp.desc":"Samen met een vriend een kleine webdesignstudio opgericht. Websites gebouwd voor lokale ondernemers en zelfstandigen via WordPress en Divi.",
+    "exp.blixem.tag":"BliXem Internet · Part time","exp.blixem.title":"Website Development & SEO","exp.blixem.desc":"Generieke domeinnamen uitgebouwd tot informatieve websites met affiliate integraties, gericht op organisch verkeer en conversie.",
+    "edu.ma.tag":"Academische Master KdG Sint Lucas","edu.ma.title":"Digitale Context","edu.ma.desc":"Gericht op digitale systemen, interactie en de relatie tussen ontwerp en technologie.","edu.ma.honor":"★ Met onderscheiding",
+    "edu.ba.tag":"Academische Bachelor KdG Sint Lucas","edu.ba.title":"Grafisch Ontwerp","edu.ba.desc":"Nadruk op digitale vormgeving, conceptontwikkeling en webprojecten.","edu.ba.honor":"★ Met onderscheiding",
     "edu.cmd.tag":"HBO Avans Hogeschool","edu.cmd.title":"Communicatie & Multimedia Design","edu.cmd.desc":"Propedeuse behaald.",
-    "cur.threejs.desc":"Praktische verdieping in interactieve 3D ervaringen op het web.",
-    "cur.codefast.desc":"Bouwen van echte webapplicaties met moderne stacks.",
-    "cur.mimo.desc":"Introductie tot full stack development en webapplicatie fundamentals.",
-    "cur.awwwards.desc":"Innovatief webdesign in Figma met focus op concept en high end webinterfaces.",
+    "cur.threejs.desc":"Diepgaande cursus in interactieve 3D ervaringen op het web.",
+    "cur.codefast.desc":"Webapplicaties bouwen met moderne stacks, gericht op snelheid en kwaliteit.",
+    "cur.mimo.desc":"Introductie in full stack development en webapplicatie fundamentals.",
+    "cur.awwwards.desc":"Webdesign in Figma met nadruk op concept en high end interfaces.",
     "stack.frontend":"Frontend","stack.frameworks":"Frameworks","stack.3d":"3D & Animatie","stack.cms":"CMS","stack.db":"Database","stack.pay":"Betaling & auth","stack.dev":"Dev tools",
     "skills.extra":"Extra vaardigheden",
     "lang.nl":"Nederlands","lang.nl.lvl":"Moedertaal","lang.en":"Engels","lang.en.lvl":"Uitstekend",
@@ -647,22 +675,24 @@ const i18n={
     "hero.eyebrow":"Frontend Developer · Curriculum Vitae",
     "meta.locatie":"Location","meta.email":"Email","meta.tel":"Phone","meta.web":"Web","meta.git":"GitHub",
     "sec.profiel":"Profile","sec.ervaring":"Experience","sec.opleiding":"Education","sec.cursussen":"Courses","sec.stack":"Tech Stack","sec.skills":"Skills","sec.talen":"Languages",
-    "profiel.body":"Frontend developer with a background in graphic design and interactive media. Specialised in building performant and visually strong web interfaces with <em>HTML, CSS, JavaScript and React/Next.js</em>. Experience with <em>APIs, Git</em>, CMS systems and motion libraries such as GSAP and Three.js. Self sufficient, strong in conceptual thinking and focused on user experience, interaction and detail.",
+    "profiel.body":"Frontend developer with a background in graphic design and interactive media. Builds interfaces and web experiences with <em>HTML, CSS, JavaScript and React/Next.js</em>, complemented by animation and 3D through <em>GSAP and Three.js</em>. Self-sufficient, with an eye for concept, interaction and detail.",
     "now":"present","range.to":"to",
-    "exp.studio.tag":"Part time · Founder & Developer","exp.studio.desc":"Studio for physical products and interactive web experiences. From webshop to custom frontend in React/Next.js, where the making process becomes part of the experience. Concept, design and code in one hand.",
-    "exp.bbf.tag":"Café Beestenbos · Full time","exp.bbf.title":"Café Manager","exp.bbf.desc":"Responsible for daily café operations, including staff training, stock management and running the venue independently.",
-    "exp.maalsen.tag":"Maalsen Optiek · Part time","exp.maalsen.title":"Website Maintenance","exp.maalsen.desc":"Responsible for maintaining and evolving the website, with focus on freshness, SEO and usability.",
-    "exp.ensie.tag":"Ensie · Part time","exp.ensie.title":"Encyclopedia Parsing","exp.ensie.desc":"Involved in digitising printed encyclopedias and converting scanned content into structured online data via parsing and correction workflows.",
-    "exp.clipit.tag":"Clipit · Full time","exp.clipit.title":"XML Developer","exp.clipit.desc":"Worked on a platform that measures online media exposure and campaign results by analysing brand mentions across news and online media.",
-    "exp.sharp.tag":"Sharp Digital Design · Part time · Co founder","exp.sharp.title":"Website Development WordPress / Divi","exp.sharp.desc":"Co founder of a small web design studio, set up with a friend, building websites for small businesses and freelancers.",
-    "exp.blixem.tag":"BliXem Internet · Part time","exp.blixem.title":"Website Development & SEO","exp.blixem.desc":"Worked on growing strong generic domain names into informative, commercially viable websites with affiliate integrations.",
+    "exp.dirk.tag":"Freelance · Frontend & CMS","exp.dirk.title":"Website Dirk Nielandt","exp.dirk.desc":"Website, visual identity and Craft CMS for children's book author Dirk Nielandt. Including hover animations, a sticker effect and a self-manageable book catalogue.",
+    "exp.cashup.tag":"Freelance · Full Stack","exp.cashup.title":"PWA Café Beestenbos CashUp","exp.cashup.desc":"Progressive Web App for daily cash-up transactions at our café. Built with Next.js, MongoDB and Tailwind CSS, including offline support.",
+    "exp.studio.tag":"Part time · Founder & Developer","exp.studio.desc":"Studio for physical products and interactive web experiences. Frontend built with Vite, Three.js and vanilla JS, complemented by Stripe and Lottie. The making process is deliberately part of the experience.",
+    "exp.bbf.tag":"Café Beestenbos · Full time","exp.bbf.title":"Café Manager","exp.bbf.desc":"Day-to-day management of the café: staff planning and training, stock management and independently running the business.",
+    "exp.maalsen.tag":"Maalsen Optiek · Part time","exp.maalsen.title":"Website Maintenance","exp.maalsen.desc":"Maintenance and further development of the website. Keeping content current, improving SEO and sharpening the interface where needed.",
+    "exp.ensie.tag":"Ensie · Part time","exp.ensie.title":"Encyclopedia Parsing","exp.ensie.desc":"Digitisation of printed encyclopedias: converting scanned content into structured online data through parsing and manual correction.",
+    "exp.clipit.tag":"Clipit · Full time","exp.clipit.title":"XML Developer","exp.clipit.desc":"Development of a media monitoring platform: analysing brand mentions in news and online media and translating them into insights on exposure and campaign results.",
+    "exp.sharp.tag":"Sharp Digital Design · Part time · Co founder","exp.sharp.title":"Website Development WordPress / Divi","exp.sharp.desc":"Co-founded a small web design studio with a friend, building websites for local businesses and freelancers using WordPress and Divi.",
+    "exp.blixem.tag":"BliXem Internet · Part time","exp.blixem.title":"Website Development & SEO","exp.blixem.desc":"Developed generic domain names into informative websites with affiliate integrations, focused on organic traffic and conversions.",
     "edu.ma.tag":"Academic Master KdG Sint Lucas","edu.ma.title":"Digital Context","edu.ma.desc":"Focus on digital systems, interaction and the relationship between design and technology.","edu.ma.honor":"★ With distinction",
-    "edu.ba.tag":"Academic Bachelor KdG Sint Lucas","edu.ba.title":"Graphic Design","edu.ba.desc":"Strong emphasis on digital design, concept development and web projects.","edu.ba.honor":"★ With distinction",
+    "edu.ba.tag":"Academic Bachelor KdG Sint Lucas","edu.ba.title":"Graphic Design","edu.ba.desc":"Emphasis on digital design, concept development and web projects.","edu.ba.honor":"★ With distinction",
     "edu.cmd.tag":"BSc Avans Hogeschool","edu.cmd.title":"Communication & Multimedia Design","edu.cmd.desc":"First year diploma (propedeuse) obtained.",
-    "cur.threejs.desc":"Hands on deep dive into interactive 3D experiences on the web.",
-    "cur.codefast.desc":"Building real world web applications with modern stacks.",
+    "cur.threejs.desc":"In-depth course on interactive 3D experiences on the web.",
+    "cur.codefast.desc":"Building web applications with modern stacks, focused on speed and quality.",
     "cur.mimo.desc":"Introduction to full stack development and web application fundamentals.",
-    "cur.awwwards.desc":"Innovative web design in Figma with focus on concept and high end web interfaces.",
+    "cur.awwwards.desc":"Web design in Figma with emphasis on concept and high end interfaces.",
     "stack.frontend":"Frontend","stack.frameworks":"Frameworks","stack.3d":"3D & Animation","stack.cms":"CMS","stack.db":"Database","stack.pay":"Payments & auth","stack.dev":"Dev tools",
     "skills.extra":"Additional skills",
     "lang.nl":"Dutch","lang.nl.lvl":"Native","lang.en":"English","lang.en.lvl":"Fluent",

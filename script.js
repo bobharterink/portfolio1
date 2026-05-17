@@ -57,6 +57,7 @@ plusButton.addEventListener("click", () => {
     gsap.to(".card-face", { opacity: 0, duration: 0.3, ease: 'power2.out' });
     plusRotation.pause();
     const overlay = document.createElement('div');
+    overlay.className = 'page-transition-overlay';
     overlay.style.cssText = 'position:fixed;inset:0;background:var(--bg);opacity:0;z-index:9999;pointer-events:none;';
     document.body.appendChild(overlay);
     const tl = gsap.timeline();
@@ -158,6 +159,7 @@ function openProject(pill) {
   plusRotation.pause();
 
   const overlay = document.createElement('div');
+  overlay.className = 'page-transition-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:var(--bg);opacity:0;z-index:9999;pointer-events:none;';
   document.body.appendChild(overlay);
 
@@ -407,3 +409,26 @@ if (projectChipsEl) {
     if (project && chipEls[project]) chipEls[project].classList.add('is-active');
   };
 }
+
+
+// ============================================
+// BFCACHE RESTORE
+// ============================================
+
+window.addEventListener('pageshow', (e) => {
+  if (!e.persisted) return;
+  document.querySelectorAll('.page-transition-overlay').forEach(el => el.remove());
+  gsap.killTweensOf([heroInner, ".title", ".hero-eyebrow", ".card-face", ".footer-socials", ".hud > *", plusButton]);
+  gsap.set(heroInner, { opacity: 1, y: 0, pointerEvents: "auto" });
+  gsap.set(".title", { y: "0%" });
+  gsap.set(".hero-eyebrow", { opacity: 1, y: 0 });
+  gsap.set(".card-face", { opacity: 1, y: 0 });
+  gsap.set(".footer-socials", { opacity: 1 });
+  gsap.set(".hud > *", { opacity: 1, y: 0 });
+  gsap.set(plusButton, { rotation: 0, scale: 1 });
+  document.body.style.overflowY = "";
+  isAnimating = false;
+  isDetailsOpen = false;
+  activePill = null;
+  plusRotation.resume();
+});

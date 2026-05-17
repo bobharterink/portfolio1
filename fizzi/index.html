@@ -2,7 +2,21 @@
 <script>if(localStorage.getItem('theme')!=='dark')document.documentElement.classList.add('light');</script>
 
 <meta charset="UTF-8">
-<title>Fizzi — Cursus</title>
+<title>Fizzi — Interactieve 3D Productpagina | Bob Harterink</title>
+<meta name="description" content="Cursusproject: 3D productpagina voor een frisdrankmerk, gebouwd met Next.js, Three.js, GSAP en Prismic CMS. Vloeiende scroll-animaties en een roterende blikje in WebGL.">
+<link rel="canonical" href="https://bobharterink.com/fizzi/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bob Harterink">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:title" content="Fizzi — Interactieve 3D Productpagina | Bob Harterink">
+<meta property="og:description" content="Cursusproject: 3D productpagina gebouwd met Next.js, Three.js, GSAP en Prismic CMS.">
+<meta property="og:url" content="https://bobharterink.com/fizzi/">
+<meta property="og:image" content="https://bobharterink.com/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fizzi — Interactieve 3D Productpagina | Bob Harterink">
+<meta name="twitter:description" content="Cursusproject: 3D productpagina gebouwd met Next.js, Three.js, GSAP en Prismic CMS.">
+<meta name="twitter:image" content="https://bobharterink.com/og-image.jpg">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -1666,7 +1680,7 @@
   }
   .fizzi-mock-headline {
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp(3rem, 8vw, 5rem);
     font-weight: 900; color: #f97316;
     line-height: 0.9; letter-spacing: -0.01em;
     margin-bottom: 12px; white-space: pre;
@@ -1994,7 +2008,7 @@
         <div class="url-bar"><span class="scheme">https://</span><span class="host">studioha.vercel.app</span><span class="path">/</span></div>
       </div>
       <div class="browser-stage" style="height:716px;overflow:hidden;">
-        <iframe src="https://studioha.vercel.app/main" style="width:calc(100% + 20px);height:100%;border:none;display:block;" title="studioha.vercel.app"></iframe>
+        <iframe data-scroll-proxy src="https://studioha.vercel.app/main" style="width:calc(100% + 20px);height:100%;border:none;display:block;" title="studioha.vercel.app"></iframe>
       </div>
     </div>
   </section>
@@ -2067,7 +2081,7 @@
         <div class="url-bar"><span class="scheme">https://</span><span class="host">studioha.vercel.app</span><span class="path">/</span></div>
       </div>
       <div class="browser-stage" style="height:716px;overflow:hidden;">
-        <iframe src="https://studioha.vercel.app/dive" style="width:calc(100% + 20px);height:100%;border:none;display:block;" title="studioha.vercel.app/dive"></iframe>
+        <iframe data-scroll-proxy src="https://studioha.vercel.app/dive" style="width:calc(100% + 20px);height:100%;border:none;display:block;" title="studioha.vercel.app/dive"></iframe>
       </div>
     </div>
   </section>
@@ -2431,7 +2445,7 @@ GUTSY</span><span class="fizzi-mock-cursor"></span></h2>
   });
 
   const iframeScrollState = new WeakMap();
-  const iframeStages = [...document.querySelectorAll('.browser-stage iframe')]
+  const iframeStages = [...document.querySelectorAll('.browser-stage iframe[data-scroll-proxy]')]
     .map(iframe => iframe.closest('.browser-stage'))
     .filter(Boolean);
   let snappedIframeStage = null;
@@ -2758,12 +2772,16 @@ GUTSY</span><span class="fizzi-mock-cursor"></span></h2>
   document.querySelector('.back-btn').addEventListener('click', e => {
     e.preventDefault();
     const overlay = document.createElement('div');
+    overlay.className = 'page-transition-overlay';
     overlay.style.cssText = 'position:fixed;inset:0;background:'+(localStorage.getItem('theme')==='light'?'#f4f4f5':'#0e0e10')+';opacity:0;z-index:9999;transition:opacity 0.5s ease;pointer-events:all;';
     document.body.appendChild(overlay);
     requestAnimationFrame(() => {
       requestAnimationFrame(() => { overlay.style.opacity = '1'; });
     });
     setTimeout(() => { window.location.href = '/?from=showreel'; }, 600);
+  });
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) document.querySelectorAll('.page-transition-overlay').forEach(el => el.remove());
   });
 })();
 </script>
